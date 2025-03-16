@@ -5,17 +5,21 @@ import { CoinApiComponent } from './pages/coin-api/coin-api.component';
 
 const routes: Routes = [
     {
-        path: '',
+        path: 'home',
         component: HomeComponent,
     },
     {
         path: 'coin-api',
         component: CoinApiComponent,
-    }
+    },
+    {
+        path: '**',
+        redirectTo: 'home',
+    },
 ];
 
 @NgModule({
-    imports: [RouterModule.forRoot(routes)],
+    imports: [RouterModule.forRoot(routes, { useHash: true })],
     exports: [RouterModule],
 })
 export class AppRoutingModule { }

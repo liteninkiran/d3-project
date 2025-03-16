@@ -1,37 +1,26 @@
 <mat-sidenav-container fullscreen>
 
     <!-- Vertical Side-Nav Menu -->
-    <mat-sidenav #sidenav class="sidenav">
-
+    <mat-sidenav #sidenav class="sidenav" autoFocus="false" mode="push">
         <mat-nav-list (click)="sidenav.close()">
-
-            <!-- Home -->
-            <a mat-list-item routerLink="/" class="sidenav-item">
-                <mat-icon>home</mat-icon>
-                <span>Home</span>
-            </a>
-
-            <!-- Coin API -->
-            <a mat-list-item routerLink="/coin-api" class="sidenav-item">
-                <mat-icon>currency_bitcoin</mat-icon>
-                <span>Coin API</span>
-            </a>
-
+            <app-navbar-links></app-navbar-links>
         </mat-nav-list>
-
     </mat-sidenav>
 
     <!-- Horizontal Toolbar -->
     <mat-toolbar color="primary">
 
         <!-- Burger Menu Icon -->
-        <button mat-icon-button (click)="sidenav.open()">
+        <button mat-icon-button (click)="sidenav.open('mouse')">
             <mat-icon>menu</mat-icon>
         </button>
 
     </mat-toolbar>
 
     <!-- Main Content -->
-    <router-outlet></router-outlet>
+    <div class="container">
+        <router-outlet></router-outlet>
+    </div>
+    
 
 </mat-sidenav-container>
