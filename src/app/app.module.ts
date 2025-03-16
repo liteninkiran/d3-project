@@ -5,14 +5,13 @@ import { HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { HomeComponent } from './pages/home/home.component';
 import { NavbarLinksComponent } from './components/navbar-links/navbar-links.component';
 import { MaterialModule } from './modules/material.module';
+import { CoinApiModule } from './modules/coin-api.module';
 
 @NgModule({
     declarations: [
         AppComponent,
-        HomeComponent,
         NavbarLinksComponent,
     ],
     imports: [
@@ -21,6 +20,7 @@ import { MaterialModule } from './modules/material.module';
         AppRoutingModule,
         BrowserAnimationsModule,
         MaterialModule,
+        CoinApiModule,
     ],
     providers: [],
     bootstrap: [AppComponent],
