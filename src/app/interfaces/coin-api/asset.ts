@@ -1,6 +1,6 @@
 export interface Asset {
     asset_id: string;
-    name: string;
+    name?: string;
     type_is_crypto: boolean;
     data_quote_start: string;
     data_quote_end: string;
