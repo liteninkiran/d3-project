@@ -11,6 +11,6 @@ export class CoinApiService {
     public loadDataFromApi(): Observable<Asset[]> {
         const key = process.env['API_KEY'];
         const url = `https://rest.coinapi.io/v1/assets?apikey=${key}`;
-        return this.http.get<Asset[]>(url);
+        return this.http.get<Asset[]>(url).pipe();
     }
 }

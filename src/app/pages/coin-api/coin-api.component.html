@@ -1,2 +1,20 @@
 <h1>Coin API</h1>
-<app-coin-api-feature [data]="(data$ | async)!"></app-coin-api-feature>
+
+<mat-list>
+    <div mat-subheader>Assets</div>
+
+    <mat-divider></mat-divider>
+
+    <mat-list-item *ngFor="let d of (data$ | async)!">
+        <mat-icon matListItemIcon>{{ d.type_is_crypto ? 'currency_bitcoin' : '' }}</mat-icon>
+        <div matListItemTitle>{{ d.name }}</div>
+        <div matListItemLine>{{ d.asset_id }}</div>
+    </mat-list-item>
+
+<!-- 
+    <mat-selection-list *ngFor="let d of data">
+          <mat-list-option>{{ d.asset_id }} - {{ d.name }}</mat-list-option>
+    </mat-selection-list>
+ -->
+
+</mat-list>
