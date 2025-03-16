@@ -1,4 +1,20 @@
 <h2>Coin API Feature</h2>
-<mat-list role="list">
-    <mat-list-item role="listitem" *ngFor="let d of data">{{ d.name }}</mat-list-item>
+
+<mat-list *ngIf="data">
+    <div mat-subheader>Assets</div>
+
+    <mat-list-item *ngFor="let d of data">
+        <mat-icon matListItemIcon>{{ d.type_is_crypto ? 'currency_bitcoin' : '' }}</mat-icon>
+        <div matListItemTitle>{{ d.name }}</div>
+        <div matListItemLine>{{ d.asset_id }}</div>
+    </mat-list-item>
+
+<!-- 
+    <mat-selection-list *ngFor="let d of data">
+          <mat-list-option>{{ d.asset_id }} - {{ d.name }}</mat-list-option>
+    </mat-selection-list>
+ -->
+
+    <mat-divider></mat-divider>
+
 </mat-list>

@@ -15,6 +15,6 @@ export class CoinApiFeatureComponent implements OnInit, OnChanges {
     }
 
     public ngOnChanges(changes: SimpleChanges): void {
-        console.log(this.data);
+
     }
 }
