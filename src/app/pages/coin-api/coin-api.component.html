@@ -11,7 +11,9 @@
             </mat-panel-title>
 
             <mat-panel-description *ngIf="!panelOpenState()">
-                <span>{{ form.value.nameOrId.split(',').join(' | ') }}</span>
+                <span *ngIf="form.value.nameFilter">{{ form.value.nameFilter.split(',').join(' | ') }}</span>
+                <span *ngIf="form.value.nameFilter && form.value.assetIdFilter">&nbsp;|&nbsp;</span>
+                <span *ngIf="form.value.assetIdFilter">{{ form.value.assetIdFilter.split(',').join(' | ') }}</span>
             </mat-panel-description>
 
         </mat-expansion-panel-header>
@@ -21,12 +23,26 @@
             <mat-form-field class="filter-form-field">
 
                 <mat-label>
-                    Filter by Name or ID
+                    Filter by Name
                 </mat-label>
 
-                <input matInput type="text" name="nameOrId" [placeholder]="placeHolder" formControlName="nameOrId" />
+                <input matInput type="text" name="nameFilter" [placeholder]="placeHolders.nameFilter" formControlName="nameFilter" />
 
-                <button matSuffix mat-icon-button aria-label="Clear" (click)="form.controls['nameOrId'].setValue('')" *ngIf="form.value.nameOrId">
+                <button matSuffix mat-icon-button aria-label="Clear" (click)="form.controls['nameFilter'].setValue('')" *ngIf="form.value.nameFilter">
+                    <mat-icon>close</mat-icon>
+                </button>
+
+            </mat-form-field>
+
+            <mat-form-field class="filter-form-field">
+
+                <mat-label>
+                    Filter by Asset ID
+                </mat-label>
+
+                <input matInput type="text" name="assetIdFilter" [placeholder]="placeHolders.assetIdFilter" formControlName="assetIdFilter" />
+
+                <button matSuffix mat-icon-button aria-label="Clear" (click)="form.controls['assetIdFilter'].setValue('')" *ngIf="form.value.assetIdFilter">
                     <mat-icon>close</mat-icon>
                 </button>
 
@@ -42,13 +58,13 @@
     <div mat-subheader>Assets</div>
 
     <mat-divider></mat-divider>
-
+<!-- 
     <mat-list-item *ngFor="let d of (data$ | async)!">
         <mat-icon matListItemIcon>{{ d.type_is_crypto ? 'currency_bitcoin' : '' }}</mat-icon>
         <div matListItemTitle>{{ d.name }}</div>
         <div matListItemLine>{{ d.asset_id }}</div>
     </mat-list-item>
-<!-- 
+ -->
     <mat-selection-list>
         <mat-list-option *ngFor="let d of (data$ | async)!">
             <mat-icon matListItemIcon>{{ d.type_is_crypto ? 'currency_bitcoin' : '' }}</mat-icon>
@@ -56,5 +72,5 @@
             <div matListItemLine>{{ d.asset_id }}</div>
         </mat-list-option>
     </mat-selection-list>
- -->
+
 </mat-list>
