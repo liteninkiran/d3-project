@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatBadgeModule } from '@angular/material/badge';
 import { MatButtonModule } from '@angular/material/button'
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
@@ -36,6 +37,7 @@ import { MatTreeModule } from '@angular/material/tree';
 
 @NgModule({
     exports: [
+        MatAutocompleteModule,
         MatBadgeModule,
         MatButtonModule,
         MatButtonToggleModule,
