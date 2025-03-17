@@ -1,5 +1,43 @@
 <h1>Coin API</h1>
 
+<mat-accordion>
+
+    <mat-expansion-panel (opened)="panelOpenState.set(true)" (closed)="panelOpenState.set(false)">
+
+        <mat-expansion-panel-header>
+
+            <mat-panel-title [ngClass]="{'accordion-title-open' : panelOpenState()}">
+                Filters
+            </mat-panel-title>
+
+            <mat-panel-description *ngIf="!panelOpenState()">
+                <span>{{ form.value.nameOrId.split(',').join(' | ') }}</span>
+            </mat-panel-description>
+
+        </mat-expansion-panel-header>
+
+        <form class="login-form data-form" [formGroup]="form">
+
+            <mat-form-field class="filter-form-field">
+
+                <mat-label>
+                    Filter by Name or ID
+                </mat-label>
+
+                <input matInput type="text" name="nameOrId" [placeholder]="placeHolder" formControlName="nameOrId" />
+
+                <button matSuffix mat-icon-button aria-label="Clear" (click)="form.controls['nameOrId'].setValue('')" *ngIf="form.value.nameOrId">
+                    <mat-icon>close</mat-icon>
+                </button>
+
+            </mat-form-field>
+
+        </form>
+        
+    </mat-expansion-panel>
+
+</mat-accordion>
+
 <mat-list>
     <div mat-subheader>Assets</div>
 
@@ -10,11 +48,5 @@
         <div matListItemTitle>{{ d.name }}</div>
         <div matListItemLine>{{ d.asset_id }}</div>
     </mat-list-item>
-
-<!-- 
-    <mat-selection-list *ngFor="let d of data">
-          <mat-list-option>{{ d.asset_id }} - {{ d.name }}</mat-list-option>
-    </mat-selection-list>
- -->
 
 </mat-list>

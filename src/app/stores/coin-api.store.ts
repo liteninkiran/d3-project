@@ -19,7 +19,7 @@ export class CoinApiStore {
         this.data$ = this.getDataFromCoinApi();
     }
 
-    public getData(filters: string[] | null): Observable<Asset[]> {
+    public getData(filters: string[] | null = null): Observable<Asset[]> {
         this.filters = filters === null ? null : filters.map(f => f.toLowerCase());
         return this.data$.pipe(
             map(assets => this.filterAssets(assets).sort(this.sortAssets))
