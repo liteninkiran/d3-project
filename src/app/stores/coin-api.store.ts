@@ -20,7 +20,7 @@ export class CoinApiStore {
     }
 
     public getData(filters: string[] | null = null): Observable<Asset[]> {
-        this.filters = filters === null ? null : filters.map(f => f.toLowerCase());
+        this.filters = filters === null ? null : filters.filter(f => f !== '').map(f => f.toLowerCase());
         return this.data$.pipe(
             map(assets => this.filterAssets(assets).sort(this.sortAssets))
         );
@@ -36,9 +36,30 @@ export class CoinApiStore {
         return assets.filter(asset => this.filterAsset(asset));
     }
 
-    private filterAsset(asset: Asset) {
-        const assetName = (asset.name ?? asset.asset_id).toLowerCase();
-        return this.filters ? this.filters.filter(filter => assetName.includes(filter)).length > 0 : true;
+    private filterAsset(asset: Asset): boolean {
+        return this.filterByAssetId(asset) || this.filterByAssetName(asset);
+    }
+
+    private filterByAssetName(asset: Asset): boolean {
+        if (this.filters === null) {
+            return true;
+        }
+
+        if (!asset.name) {
+            return false;
+        }
+
+        const assetName = asset.name.toLowerCase();
+        return this.filters.filter(filter => assetName.includes(filter)).length > 0;
+    }
+
+    private filterByAssetId(asset: Asset): boolean {
+        if (this.filters === null) {
+            return true;
+        }
+
+        const assetId = asset.asset_id.toLowerCase();
+        return this.filters.filter(filter => assetId.includes(filter)).length > 0;
     }
 
     private sortAssets(a1: Asset, a2: Asset) {

@@ -14,7 +14,7 @@ export class CoinApiComponent implements OnInit, OnDestroy {
     public data$: Observable<Asset[]> = new Observable();
     public form!: FormGroup;
     public defaults = {
-        nameOrId: 'Dollar,Pound,BTC',
+        nameOrId: 'Dollar,Pound',
     };
     public placeHolder = `Comma separate search terms, e.g. ${this.defaults.nameOrId}`;
     public nameOrId = this.fb.control(this.defaults.nameOrId);

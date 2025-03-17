@@ -48,5 +48,13 @@
         <div matListItemTitle>{{ d.name }}</div>
         <div matListItemLine>{{ d.asset_id }}</div>
     </mat-list-item>
-
+<!-- 
+    <mat-selection-list>
+        <mat-list-option *ngFor="let d of (data$ | async)!">
+            <mat-icon matListItemIcon>{{ d.type_is_crypto ? 'currency_bitcoin' : '' }}</mat-icon>
+            <div matListItemTitle>{{ d.name }}</div>
+            <div matListItemLine>{{ d.asset_id }}</div>
+        </mat-list-option>
+    </mat-selection-list>
+ -->
 </mat-list>
