@@ -16,10 +16,10 @@ import { MY_FORMATS } from 'src/app/config/dates';
 export class RequestParamsComponent implements OnInit {
 
     public form!: FormGroup;
-    public sourceAssetId = this.fb.control('');
-    public targetAssetId = this.fb.control('');
-    public startDate = this.fb.control(new Date());
-    public endDate = this.fb.control(new Date());
+    public sourceAssetId = this.fb.control('BTC');
+    public targetAssetId = this.fb.control('GBP');
+    public startDate = this.fb.control(new Date(2020, 0, 1));
+    public endDate = this.fb.control(new Date(2023, 11, 31));
 
     readonly panelOpenState = signal(false);
 
