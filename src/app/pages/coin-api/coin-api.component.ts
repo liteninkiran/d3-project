@@ -14,9 +14,9 @@ export class CoinApiComponent implements OnInit, OnDestroy {
     public data$: Observable<Asset[]> = new Observable();
     public form!: FormGroup;
     public defaults = {
-        nameOrId: 'Dollar,Pound',
+        nameOrId: '',
     };
-    public placeHolder = `Comma separate search terms, e.g. ${this.defaults.nameOrId}`;
+    public placeHolder = 'Type to search';
     public nameOrId = this.fb.control(this.defaults.nameOrId);
 
     private subscriptions: Subscription[] = [];
@@ -29,7 +29,7 @@ export class CoinApiComponent implements OnInit, OnDestroy {
     ) { }
 
     public ngOnInit(): void {
-        this.data$ = this.store.getData(this.defaults.nameOrId.split(','));
+        this.data$ = this.store.getData(this.defaults.nameOrId);
         this.setupForm();
     }
 
@@ -44,7 +44,7 @@ export class CoinApiComponent implements OnInit, OnDestroy {
         const sub = this.nameOrId.valueChanges
             .pipe(debounceTime(500))
             .subscribe(value => {
-                this.data$ = this.store.getData(value?.split(','));
+                this.data$ = this.store.getData(value ?? '');
             });
         this.subscriptions.push(sub);
         

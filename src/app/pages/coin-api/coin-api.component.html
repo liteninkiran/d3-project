@@ -1,60 +1,64 @@
 <h1>Coin API</h1>
 
-<mat-accordion>
+<div class="container">
+    <mat-accordion>
 
-    <mat-expansion-panel (opened)="panelOpenState.set(true)" (closed)="panelOpenState.set(false)">
+        <mat-expansion-panel (opened)="panelOpenState.set(true)" (closed)="panelOpenState.set(false)">
 
-        <mat-expansion-panel-header>
+            <mat-expansion-panel-header>
 
-            <mat-panel-title [ngClass]="{'accordion-title-open' : panelOpenState()}">
-                Filters
-            </mat-panel-title>
+                <mat-panel-title [ngClass]="{'accordion-title-open' : panelOpenState()}">
+                    Assets
+                </mat-panel-title>
 
-            <mat-panel-description *ngIf="!panelOpenState()">
-                <span>{{ form.value.nameOrId.split(',').join(' | ') }}</span>
-            </mat-panel-description>
+                <mat-panel-description *ngIf="!panelOpenState()">
+                    <span>Click to see a list of Assets</span>
+                </mat-panel-description>
 
-        </mat-expansion-panel-header>
+            </mat-expansion-panel-header>
 
-        <form class="login-form data-form" [formGroup]="form">
+            <form class="login-form data-form" [formGroup]="form">
 
-            <mat-form-field class="filter-form-field">
+                <mat-form-field class="filter-form-field">
 
-                <mat-label>
-                    Filter by Name or ID
-                </mat-label>
+                    <mat-label>
+                        Filter by Name or ID
+                    </mat-label>
 
-                <input matInput type="text" name="nameOrId" [placeholder]="placeHolder" formControlName="nameOrId" />
+                    <input matInput type="text" name="nameOrId" [placeholder]="placeHolder" formControlName="nameOrId" />
 
-                <button matSuffix mat-icon-button aria-label="Clear" (click)="form.controls['nameOrId'].setValue('')" *ngIf="form.value.nameOrId">
-                    <mat-icon>close</mat-icon>
-                </button>
+                    <button matSuffix mat-icon-button aria-label="Clear" (click)="form.controls['nameOrId'].setValue('')" *ngIf="form.value.nameOrId">
+                        <mat-icon>close</mat-icon>
+                    </button>
 
-            </mat-form-field>
+                </mat-form-field>
 
-        </form>
-        
-    </mat-expansion-panel>
+            </form>
+            
+            <mat-list>
+                <div mat-subheader>Assets</div>
+            
+                <mat-divider></mat-divider>
+            
+                <mat-list-item *ngFor="let d of (data$ | async)!">
+                    <mat-icon matListItemIcon>{{ d.type_is_crypto ? 'currency_bitcoin' : '' }}</mat-icon>
+                    <div matListItemTitle>{{ d.name }}</div>
+                    <div matListItemLine>{{ d.asset_id }}</div>
+                </mat-list-item>
+            <!-- 
+                <mat-selection-list>
+                    <mat-list-option *ngFor="let d of (data$ | async)!">
+                        <mat-icon matListItemIcon>{{ d.type_is_crypto ? 'currency_bitcoin' : '' }}</mat-icon>
+                        <div matListItemTitle>{{ d.name }}</div>
+                        <div matListItemLine>{{ d.asset_id }}</div>
+                    </mat-list-option>
+                </mat-selection-list>
+            -->
+            </mat-list>
+            
+        </mat-expansion-panel>
 
-</mat-accordion>
 
-<mat-list>
-    <div mat-subheader>Assets</div>
+    </mat-accordion>
 
-    <mat-divider></mat-divider>
-
-    <mat-list-item *ngFor="let d of (data$ | async)!">
-        <mat-icon matListItemIcon>{{ d.type_is_crypto ? 'currency_bitcoin' : '' }}</mat-icon>
-        <div matListItemTitle>{{ d.name }}</div>
-        <div matListItemLine>{{ d.asset_id }}</div>
-    </mat-list-item>
-<!-- 
-    <mat-selection-list>
-        <mat-list-option *ngFor="let d of (data$ | async)!">
-            <mat-icon matListItemIcon>{{ d.type_is_crypto ? 'currency_bitcoin' : '' }}</mat-icon>
-            <div matListItemTitle>{{ d.name }}</div>
-            <div matListItemLine>{{ d.asset_id }}</div>
-        </mat-list-option>
-    </mat-selection-list>
- -->
-</mat-list>
+</div>

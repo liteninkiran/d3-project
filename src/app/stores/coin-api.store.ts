@@ -3,6 +3,7 @@ import { BehaviorSubject, map, Observable, shareReplay } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { Asset } from '../interfaces/coin-api/asset';
 
+const max = 100;
 
 @Injectable({
     providedIn: 'root'
@@ -13,16 +14,16 @@ export class CoinApiStore {
 
     private data$ : Observable<Asset[]> = this.subject.asObservable();
 
-    private filters: string[] | null = null;
+    private filter: string = '';
 
     constructor(private http: HttpClient) {
         this.data$ = this.getDataFromCoinApi();
     }
 
-    public getData(filters: string[] | null = null): Observable<Asset[]> {
-        this.filters = filters === null ? null : filters.filter(f => f !== '').map(f => f.toLowerCase());
+    public getData(filters: string = ''): Observable<Asset[]> {
+        this.filter = filters.toLowerCase();
         return this.data$.pipe(
-            map(assets => this.filterAssets(assets).sort(this.sortAssets))
+            map(assets => this.filterAssets(assets).sort(this.sortAssets).slice(0, max))
         );
     }
 
@@ -33,7 +34,7 @@ export class CoinApiStore {
     }
 
     private filterAssets(assets: Asset[]) {
-        return assets.filter(asset => this.filterAsset(asset));
+        return this.filter === '' ? assets : assets.filter(asset => this.filterAsset(asset));
     }
 
     private filterAsset(asset: Asset): boolean {
@@ -41,25 +42,17 @@ export class CoinApiStore {
     }
 
     private filterByAssetName(asset: Asset): boolean {
-        if (this.filters === null) {
-            return true;
-        }
-
         if (!asset.name) {
             return false;
         }
 
         const assetName = asset.name.toLowerCase();
-        return this.filters.filter(filter => assetName.includes(filter)).length > 0;
+        return assetName.includes(this.filter);
     }
 
     private filterByAssetId(asset: Asset): boolean {
-        if (this.filters === null) {
-            return true;
-        }
-
         const assetId = asset.asset_id.toLowerCase();
-        return this.filters.filter(filter => assetId.includes(filter)).length > 0;
+        return assetId.includes(this.filter);
     }
 
     private sortAssets(a1: Asset, a2: Asset) {
