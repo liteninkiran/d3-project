@@ -10,3 +10,13 @@ mat-form-field {
 .container {
     margin-bottom: 20px;
 }
+
+.mat-list-subheader {
+    display: flex;
+    justify-content: space-between;
+}
+
+.asset-icon {
+    height: 50px;
+    width: 50px;
+}

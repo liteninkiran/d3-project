@@ -3,6 +3,11 @@ import { BehaviorSubject, map, Observable, shareReplay } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { Asset } from '../interfaces/coin-api/asset';
 
+export type Filter = {
+    nameOrId: string,
+    includeCrypto: boolean,
+}
+
 const max = 100;
 
 @Injectable({
@@ -14,14 +19,18 @@ export class CoinApiStore {
 
     private data$ : Observable<Asset[]> = this.subject.asObservable();
 
-    private filter: string = '';
+    private filter: Filter = {
+        nameOrId: '',
+        includeCrypto: false,
+    };
 
     constructor(private http: HttpClient) {
         this.data$ = this.getDataFromCoinApi();
     }
 
-    public getData(filters: string = ''): Observable<Asset[]> {
-        this.filter = filters.toLowerCase();
+    public getData(filter: Filter): Observable<Asset[]> {
+        this.filter = filter;
+        this.filter.nameOrId = this.filter.nameOrId.toLowerCase();
         return this.data$.pipe(
             map(assets => this.filterAssets(assets).sort(this.sortAssets).slice(0, max))
         );
@@ -34,11 +43,13 @@ export class CoinApiStore {
     }
 
     private filterAssets(assets: Asset[]) {
-        return this.filter === '' ? assets : assets.filter(asset => this.filterAsset(asset));
+        return assets.filter(asset => this.filterAsset(asset));
     }
 
     private filterAsset(asset: Asset): boolean {
-        return this.filterByAssetId(asset) || this.filterByAssetName(asset);
+        const nameOrId = this.filter.nameOrId === '' ? true : (this.filterByAssetId(asset) || this.filterByAssetName(asset));
+        const includeCrypto = this.filter.includeCrypto ? true : !asset.type_is_crypto;
+        return nameOrId && includeCrypto;
     }
 
     private filterByAssetName(asset: Asset): boolean {
@@ -47,12 +58,12 @@ export class CoinApiStore {
         }
 
         const assetName = asset.name.toLowerCase();
-        return assetName.includes(this.filter);
+        return assetName.includes(this.filter.nameOrId);
     }
 
     private filterByAssetId(asset: Asset): boolean {
         const assetId = asset.asset_id.toLowerCase();
-        return assetId.includes(this.filter);
+        return assetId.includes(this.filter.nameOrId);
     }
 
     private sortAssets(a1: Asset, a2: Asset) {

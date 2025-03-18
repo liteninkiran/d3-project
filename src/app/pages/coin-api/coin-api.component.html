@@ -17,9 +17,9 @@
 
             </mat-expansion-panel-header>
 
-            <form class="login-form data-form" [formGroup]="form">
+            <form [formGroup]="form">
 
-                <mat-form-field class="filter-form-field">
+                <mat-form-field>
 
                     <mat-label>
                         Filter by Name or ID
@@ -33,27 +33,28 @@
 
                 </mat-form-field>
 
+                <mat-checkbox formControlName="includeCrypto">
+                    Include Crypto
+                </mat-checkbox>
+
             </form>
             
             <mat-list>
-                <div mat-subheader>Assets</div>
+                <div mat-subheader class="mat-list-subheader">
+                    <div>Assets</div>
+                    <div>Displaying {{ (data$ | async)?.length }} results</div>
+                </div>
             
                 <mat-divider></mat-divider>
             
                 <mat-list-item *ngFor="let d of (data$ | async)!">
                     <mat-icon matListItemIcon>{{ d.type_is_crypto ? 'currency_bitcoin' : '' }}</mat-icon>
+                    <!-- <img *ngIf="d.id_icon" [src]='imgUrl + d.id_icon.replaceAll("-", "") + ".png"' alt="" class="asset-icon"> -->
                     <div matListItemTitle>{{ d.name }}</div>
                     <div matListItemLine>{{ d.asset_id }}</div>
+                    
                 </mat-list-item>
-            <!-- 
-                <mat-selection-list>
-                    <mat-list-option *ngFor="let d of (data$ | async)!">
-                        <mat-icon matListItemIcon>{{ d.type_is_crypto ? 'currency_bitcoin' : '' }}</mat-icon>
-                        <div matListItemTitle>{{ d.name }}</div>
-                        <div matListItemLine>{{ d.asset_id }}</div>
-                    </mat-list-option>
-                </mat-selection-list>
-            -->
+
             </mat-list>
             
         </mat-expansion-panel>

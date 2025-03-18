@@ -1,8 +1,8 @@
 import { Component, OnInit, OnDestroy, signal } from '@angular/core';
-import { CoinApiStore } from '../../stores/coin-api.store';
+import { CoinApiStore, Filter } from '../../stores/coin-api.store';
 import { Observable, Subscription, debounceTime } from 'rxjs';
 import { Asset } from 'src/app/interfaces/coin-api/asset';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormControl, FormGroup, NonNullableFormBuilder } from '@angular/forms';
 
 @Component({
     selector: 'app-coin-api',
@@ -13,11 +13,15 @@ export class CoinApiComponent implements OnInit, OnDestroy {
 
     public data$: Observable<Asset[]> = new Observable();
     public form!: FormGroup;
-    public defaults = {
-        nameOrId: '',
+    public defaults: Filter = {
+        nameOrId: 'Pound',
+        includeCrypto: false,
     };
     public placeHolder = 'Type to search';
     public nameOrId = this.fb.control(this.defaults.nameOrId);
+    public includeCrypto = this.fb.control(this.defaults.includeCrypto);
+    public options: {[k: string]: string | boolean} = {} = this.defaults;
+    public imgUrl = 'https://s3.eu-central-1.amazonaws.com/bbxt-static-icons/type-id/png_512/';
 
     private subscriptions: Subscription[] = [];
     
@@ -25,29 +29,36 @@ export class CoinApiComponent implements OnInit, OnDestroy {
 
     constructor(
         private readonly store: CoinApiStore,
-        private fb: FormBuilder,
+        private fb: NonNullableFormBuilder,
     ) { }
 
     public ngOnInit(): void {
-        this.data$ = this.store.getData(this.defaults.nameOrId);
+        this.data$ = this.store.getData(this.options as Filter);
         this.setupForm();
     }
 
     private setupForm(): void {
-
         this.form = this.fb.group({
             nameOrId: this.nameOrId,
-            // includeCrypto: true,
-            // includeNonCrypto: true,
+            includeCrypto: this.includeCrypto,
         });
+        this.addSubscription(this.nameOrId, 500);
+        this.addSubscription(this.includeCrypto);
+    }
 
-        const sub = this.nameOrId.valueChanges
-            .pipe(debounceTime(500))
-            .subscribe(value => {
-                this.data$ = this.store.getData(value ?? '');
+    private addSubscription(control: FormControl, debounce: number = 0) {
+        const name = this.getName(control);
+        const sub = control.valueChanges
+            .pipe(debounceTime(debounce))
+            .subscribe((value: string | boolean) => {
+                this.options[name as keyof Filter] = value
+                this.data$ = this.store.getData(this.options as Filter);
             });
         this.subscriptions.push(sub);
-        
+    }
+
+    private getName(control: FormControl): string {
+        return Object.entries(control.parent?.controls ?? []).find(([_, value]) => value === control)?.[0] ?? '';
     }
 
     public ngOnDestroy(): void {
