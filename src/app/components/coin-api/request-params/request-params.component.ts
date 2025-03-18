@@ -44,5 +44,9 @@ export class RequestParamsComponent implements OnInit {
             timePeriod: this.timePeriod,
         });
     }
+
+    public onSubmit() {
+        console.log(this.form.value);
+    }
 }
 
