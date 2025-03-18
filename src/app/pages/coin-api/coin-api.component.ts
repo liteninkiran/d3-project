@@ -46,8 +46,8 @@ export class CoinApiComponent implements OnInit {
             distinctUntilChanged(), // Avoid unnecessary calls
             startWith(''), // Ensure it starts with an empty value
             switchMap(value => typeof value === 'string'
-                ? this.store.getFilteredData(value?.toUpperCase() || '')
-                : this.store.getData()
+                    ? this.store.getFilteredData(value?.toLowerCase() || '')
+                    : this.store.getData()
             ) // Fetch filtered data
         )
     }

@@ -38,7 +38,8 @@ export class CoinApiStore {
     }
 
     private filterName(assets: Asset[], filter: string) {
-        return filter ? assets : assets.filter(asset => asset.name?.toLocaleUpperCase().includes(filter));
+        console.log(filter);
+        return filter ? assets.filter(asset => asset.name?.toLowerCase().includes(filter)) : assets;
     }
 
     private sortAssets(assets: Asset[]) {
