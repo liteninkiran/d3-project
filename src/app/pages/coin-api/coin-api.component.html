@@ -1,7 +1,8 @@
 <h1>Coin API</h1>
 
-<app-coin-api-asset-list />
+<app-coin-api-chart [options]="options" />
 
 <app-coin-api-request-params [defaultOptions]="defaultOptions" (userOptions)="storeUserOptions($event)" />
 
-<app-coin-api-chart [options]="options" />
+<app-coin-api-asset-list />
+

@@ -13,7 +13,12 @@ export class ChartComponent implements OnInit, OnChanges {
 
     @Input() public options: ExchangeRateOptions = {} as ExchangeRateOptions;
 
+    // Data
     public data$: Observable<ExchangeRate[]> = new Observable();
+
+    // Main elements
+    public host: any;
+    public svg: any;
 
     constructor(
         private readonly store: CoinApiStore,
@@ -21,6 +26,7 @@ export class ChartComponent implements OnInit, OnChanges {
 
     public ngOnInit(): void {
         this.getData();
+        this.svg = this.host.select('svg');
     }
 
     public ngOnChanges(changes: SimpleChanges): void {
