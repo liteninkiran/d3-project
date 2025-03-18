@@ -1,24 +1,25 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, shareReplay } from 'rxjs';
+import { Observable } from 'rxjs';
 import { Asset } from 'src/app/interfaces/coin-api/asset';
+import { TimePeriod } from 'src/app/interfaces/coin-api/time-period';
 
-@Injectable()
+const key = process.env['API_KEY'];
+
+@Injectable({
+    providedIn: 'root'
+})
 export class CoinApiService {
 
-    private data$: Observable<Asset[]> = new Observable();
+    constructor(private http: HttpClient) { }
 
-    constructor(private http: HttpClient) {
-        this.data$ = this.getData().pipe(shareReplay(1));
-    }
-
-    private getData(): Observable<Asset[]> {
-        const key = process.env['API_KEY'];
+    public getAssets(): Observable<Asset[]> {
         const url = `https://rest.coinapi.io/v1/assets?apikey=${key}`;
         return this.http.get<Asset[]>(url);
     }
 
-    public loadDataFromApi(): Observable<Asset[]> {
-        return this.data$;
+    public getTimePeriods(): Observable<TimePeriod[]> {
+        const url = `https://rest.coinapi.io/v1/exchangerate/history/periods?apikey=${key}`;
+        return this.http.get<TimePeriod[]>(url);
     }
 }

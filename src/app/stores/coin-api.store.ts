@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, map, Observable, shareReplay } from 'rxjs';
-import { HttpClient } from '@angular/common/http';
 import { Asset } from '../interfaces/coin-api/asset';
+import { CoinApiService } from '../services/coin-api/coin-api.service';
+import { TimePeriod } from '../interfaces/coin-api/time-period';
 
 export type Filter = {
     nameOrId: string,
@@ -15,31 +16,34 @@ const max = 100;
 })
 export class CoinApiStore {
 
-    private subject = new BehaviorSubject<Asset[]>([]);
+    private assetSubject = new BehaviorSubject<Asset[]>([]);
+    private timePeriodSubject = new BehaviorSubject<TimePeriod[]>([]);
 
-    private data$ : Observable<Asset[]> = this.subject.asObservable();
+    private assetData$ : Observable<Asset[]> = this.assetSubject.asObservable();
+    private timePeriodData$ : Observable<TimePeriod[]> = this.timePeriodSubject.asObservable();
 
     private filter: Filter = {
         nameOrId: '',
         includeCrypto: false,
     };
 
-    constructor(private http: HttpClient) {
-        this.data$ = this.getDataFromCoinApi();
+    constructor(
+        private readonly service: CoinApiService
+    ) {
+        this.assetData$ = this.service.getAssets().pipe(shareReplay());
+        this.timePeriodData$ = this.service.getTimePeriods().pipe(shareReplay());
     }
 
-    public getData(filter: Filter): Observable<Asset[]> {
+    public getAssetData(filter: Filter): Observable<Asset[]> {
         this.filter = filter;
         this.filter.nameOrId = this.filter.nameOrId.toLowerCase();
-        return this.data$.pipe(
+        return this.assetData$.pipe(
             map(assets => this.filterAssets(assets).sort(this.sortAssets).slice(0, max))
         );
     }
 
-    private getDataFromCoinApi(): Observable<Asset[]> {
-        const key = process.env['API_KEY'];
-        const url = `https://rest.coinapi.io/v1/assets?apikey=${key}`;
-        return this.http.get<Asset[]>(url).pipe(shareReplay(1));
+    public getTimePeriodData(): Observable<TimePeriod[]> {
+        return this.timePeriodData$;
     }
 
     private filterAssets(assets: Asset[]) {

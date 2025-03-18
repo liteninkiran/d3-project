@@ -33,7 +33,7 @@ export class AssetListComponent implements OnInit, OnDestroy {
     ) { }
 
     public ngOnInit(): void {
-        this.data$ = this.store.getData(this.options as Filter);
+        this.data$ = this.store.getAssetData(this.options as Filter);
         this.setupForm();
     }
 
@@ -52,7 +52,7 @@ export class AssetListComponent implements OnInit, OnDestroy {
             .pipe(debounceTime(debounce))
             .subscribe((value: string | boolean) => {
                 this.options[name as keyof Filter] = value
-                this.data$ = this.store.getData(this.options as Filter);
+                this.data$ = this.store.getAssetData(this.options as Filter);
             });
         this.subscriptions.push(sub);
     }
