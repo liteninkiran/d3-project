@@ -1,8 +1,8 @@
-import { Component, OnInit, signal } from '@angular/core';
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Output, signal } from '@angular/core';
 import { FormGroup, NonNullableFormBuilder } from '@angular/forms';
 import { MomentDateAdapter } from '@angular/material-moment-adapter';
 import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { MY_FORMATS } from 'src/app/config/dates';
 import { ExchangeRate } from 'src/app/interfaces/coin-api/exchange-rate';
 import { TimePeriod } from 'src/app/interfaces/coin-api/time-period';
@@ -15,22 +15,24 @@ import { CoinApiStore } from 'src/app/stores/coin-api.store';
     styleUrls: ['./request-params.component.scss'],
     providers: [
         { provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE] },
-        { provide: MAT_DATE_FORMATS, useValue: MY_FORMATS }
+        { provide: MAT_DATE_FORMATS, useValue: MY_FORMATS },
     ],
 })
-export class RequestParamsComponent implements OnInit {
+export class RequestParamsComponent implements OnInit, OnDestroy {
+
+    @Input() public defaultOptions!: ExchangeRateOptions;
+
+    @Output() userOptions = new EventEmitter<ExchangeRateOptions>();
 
     public timePeriods$: Observable<TimePeriod[]> = new Observable();
+
     public exchangeRates$: Observable<ExchangeRate[]> = new Observable();
 
     public form!: FormGroup;
-    public sourceAssetId = this.fb.control('BTC');
-    public targetAssetId = this.fb.control('GBP');
-    public timePeriod = this.fb.control('1DAY');
-    public startDate = this.fb.control(new Date(2020, 0, 1));
-    public endDate = this.fb.control(new Date(2020, 1, 1));
 
     readonly panelOpenState = signal(false);
+
+    private subscriptions: Subscription[] = [];
 
     constructor(
         private readonly store: CoinApiStore,
@@ -40,27 +42,25 @@ export class RequestParamsComponent implements OnInit {
     public ngOnInit(): void {
         this.timePeriods$ = this.store.getTimePeriodData();
         this.form = this.fb.group({
-            sourceAssetId: this.sourceAssetId,
-            targetAssetId: this.targetAssetId,
-            startDate: this.startDate,
-            endDate: this.endDate,
-            timePeriod: this.timePeriod,
+            sourceAssetId: this.fb.control(this.defaultOptions.assetIdBase),
+            targetAssetId: this.fb.control(this.defaultOptions.assetIdQuote),
+            startDate: this.fb.control(new Date(this.defaultOptions.startTime)),
+            endDate: this.fb.control(new Date(this.defaultOptions.endTime)),
+            timePeriod: this.fb.control(this.defaultOptions.periodId),
         });
+        const sub = this.form.valueChanges.subscribe(values =>
+            this.userOptions.emit({
+                assetIdBase: values.sourceAssetId,
+                assetIdQuote: values.targetAssetId,
+                startTime: values.startDate.toISOString().slice(0, 10),
+                endTime: values.endDate.toISOString().slice(0, 10),
+                periodId: values.timePeriod,
+                limit: 1000,
+            }));
+        this.subscriptions.push(sub);
     }
 
-    public onSubmit() {
-        const values = this.form.value;
-        const options: ExchangeRateOptions = {
-            assetIdBase: values.sourceAssetId,
-            assetIdQuote: values.targetAssetId,
-            startTime: values.startDate.toISOString().slice(0, 10),
-            endTime: values.endDate.toISOString().slice(0, 10),
-            limit: 1000,
-            periodId: values.timePeriod,
-        }
-        this.exchangeRates$ = this.store.getExchangeRateData(options)
-        this.exchangeRates$.subscribe(x => {
-            console.log(x);
-        });
+    public ngOnDestroy(): void {
+        this.subscriptions.map((sub) => sub.unsubscribe());
     }
 }

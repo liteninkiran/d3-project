@@ -15,7 +15,7 @@
 
             </mat-expansion-panel-header>
 
-            <form [formGroup]="form" (ngSubmit)="onSubmit()">
+            <form [formGroup]="form">
 
                 <div class="form-row">
 
@@ -68,6 +68,7 @@
 
                     </mat-form-field>
 
+                    <!-- Time Period -->
                     <mat-form-field>
                         <mat-label>Time Period</mat-label>
                         <select matNativeControl formControlName="timePeriod" name="timePeriod">
@@ -76,10 +77,6 @@
                     </mat-form-field>
 
                 </div>
-
-                <button mat-raised-button color="primary" type="submit">
-                    Submit
-                </button>
 
             </form>
 

@@ -2,4 +2,6 @@
 
 <app-coin-api-asset-list />
 
-<app-coin-api-request-params />
+<app-coin-api-request-params [defaultOptions]="defaultOptions" (userOptions)="storeUserOptions($event)" />
+
+<app-coin-api-chart [options]="options" />
