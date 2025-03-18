@@ -71,7 +71,7 @@
                     <mat-form-field>
                         <mat-label>Time Period</mat-label>
                         <select matNativeControl formControlName="timePeriod" name="timePeriod">
-                            <option [value]="d.period_id" *ngFor="let d of (data$ | async)!">{{d.display_name}}</option>
+                            <option [value]="d.period_id" *ngFor="let d of (timePeriods$ | async)!">{{d.display_name}}</option>
                         </select>
                     </mat-form-field>
 

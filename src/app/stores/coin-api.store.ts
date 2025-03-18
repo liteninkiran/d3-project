@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, map, Observable, shareReplay } from 'rxjs';
 import { Asset } from '../interfaces/coin-api/asset';
-import { CoinApiService } from '../services/coin-api/coin-api.service';
+import { CoinApiService, ExchangeRateOptions } from '../services/coin-api/coin-api.service';
 import { TimePeriod } from '../interfaces/coin-api/time-period';
+import { ExchangeRate } from '../interfaces/coin-api/exchange-rate';
 
 export type Filter = {
     nameOrId: string,
@@ -18,14 +19,18 @@ export class CoinApiStore {
 
     private assetSubject = new BehaviorSubject<Asset[]>([]);
     private timePeriodSubject = new BehaviorSubject<TimePeriod[]>([]);
+    private exchangeRateSubject = new BehaviorSubject<ExchangeRate[]>([]);
 
     private assetData$ : Observable<Asset[]> = this.assetSubject.asObservable();
     private timePeriodData$ : Observable<TimePeriod[]> = this.timePeriodSubject.asObservable();
+    private exchangeRateData$ : Observable<ExchangeRate[]> = this.exchangeRateSubject.asObservable();
 
     private filter: Filter = {
         nameOrId: '',
         includeCrypto: false,
     };
+
+    private options: ExchangeRateOptions = {} as ExchangeRateOptions;
 
     constructor(
         private readonly service: CoinApiService
@@ -44,6 +49,12 @@ export class CoinApiStore {
 
     public getTimePeriodData(): Observable<TimePeriod[]> {
         return this.timePeriodData$;
+    }
+
+    public getExchangeRateData(options: ExchangeRateOptions): Observable<ExchangeRate[]> {
+        this.options = options;
+        this.exchangeRateData$ = this.service.getExchangeRates(this.options).pipe(shareReplay());
+        return this.exchangeRateData$;
     }
 
     private filterAssets(assets: Asset[]) {
