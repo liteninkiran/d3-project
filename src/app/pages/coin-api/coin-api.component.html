@@ -43,12 +43,12 @@
                 </div>
 
                 <!-- Autocomplete -->
-                <mat-autocomplete #auto="matAutocomplete">
+                <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
                     <mat-option
                         *ngFor="let asset of filteredSourceAssets$ | async"
-                        [value]="asset.name ? asset.asset_id + ' - ' + asset.name : asset.asset_id"
+                        [value]="asset"
                     >
-                        {{ asset.name ? asset.asset_id + ' - ' + asset.name : asset.asset_id }}
+                        {{ asset.name ? asset.name + ' (' + asset.asset_id + ')' : asset.asset_id }}
                     </mat-option>
                 </mat-autocomplete>
 

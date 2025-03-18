@@ -11,11 +11,10 @@ import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 })
 export class CoinApiComponent implements OnInit {
 
-    public data$: Observable<Asset[]> = new Observable();
     public form!: FormGroup;
 
     public sourceAsset = new FormControl('');
-    public sourceAssetCrypto = new FormControl(true);
+    public sourceAssetCrypto = new FormControl(false);
     public filteredSourceAssets$!: Observable<Asset[]>;
 
     readonly panelOpenState = signal(false);
@@ -27,8 +26,11 @@ export class CoinApiComponent implements OnInit {
 
     public ngOnInit(): void {
         this.filteredSourceAssets$ = this.getSourceSubscription();
-        this.data$ = this.store.getData();
         this.setupForm();
+    }
+
+    public displayFn(asset: Asset): string {
+        return asset && (asset.name ? asset.name + ' (' + asset.asset_id + ')' : asset.asset_id);
     }
 
     private setupForm(): void {
@@ -43,7 +45,10 @@ export class CoinApiComponent implements OnInit {
             debounceTime(300), // Wait 300ms before making a request
             distinctUntilChanged(), // Avoid unnecessary calls
             startWith(''), // Ensure it starts with an empty value
-            switchMap(value => this.store.getFilteredData(value?.toUpperCase() || '')) // Fetch filtered data
+            switchMap(value => typeof value === 'string'
+                ? this.store.getFilteredData(value?.toUpperCase() || '')
+                : this.store.getData()
+            ) // Fetch filtered data
         )
     }
 }

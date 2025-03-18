@@ -18,16 +18,31 @@ export class CoinApiStore {
         this.data$ = this.getDataFromCoinApi();
     }
 
-    public getData(): Observable<Asset[]> {
+    public getData(includeCrypto = false): Observable<Asset[]> {
         return this.data$.pipe(
-            map(assets => assets.sort(this.sortAssets).slice(0, max))
+            map(assets => this.filterCrypto(assets, includeCrypto)),
+            map(assets => this.sortAssets(assets)),
         );
     }
 
-    public getFilteredData(value: string): Observable<Asset[]> {
+    public getFilteredData(value: string, includeCrypto = false): Observable<Asset[]> {
         return this.data$.pipe(
-            map(assets => assets.filter(asset => asset.name?.toLocaleUpperCase().includes(value)).sort(this.sortAssets).slice(0, max))
-        );
+            map(assets => this.filterCrypto(assets, includeCrypto)),
+            map(assets => this.filterName(assets, value)),
+            map(assets => this.sortAssets(assets)),
+        )
+    }
+
+    private filterCrypto(assets: Asset[], filter: boolean): Asset[] {
+        return filter ? assets : assets.filter(asset => !asset.type_is_crypto);
+    }
+
+    private filterName(assets: Asset[], filter: string) {
+        return filter ? assets : assets.filter(asset => asset.name?.toLocaleUpperCase().includes(filter));
+    }
+
+    private sortAssets(assets: Asset[]) {
+        return assets.sort(this.assetSortFn).slice(0, max);
     }
 
     private getDataFromCoinApi(): Observable<Asset[]> {
@@ -36,7 +51,7 @@ export class CoinApiStore {
         return this.http.get<Asset[]>(url).pipe(shareReplay(1));
     }
 
-    private sortAssets(a1: Asset, a2: Asset) {
+    private assetSortFn(a1: Asset, a2: Asset) {
         return (a1.name ?? a1.asset_id).localeCompare((a2.name ?? a2.asset_id));
     }
 
