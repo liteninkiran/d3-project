@@ -1,0 +1,83 @@
+<div class="container">
+    <mat-accordion>
+
+        <mat-expansion-panel (opened)="panelOpenState.set(true)" (closed)="panelOpenState.set(false)">
+
+            <mat-expansion-panel-header>
+
+                <mat-panel-title [ngClass]="{'accordion-title-open' : panelOpenState()}">
+                    Request Parameters
+                </mat-panel-title>
+
+                <mat-panel-description *ngIf="!panelOpenState()">
+                    <span>Click to change the request parameters</span>
+                </mat-panel-description>
+
+            </mat-expansion-panel-header>
+
+            <form [formGroup]="form">
+
+                <div class="form-row">
+
+                    <!-- Source Asset -->
+                    <mat-form-field>
+
+                        <mat-label>
+                            Source Asset
+                        </mat-label>
+
+                        <input matInput type="text" name="sourceAssetId" placeholder="Enter source asset ID, e.g. BTC"
+                            formControlName="sourceAssetId" />
+
+                        <button matSuffix mat-icon-button aria-label="Clear"
+                            (click)="form.controls['sourceAssetId'].setValue('')" *ngIf="form.value.sourceAssetId">
+                            <mat-icon>close</mat-icon>
+                        </button>
+
+                    </mat-form-field>
+
+                    <!-- Target Asset -->
+                    <mat-form-field>
+
+                        <mat-label>
+                            Target Asset
+                        </mat-label>
+
+                        <input matInput type="text" name="targetAssetId" placeholder="Enter target asset ID, e.g. GBP"
+                            formControlName="targetAssetId" />
+
+                        <button matSuffix mat-icon-button aria-label="Clear"
+                            (click)="form.controls['targetAssetId'].setValue('')" *ngIf="form.value.targetAssetId">
+                            <mat-icon>close</mat-icon>
+                        </button>
+
+                    </mat-form-field>
+
+                    <!-- Start / End Date -->
+                    <mat-form-field>
+
+                        <mat-label>Enter a date range</mat-label>
+
+                        <mat-date-range-input [formGroup]="form" [rangePicker]="picker">
+                            <input matStartDate formControlName="startDate" placeholder="Start date">
+                            <input matEndDate formControlName="endDate" placeholder="End date">
+                        </mat-date-range-input>
+
+                        <!-- <mat-hint>DD/MM/YYYY – DD/MM/YYYY</mat-hint> -->
+                        <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                        <mat-date-range-picker #picker></mat-date-range-picker>
+
+                        <!-- <mat-error *ngIf="form.controls.startDate.hasError('matStartDateInvalid')">Invalid start date</mat-error>
+                        <mat-error *ngIf="form.controls.endDate.hasError('matEndDateInvalid')">Invalid end date</mat-error> -->
+
+                    </mat-form-field>
+
+                </div>
+
+            </form>
+
+        </mat-expansion-panel>
+
+    </mat-accordion>
+
+</div>
