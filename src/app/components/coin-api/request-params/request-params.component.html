@@ -63,13 +63,17 @@
                             <input matEndDate formControlName="endDate" placeholder="End date">
                         </mat-date-range-input>
 
-                        <!-- <mat-hint>DD/MM/YYYY – DD/MM/YYYY</mat-hint> -->
+                        <mat-hint>DD/MM/YYYY – DD/MM/YYYY</mat-hint>
                         <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
                         <mat-date-range-picker #picker></mat-date-range-picker>
 
-                        <!-- <mat-error *ngIf="form.controls.startDate.hasError('matStartDateInvalid')">Invalid start date</mat-error>
-                        <mat-error *ngIf="form.controls.endDate.hasError('matEndDateInvalid')">Invalid end date</mat-error> -->
+                    </mat-form-field>
 
+                    <mat-form-field>
+                        <mat-label>Time Period</mat-label>
+                        <select matNativeControl formControlName="timePeriod" name="timePeriod">
+                            <option [value]="d.period_id" *ngFor="let d of (data$ | async)!">{{d.display_name}}</option>
+                        </select>
                     </mat-form-field>
 
                 </div>
