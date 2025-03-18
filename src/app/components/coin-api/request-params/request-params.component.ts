@@ -42,16 +42,17 @@ export class RequestParamsComponent implements OnInit, OnDestroy {
     public ngOnInit(): void {
         this.timePeriods$ = this.store.getTimePeriodData();
         this.form = this.fb.group({
-            sourceAssetId: this.fb.control(this.defaultOptions.assetIdBase),
-            targetAssetId: this.fb.control(this.defaultOptions.assetIdQuote),
+            baseAssetId: this.fb.control(this.defaultOptions.assetIdBase),
+            quoteAssetId: this.fb.control(this.defaultOptions.assetIdQuote),
             startDate: this.fb.control(new Date(this.defaultOptions.startTime)),
             endDate: this.fb.control(new Date(this.defaultOptions.endTime)),
             timePeriod: this.fb.control(this.defaultOptions.periodId),
         });
+        this.form.controls['timePeriod'].disable();
         const sub = this.form.valueChanges.subscribe(values =>
             this.userOptions.emit({
-                assetIdBase: values.sourceAssetId,
-                assetIdQuote: values.targetAssetId,
+                assetIdBase: values.baseAssetId,
+                assetIdQuote: values.quoteAssetId,
                 startTime: values.startDate.toISOString().slice(0, 10),
                 endTime: values.endDate.toISOString().slice(0, 10),
                 periodId: values.timePeriod,

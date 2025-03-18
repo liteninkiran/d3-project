@@ -19,35 +19,35 @@
 
                 <div class="form-row">
 
-                    <!-- Source Asset -->
+                    <!-- Base Asset -->
                     <mat-form-field>
 
                         <mat-label>
-                            Source Asset
+                            Base Asset
                         </mat-label>
 
-                        <input matInput type="text" name="sourceAssetId" placeholder="Enter source asset ID, e.g. BTC"
-                            formControlName="sourceAssetId" />
+                        <input matInput type="text" name="baseAssetId" placeholder="Enter base asset ID, e.g. BTC"
+                            formControlName="baseAssetId" />
 
                         <button matSuffix mat-icon-button aria-label="Clear"
-                            (click)="form.controls['sourceAssetId'].setValue('')" *ngIf="form.value.sourceAssetId">
+                            (click)="form.controls['baseAssetId'].setValue('')" *ngIf="form.value.baseAssetId">
                             <mat-icon>close</mat-icon>
                         </button>
 
                     </mat-form-field>
 
-                    <!-- Target Asset -->
+                    <!-- Quote Asset -->
                     <mat-form-field>
 
                         <mat-label>
-                            Target Asset
+                            Quote Asset
                         </mat-label>
 
-                        <input matInput type="text" name="targetAssetId" placeholder="Enter target asset ID, e.g. GBP"
-                            formControlName="targetAssetId" />
+                        <input matInput type="text" name="quoteAssetId" placeholder="Enter quote asset ID, e.g. GBP"
+                            formControlName="quoteAssetId" />
 
                         <button matSuffix mat-icon-button aria-label="Clear"
-                            (click)="form.controls['targetAssetId'].setValue('')" *ngIf="form.value.targetAssetId">
+                            (click)="form.controls['quoteAssetId'].setValue('')" *ngIf="form.value.quoteAssetId">
                             <mat-icon>close</mat-icon>
                         </button>
 

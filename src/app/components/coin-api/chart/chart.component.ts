@@ -29,8 +29,8 @@ export class ChartComponent implements OnInit, OnChanges {
 
     public getData() {
         this.data$ = this.store.getExchangeRateData(this.options)
-        this.data$.subscribe(x => {
-            console.log(x);
-        });
+        // this.data$.subscribe(x => {
+        //     console.log(x);
+        // });
     }
 }
