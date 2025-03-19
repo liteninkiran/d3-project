@@ -55,9 +55,10 @@ export class RequestParamsComponent implements OnInit, OnDestroy {
                 assetIdQuote: values.quoteAssetId,
                 startTime: values.startDate.toISOString().slice(0, 10),
                 endTime: values.endDate.toISOString().slice(0, 10),
-                periodId: values.timePeriod,
+                periodId: this.form.getRawValue().timePeriod, // Remove getRawValue() when enabled
                 limit: 1000,
-            }));
+            })
+        );
         this.subscriptions.push(sub);
     }
 
