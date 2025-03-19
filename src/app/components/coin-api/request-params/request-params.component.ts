@@ -63,7 +63,7 @@ export class RequestParamsComponent implements OnInit, OnDestroy {
             startTime: values.startDate.toISOString().slice(0, 10),
             endTime: values.endDate.toISOString().slice(0, 10),
             periodId: this.form.getRawValue().timePeriod, // Remove getRawValue() when enabled
-            limit: 1000,
+            limit: 10000,
         })
     }
 }

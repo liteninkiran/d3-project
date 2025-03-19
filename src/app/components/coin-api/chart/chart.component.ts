@@ -61,6 +61,12 @@ export class ChartComponent implements OnInit, OnDestroy, OnChanges {
     // Line generator
     public line: Line<any>;
 
+    get lineData() {
+        // const names = ['open', 'close', 'high', 'low'];
+        const names = ['close'];
+        return names.map(name => ({ name, data: this.transformData(`rate_${name}`) }));
+    }
+
     constructor(
         private readonly store: CoinApiStore,
         element: ElementRef
@@ -88,10 +94,16 @@ export class ChartComponent implements OnInit, OnDestroy, OnChanges {
         this.subscribeToData();
     }
 
+    private transformData(prop: string) {
+        return this.data.map(d => ({
+            x: this.getParsedDate(d.time_period_start),
+            y: d[prop],
+        }));
+    }
+
     private subscribeToData() {
         const sub = this.data$.subscribe(data => {
             this.data = data;
-            console.log(this.data);
             this.updateChart();
         });
         this.subscriptions.push(sub);
@@ -144,9 +156,13 @@ export class ChartComponent implements OnInit, OnDestroy, OnChanges {
         }
     }
 
+    private getParsedDate(date: string) {
+        return this.timeParse(date.substring(0, 19));
+    }
+
     private setParams(): void {
         // Parse dates / values
-        const parsedDates = this.data.map((d: ExchangeRate) => this.timeParse(d.time_period_start.substring(0, 19)));
+        const parsedDates = this.data.map((d: ExchangeRate) => this.getParsedDate(d.time_period_start));
         const maxValues = [
             Math.max(...this.data.map(o => o.rate_open)),
             Math.max(...this.data.map(o => o.rate_high)),
@@ -219,8 +235,8 @@ export class ChartComponent implements OnInit, OnDestroy, OnChanges {
     private draw(): void {
         // Bind data
         const lines = this.dataContainer
-            .selectAll('path.rate_open')
-            .data(this.data);
+            .selectAll('path.data')
+            .data(this.lineData);
 
         // Enter and merge
         lines.enter()
@@ -232,7 +248,7 @@ export class ChartComponent implements OnInit, OnDestroy, OnChanges {
             .merge(lines)
             .transition()
             .duration(500)
-            .attr('d', (d) => this.line(d.rate_open));
+            .attr('d', (d) => this.line(d.data));
 
         // Exit
         lines.exit().remove();
