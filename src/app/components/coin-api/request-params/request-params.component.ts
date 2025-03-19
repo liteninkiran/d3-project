@@ -49,20 +49,21 @@ export class RequestParamsComponent implements OnInit, OnDestroy {
             timePeriod: this.fb.control(this.defaultOptions.periodId),
         });
         this.form.controls['timePeriod'].disable();
-        const sub = this.form.valueChanges.subscribe(values =>
-            this.userOptions.emit({
-                assetIdBase: values.baseAssetId,
-                assetIdQuote: values.quoteAssetId,
-                startTime: values.startDate.toISOString().slice(0, 10),
-                endTime: values.endDate.toISOString().slice(0, 10),
-                periodId: this.form.getRawValue().timePeriod, // Remove getRawValue() when enabled
-                limit: 1000,
-            })
-        );
-        this.subscriptions.push(sub);
     }
 
     public ngOnDestroy(): void {
         this.subscriptions.map((sub) => sub.unsubscribe());
+    }
+
+    public onSubmit() {
+        const values = this.form.value;
+        this.userOptions.emit({
+            assetIdBase: values.baseAssetId,
+            assetIdQuote: values.quoteAssetId,
+            startTime: values.startDate.toISOString().slice(0, 10),
+            endTime: values.endDate.toISOString().slice(0, 10),
+            periodId: this.form.getRawValue().timePeriod, // Remove getRawValue() when enabled
+            limit: 1000,
+        })
     }
 }

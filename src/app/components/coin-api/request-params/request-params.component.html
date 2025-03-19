@@ -15,7 +15,7 @@
 
             </mat-expansion-panel-header>
 
-            <form [formGroup]="form">
+            <form [formGroup]="form" (ngSubmit)="onSubmit()">
 
                 <div class="form-row">
 
@@ -77,6 +77,10 @@
                     </mat-form-field>
 
                 </div>
+
+                <button mat-raised-button color="primary" type="submit">
+                    Submit
+                </button>
 
             </form>
 
