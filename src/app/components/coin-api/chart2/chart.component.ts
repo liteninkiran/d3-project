@@ -1,15 +1,11 @@
-import { Component, Input, OnChanges, OnInit, OnDestroy, SimpleChanges, ElementRef } from '@angular/core';
+import { Component, Input, OnChanges, OnInit, OnDestroy, SimpleChanges } from '@angular/core';
 import { Observable, Subscription } from 'rxjs';
 import { ExchangeRate } from 'src/app/interfaces/coin-api/exchange-rate';
 import { ExchangeRateOptions } from 'src/app/services/coin-api/coin-api.service';
 import { CoinApiStore } from 'src/app/stores/coin-api.store';
+import { Data } from 'src/app/interfaces/d3/data';
 
 import * as d3 from 'd3';
-import { Axis } from 'd3-axis';
-import { Selection } from 'd3-selection';
-import { ScaleTime, ScaleContinuousNumeric } from 'd3-scale';
-import { Line } from 'd3-shape';
-import { Data, LineDataItem } from 'src/app/interfaces/d3/data';
 
 @Component({
     selector: 'app-coin-api-chart2',
@@ -26,52 +22,36 @@ export class Chart2Component implements OnInit, OnDestroy, OnChanges {
     public data$: Observable<ExchangeRate[]> = new Observable();
     private data: ExchangeRate[] = [];
 
-    // Main elements
-    public host: any;
-    public svg: Selection<SVGElement, {}, HTMLElement, any>;
+    // SVG
+    public svg: d3.Selection<SVGElement, {}, HTMLElement, any>;
 
-    // Dimensions
-    public dimensions!: DOMRect;
-    public innerWidth: number = 0;
-    public innerHeight: number = 0;
-    public margins = {
-        left: 50,
-        top: 40,
-        right: 20,
-        bottom: 80,
-    };
+    // Set dimensions
+    public margin = {
+        top: 70,
+        right: 30,
+        bottom: 40,
+        left: 80
+    }
+    public width = 1200 - this.margin.left - this.margin.right;
+    public height = 500 - this.margin.top - this.margin.bottom;
 
-    // Containers
-    public dataContainer: any; // Selection<SVGGElement, {}, HTMLElement, any>;
-    public xAxisContainer: Selection<SVGGElement, {}, HTMLElement, any>;
-    public yAxisContainer: Selection<SVGGElement, {}, HTMLElement, any>;
-    public legendContainer: Selection<SVGGElement, {}, HTMLElement, any>;
-    public titleContainer: Selection<SVGGElement, {}, HTMLElement, any>;
+    // Set up the x and y scales
+    public x: d3.ScaleTime<number, number, never> = d3.scaleTime().range([0, this.width]);
+    public y: d3.ScaleContinuousNumeric<number, number, never> = d3.scaleLinear().range([this.height, 0]);
 
     // Date/time formatters
     public timeParse = d3.timeParse('%Y-%m-%dT%H:%M:%S');
 
-    // Axes
-    public xAxis: Axis<Date | d3.NumberValue>;
-    public yAxis: Axis<d3.NumberValue>;
-
-    // Scales
-    public x: ScaleTime<number, number, never>;
-    public y: ScaleContinuousNumeric<number, number, never>;
-
-    // Line generator
-    public line: Line<any>;
+    get lineData(): Data[] {
+        return this.transformData();
+    }
 
     constructor(
         private readonly store: CoinApiStore,
-        element: ElementRef
-    ) {
-        this.host = d3.select(element.nativeElement);
-    }
+    ) { }
 
     public ngOnInit(): void {
-        this.svg = this.host.select('svg');
-
+        this.svg = this.createSvg();
     }
 
     public ngOnDestroy(): void {
@@ -88,11 +68,76 @@ export class Chart2Component implements OnInit, OnDestroy, OnChanges {
         this.subscribeToData();
     }
 
+    private transformData(): Data[] {
+        return this.data.map(d => ({
+            x: this.getParsedDate(d.time_period_start),
+            y: d.rate_close,
+        }));
+    }
+
+    private getParsedDate(date: string) {
+        return this.timeParse(date.substring(0, 19));
+    }
+
     private subscribeToData() {
         const sub = this.data$.subscribe(data => {
             this.data = data;
-            
+            this.updateChart();
         });
         this.subscriptions.push(sub);
+    }
+
+    private createSvg() {
+        const svg = d3.select('#chart-container')
+            .append('svg')
+            .attr('width', this.width + this.margin.left + this.margin.right)
+            .attr('height', this.height + this.margin.top + this.margin.bottom);
+        svg.append('g')
+            .attr('transform', `translate(${this.margin.left}, ${this.margin.top})`);
+        return svg;
+    }
+
+    private updateChart() {
+        this.setDomains();
+        this.addXAxis();
+        this.addYAxis();
+        this.addLine();
+    }
+
+    private setDomains() {
+        // Define the x and y domains
+        this.x.domain(d3.extent(this.lineData, d => d.x));
+        this.y.domain([0, d3.max(this.lineData, d => d.y)]);
+    }
+
+    private addXAxis() {
+        // Define the x-axis
+        const axisBottom = d3.axisBottom(this.x)
+        .ticks(d3.timeMonth.every(6))
+        .tickFormat(d3.timeFormat('%b %Y'));
+
+        // Add the x-axis
+        this.svg.append('g')
+            .attr('transform', `translate(0,${this.height})`)
+            .call(axisBottom);
+    }
+
+    private addYAxis() {
+        this.svg.append('g').call(d3.axisLeft(this.y))
+    }
+
+    private addLine() {
+        // Create the line generator
+        const line: d3.Line<any> = d3.line()
+            .x((d: any) => this.x(d.x))
+            .y((d: any) => this.y(d.y));
+
+        // Add the line path to the SVG element
+        this.svg.append('path')
+            .datum(this.lineData)
+            .attr('fill', 'none')
+            .attr('stroke', 'steelblue')
+            .attr('stroke-width', 1)
+            .attr('d', line);
     }
 }
