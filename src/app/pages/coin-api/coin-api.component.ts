@@ -11,7 +11,7 @@ export class CoinApiComponent implements OnInit {
     public defaultOptions: ExchangeRateOptions = {
         assetIdBase: 'BTC',
         assetIdQuote: 'GBP',
-        startTime: '2020-04-01',
+        startTime: '2021-01-01',
         endTime: '2025-03-01',
         periodId: '1DAY',
         limit: 10000,
