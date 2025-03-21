@@ -198,7 +198,7 @@ export class ChartComponent implements OnInit, OnDestroy, OnChanges {
         this.titleContainer
             .text(title)
             .style('font-size', '20px')
-            .attr('transform', `translate(0, 10)`);;
+            .attr('transform', `translate(0, 10)`);
     }
 
     private setAxis(): void {
@@ -244,7 +244,7 @@ export class ChartComponent implements OnInit, OnDestroy, OnChanges {
             .append('path')
             .attr('class', 'data')
             .style('fill', 'none')
-            .style('stroke-width', '2px')
+            .style('stroke-width', '1px')
             .style('stroke', 'black')
             .merge(lines)
             .transition()
