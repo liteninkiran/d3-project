@@ -9,6 +9,7 @@ import { Axis } from 'd3-axis';
 import { Selection } from 'd3-selection';
 import { ScaleTime, ScaleContinuousNumeric } from 'd3-scale';
 import { Line } from 'd3-shape';
+import { Data, LineDataItem } from 'src/app/interfaces/d3/data';
 
 @Component({
     selector: 'app-coin-api-chart',
@@ -61,7 +62,7 @@ export class ChartComponent implements OnInit, OnDestroy, OnChanges {
     // Line generator
     public line: Line<any>;
 
-    get lineData() {
+    get lineData(): LineDataItem[] {
         // const names = ['open', 'close', 'high', 'low'];
         const names = ['close'];
         return names.map(name => ({ name, data: this.transformData(`rate_${name}`) }));
@@ -94,10 +95,10 @@ export class ChartComponent implements OnInit, OnDestroy, OnChanges {
         this.subscribeToData();
     }
 
-    private transformData(prop: string) {
+    private transformData(prop: string): Data[] {
         return this.data.map(d => ({
             x: this.getParsedDate(d.time_period_start),
-            y: d[prop],
+            y: +d[prop],
         }));
     }
 
@@ -248,7 +249,7 @@ export class ChartComponent implements OnInit, OnDestroy, OnChanges {
             .merge(lines)
             .transition()
             .duration(500)
-            .attr('d', (d) => this.line(d.data));
+            .attr('d', (d: LineDataItem) => this.line(d.data));
 
         // Exit
         lines.exit().remove();
