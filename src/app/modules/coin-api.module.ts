@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CoinApiComponent } from '../pages/coin-api/coin-api.component';
-import { CommonModule } from '@angular/common';
+import { CommonModule, CurrencyPipe } from '@angular/common';
 import { MaterialModule } from './material.module';
 import { ReactiveFormsModule } from '@angular/forms';
 import { AssetListComponent } from '../components/coin-api/asset-list/asset-list.component';
@@ -27,6 +27,9 @@ import { Chart2Component } from '../components/coin-api/chart2/chart.component';
         RequestParamsComponent,
         ChartComponent,
         Chart2Component,
+    ],
+    providers: [
+        CurrencyPipe,
     ],
 })
 export class CoinApiModule { }

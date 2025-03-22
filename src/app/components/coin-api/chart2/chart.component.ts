@@ -6,6 +6,7 @@ import { CoinApiStore } from 'src/app/stores/coin-api.store';
 import { Data } from 'src/app/interfaces/d3/data';
 
 import * as d3 from 'd3';
+import { CurrencyPipe } from '@angular/common';
 
 @Component({
     selector: 'app-coin-api-chart2',
@@ -50,6 +51,7 @@ export class Chart2Component implements OnInit, OnDestroy, OnChanges {
 
     constructor(
         private readonly store: CoinApiStore,
+        private currencyPipe: CurrencyPipe,
     ) { }
 
     public ngOnInit(): void {
@@ -189,6 +191,7 @@ export class Chart2Component implements OnInit, OnDestroy, OnChanges {
         const data = this.lineData;
         const x = this.x;
         const y = this.y;
+        const pipe = this.currencyPipe;
 
         listeningRect.on('mousemove', function (event) {
             const [xCoord] = d3.pointer(event, this);
@@ -217,8 +220,7 @@ export class Chart2Component implements OnInit, OnDestroy, OnChanges {
                 .style('display', 'block')
                 .style('left', `${xPos + 100}px`)
                 .style('top', `${yPos + 50}px`)
-                .html(`<strong>Date:</strong> ${d.x.toLocaleDateString()}<br><strong>Value:</strong> ${d.y !== undefined ? (d.y / 1000).toFixed(0) + 'k' : 'N/A'}`);
-            console.log(tooltip);
+                .html(`<strong>Date:</strong> ${d.x.toLocaleDateString()}<br><strong>Value:</strong> ${pipe.transform(d.y, 'GBP')}`);
         });
     
         // Listening rectangle mouse leave function
