@@ -25,7 +25,7 @@ export class Chart2Component implements OnInit, OnDestroy, OnChanges {
 
     // SVG
     public svg: d3.Selection<SVGElement, {}, HTMLElement, any>;
-    public container: d3.Selection<SVGGElement, {}, HTMLElement, any>;
+    public container: any; // d3.Selection<SVGGElement, {}, HTMLElement, any>;
 
     // Set dimensions
     public margin = {
@@ -188,24 +188,20 @@ export class Chart2Component implements OnInit, OnDestroy, OnChanges {
             .style('stroke-opacity', 0)
             .style('z-index', 1);
 
-        const data = this.lineData;
-        const x = this.x;
-        const y = this.y;
-        const pipe = this.currencyPipe;
-        const ccy = this.options.assetIdQuote;
-
-        listeningRect.on('mousemove', function (event) {
-            const [xCoord] = d3.pointer(event, this);
+        const mousemoveFn = (event: MouseEvent) => {
+            const data = this.lineData;
+            const rect = this.container.select('rect')._groups[0][0];
+            const [xCoord] = d3.pointer(event, rect);
             const bisectDate = d3.bisector((d: Data) => d.x).left;
-            const x0 = x.invert(xCoord);
+            const x0 = this.x.invert(xCoord);
             const i = bisectDate(data, x0, 1);
             const d0 = data[i - 1];
             const d1 = data[i];
             const diff0 = x0.valueOf() - d0.x.valueOf();
             const diff1 = d1.x.valueOf() - x0.valueOf();
             const d = diff0 > diff1 ? d1 : d0;
-            const xPos = x(d.x);
-            const yPos = y(d.y);
+            const xPos = this.x(d.x);
+            const yPos = this.y(d.y);
     
             // Update the circle position
             circle.attr('cx', xPos)
@@ -221,14 +217,15 @@ export class Chart2Component implements OnInit, OnDestroy, OnChanges {
                 .style('display', 'block')
                 .style('left', `${xPos + 100}px`)
                 .style('top', `${yPos + 50}px`)
-                .html(`<strong>Date:</strong> ${d.x.toLocaleDateString()}<br><strong>Value:</strong> ${pipe.transform(d.y, ccy)}`);
-        });
-    
-        // Listening rectangle mouse leave function
-        listeningRect.on('mouseleave', () => {
+                .html(`<strong>Date:</strong> ${d.x.toLocaleDateString()}<br><strong>Value:</strong> ${this.currencyPipe.transform(d.y, this.options.assetIdQuote)}`);
+        }
+
+        const mouseleaveFn = () => {
             circle.transition().duration(50).attr('r', 0);
             tooltip.style('display', 'none');
-        });
+        }
 
+        listeningRect.on('mousemove', mousemoveFn);
+        listeningRect.on('mouseleave', mouseleaveFn);
     }
 }
