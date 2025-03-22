@@ -154,6 +154,14 @@ export class Chart2Component implements OnInit, OnDestroy, OnChanges {
             .attr('d', line);
     }
 
+    // private xxxx(i: number, x0: Date) {
+    //     const d0 = this.lineData[i - 1];
+    //     const d1 = this.lineData[i];
+    //     const diff0 = x0.valueOf() - d0.x.valueOf();
+    //     const diff1 = d1.x.valueOf() - x0.valueOf();
+    //     return diff0 > diff1 ? d1 : d0;
+    // }
+
     private addTooltip() {
         // Add a DIV element
         const tooltip = d3.select('body')
@@ -189,35 +197,44 @@ export class Chart2Component implements OnInit, OnDestroy, OnChanges {
             .style('z-index', 1);
 
         const mousemoveFn = (event: MouseEvent) => {
-            const data = this.lineData;
-            const rect = this.container.select('rect')._groups[0][0];
-            const [xCoord] = d3.pointer(event, rect);
-            const bisectDate = d3.bisector((d: Data) => d.x).left;
-            const x0 = this.x.invert(xCoord);
-            const i = bisectDate(data, x0, 1);
-            const d0 = data[i - 1];
-            const d1 = data[i];
-            const diff0 = x0.valueOf() - d0.x.valueOf();
-            const diff1 = d1.x.valueOf() - x0.valueOf();
-            const d = diff0 > diff1 ? d1 : d0;
-            const xPos = this.x(d.x);
-            const yPos = this.y(d.y);
+            // Find the closest data item
+            const dAttribute = (event: MouseEvent) => {
+                const data = this.lineData;
+                const rect = this.container.select('rect')._groups[0][0];
+                const [xCoord] = d3.pointer(event, rect);
+                const bisectDate = d3.bisector((d: Data) => d.x).left;
+                const x0 = this.x.invert(xCoord);
+                const i = bisectDate(data, x0, 1);
+                const d0 = data[i - 1];
+                const d1 = data[i];
+                const diff0 = x0.valueOf() - d0.x.valueOf();
+                const diff1 = d1.x.valueOf() - x0.valueOf();
+                return diff0 > diff1 ? d1 : d0;
+            }
+    
+            // Store the closest data item
+            const dataItem = dAttribute(event);
+
+            // Calculate x, y positions
+            const xPos = this.x(dataItem.x);
+            const yPos = this.y(dataItem.y);
     
             // Update the circle position
-            circle.attr('cx', xPos)
-                .attr('cy', yPos);
+            circle.attr('cx', xPos).attr('cy', yPos);
     
             // Add transition for the circle radius
-            circle.transition()
-                .duration(50)
-                .attr('r', 5);
-    
+            circle.transition().duration(50).attr('r', 5);
+
+            const htmlLines = [
+                `<strong>Date:</strong> ${dataItem.x.toLocaleDateString()}<br><strong>`,
+                `<strong>Value:</strong> ${this.currencyPipe.transform(dataItem.y, this.options.assetIdQuote)}`,
+            ];
+
             // Add in our tooltip
-            tooltip
-                .style('display', 'block')
+            tooltip.style('display', 'block')
                 .style('left', `${xPos + 100}px`)
                 .style('top', `${yPos + 50}px`)
-                .html(`<strong>Date:</strong> ${d.x.toLocaleDateString()}<br><strong>Value:</strong> ${this.currencyPipe.transform(d.y, this.options.assetIdQuote)}`);
+                .html(htmlLines.join('<br>'));
         }
 
         const mouseleaveFn = () => {
