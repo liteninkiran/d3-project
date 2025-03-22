@@ -107,6 +107,7 @@ export class Chart2Component implements OnInit, OnDestroy, OnChanges {
         this.addXAxis();
         this.addYAxis();
         this.addLine();
+        this.addTooltip();
     }
 
     private setDomains() {
@@ -149,5 +150,82 @@ export class Chart2Component implements OnInit, OnDestroy, OnChanges {
             .attr('stroke', 'steelblue')
             .attr('stroke-width', 1)
             .attr('d', line);
+    }
+
+    private addTooltip() {
+        // Add a DIV element
+        const tooltip = d3.select('body')
+            .append('div')
+            .attr('class', 'tooltip')
+            .style('position', 'absolute')
+            .style('padding', '10px')
+            .style('background-color', 'steelblue')
+            .style('color', 'white')
+            .style('border', '1px solid white')
+            .style('border-radius', '10px')
+            .style('display', 'none')
+            .style('opacity', 0.75)
+            .style('z-index', 5);
+
+        // Add a circle element
+        const circle = this.container
+            .append('circle')
+            .attr('r', 0)
+            .attr('fill', 'steelblue')
+            .style('stroke', 'white')
+            .attr('opacity', .70)
+            .style('pointer-events', 'none');
+
+        // Create a listening rectangle
+        const listeningRect = this.container
+            .append('rect')
+            .attr('width', this.width)
+            .attr('height', this.height)
+            .style('pointer-events', 'all')
+            .style('fill-opacity', 0)
+            .style('stroke-opacity', 0)
+            .style('z-index', 1);
+
+        const data = this.lineData;
+        const x = this.x;
+        const y = this.y;
+
+        listeningRect.on('mousemove', function (event) {
+            const [xCoord] = d3.pointer(event, this);
+            const bisectDate = d3.bisector((d: Data) => d.x).left;
+            const x0 = x.invert(xCoord);
+            const i = bisectDate(data, x0, 1);
+            const d0 = data[i - 1];
+            const d1 = data[i];
+            const diff0 = x0.valueOf() - d0.x.valueOf();
+            const diff1 = d1.x.valueOf() - x0.valueOf();
+            const d = diff0 > diff1 ? d1 : d0;
+            const xPos = x(d.x);
+            const yPos = y(d.y);
+    
+            // Update the circle position
+            circle.attr('cx', xPos)
+                .attr('cy', yPos);
+    
+            // Add transition for the circle radius
+            circle.transition()
+                .duration(50)
+                .attr('r', 5);
+    
+            // Add in our tooltip
+            tooltip
+                .style('display', 'block')
+                .style('left', `${xPos + 100}px`)
+                .style('top', `${yPos + 50}px`)
+                .html(`<strong>Date:</strong> ${d.x.toLocaleDateString()}<br><strong>Value:</strong> ${d.y !== undefined ? (d.y / 1000).toFixed(0) + 'k' : 'N/A'}`);
+            console.log(tooltip);
+        });
+    
+        // Listening rectangle mouse leave function
+        listeningRect.on('mouseleave', () => {
+            circle.transition().duration(50).attr('r', 0);
+            tooltip.style('display', 'none');
+        });
+
     }
 }
