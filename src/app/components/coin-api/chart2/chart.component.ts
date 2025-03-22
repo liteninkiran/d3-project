@@ -192,6 +192,7 @@ export class Chart2Component implements OnInit, OnDestroy, OnChanges {
         const x = this.x;
         const y = this.y;
         const pipe = this.currencyPipe;
+        const ccy = this.options.assetIdQuote;
 
         listeningRect.on('mousemove', function (event) {
             const [xCoord] = d3.pointer(event, this);
@@ -220,7 +221,7 @@ export class Chart2Component implements OnInit, OnDestroy, OnChanges {
                 .style('display', 'block')
                 .style('left', `${xPos + 100}px`)
                 .style('top', `${yPos + 50}px`)
-                .html(`<strong>Date:</strong> ${d.x.toLocaleDateString()}<br><strong>Value:</strong> ${pipe.transform(d.y, 'GBP')}`);
+                .html(`<strong>Date:</strong> ${d.x.toLocaleDateString()}<br><strong>Value:</strong> ${pipe.transform(d.y, ccy)}`);
         });
     
         // Listening rectangle mouse leave function
