@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, shareReplay } from 'rxjs';
 import { NhsApiService } from 'src/app/services/nhs-api/nhs-api.service';
-import { DatastoreSearch, DatastoreSearchSql } from 'src/app/types/nhs/epd';
+import { DatastoreSearch, DatastoreSearchSql } from 'src/app/types/nhs-api/epd';
 
 @Injectable({
     providedIn: 'root'

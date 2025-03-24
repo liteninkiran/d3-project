@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { DatastoreSearch, DatastoreSearchSql } from 'src/app/types/nhs/epd';
+import { DatastoreSearch, DatastoreSearchSql } from 'src/app/types/nhs-api/epd';
 
 const baseUrl = 'https://opendata.nhsbsa.net/api/3/action/datastore_search';
 
