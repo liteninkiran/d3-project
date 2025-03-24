@@ -9,6 +9,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NavbarLinksComponent } from './components/navbar-links/navbar-links.component';
 import { MaterialModule } from './modules/material.module';
 import { CoinApiModule } from './modules/coin-api.module';
+import { NhsApiModule } from './modules/nhs-api.module';
 
 @NgModule({
     declarations: [
@@ -23,6 +24,7 @@ import { CoinApiModule } from './modules/coin-api.module';
         BrowserAnimationsModule,
         MaterialModule,
         CoinApiModule,
+        NhsApiModule,
     ],
     providers: [],
     bootstrap: [AppComponent],

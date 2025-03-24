@@ -18,6 +18,11 @@ export class NavbarLinksComponent {
             icon: 'currency_bitcoin',
             text: 'Coin API',
         },
+        {
+            link: '/nhs-api',
+            icon: 'personal_injury',
+            text: 'NHS API',
+        },
     ]
 }
 

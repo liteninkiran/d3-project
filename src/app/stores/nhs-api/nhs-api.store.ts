@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, map, Observable, shareReplay } from 'rxjs';
-import { NhsService } from 'src/app/services/nhs/nhs.service';
+import { BehaviorSubject, Observable, shareReplay } from 'rxjs';
+import { NhsApiService } from 'src/app/services/nhs-api/nhs-api.service';
 import { DatastoreSearch, DatastoreSearchSql } from 'src/app/types/nhs/epd';
 
 @Injectable({
     providedIn: 'root'
 })
-export class NhsStore {
+export class NhsApiStore {
 
     private datastoreSearchSubject = new BehaviorSubject<DatastoreSearch[]>([]);
     private datastoreSearchSqlSubject = new BehaviorSubject<DatastoreSearchSql[]>([]);
@@ -15,7 +15,7 @@ export class NhsStore {
     private datastoreSearchSql$ : Observable<DatastoreSearchSql[]> = this.datastoreSearchSqlSubject.asObservable();
 
     constructor(
-        private readonly service: NhsService
+        private readonly service: NhsApiService
     ) { }
 
     public getDatastoreSearch(options: string): Observable<DatastoreSearch[]> {

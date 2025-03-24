@@ -8,7 +8,7 @@ const baseUrl = 'https://opendata.nhsbsa.net/api/3/action/datastore_search';
 @Injectable({
     providedIn: 'root'
 })
-export class NhsService {
+export class NhsApiService {
 
     constructor(private http: HttpClient) { }
 

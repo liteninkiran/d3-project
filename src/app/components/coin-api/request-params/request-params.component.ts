@@ -7,7 +7,7 @@ import { MY_FORMATS } from 'src/app/config/dates';
 import { ExchangeRate } from 'src/app/types/coin-api/exchange-rate';
 import { TimePeriod } from 'src/app/types/coin-api/time-period';
 import { ExchangeRateOptions } from 'src/app/services/coin-api/coin-api.service';
-import { CoinApiStore } from 'src/app/stores/coin-api.store';
+import { CoinApiStore } from 'src/app/stores/coin-api/coin-api.store';
 
 @Component({
     selector: 'app-coin-api-request-params',
