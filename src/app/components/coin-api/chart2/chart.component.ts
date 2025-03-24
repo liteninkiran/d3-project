@@ -2,7 +2,7 @@ import { Component, Input, OnChanges, OnInit, OnDestroy, SimpleChanges } from '@
 import { Observable, Subscription } from 'rxjs';
 import { ExchangeRate } from 'src/app/interfaces/coin-api/exchange-rate';
 import { ExchangeRateOptions } from 'src/app/services/coin-api/coin-api.service';
-import { CoinApiStore } from 'src/app/stores/coin-api.store';
+import { CoinApiStore } from 'src/app/stores/coin-api/coin-api.store';
 import { Data } from 'src/app/interfaces/d3/data';
 
 import * as d3 from 'd3';
