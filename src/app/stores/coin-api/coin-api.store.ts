@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, map, Observable, shareReplay } from 'rxjs';
-import { Asset } from '../interfaces/coin-api/asset';
-import { CoinApiService, ExchangeRateOptions } from '../services/coin-api/coin-api.service';
-import { TimePeriod } from '../interfaces/coin-api/time-period';
-import { ExchangeRate } from '../interfaces/coin-api/exchange-rate';
+import { Asset } from 'src/app/types/coin-api/asset';
+import { CoinApiService, ExchangeRateOptions } from 'src/app/services/coin-api/coin-api.service';
+import { TimePeriod } from 'src/app/types/coin-api/time-period';
+import { ExchangeRate } from 'src/app/types/coin-api/exchange-rate';
 
 export type Filter = {
     nameOrId: string,

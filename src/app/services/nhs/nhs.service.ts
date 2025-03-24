@@ -8,16 +8,16 @@ const baseUrl = 'https://opendata.nhsbsa.net/api/3/action/datastore_search';
 @Injectable({
     providedIn: 'root'
 })
-export class CoinApiService {
+export class NhsService {
 
     constructor(private http: HttpClient) { }
 
-    public datastoreSearch(options: string): Observable<DatastoreSearch[]> {
+    public getDatastoreSearch(options: string): Observable<DatastoreSearch[]> {
         const url = `${baseUrl}?${options}`;
         return this.http.get<DatastoreSearch[]>(url);
     }
 
-    public datastoreSearchSql(sql: string): Observable<DatastoreSearchSql[]> {
+    public getDatastoreSearchSql(sql: string): Observable<DatastoreSearchSql[]> {
         const url = `${baseUrl}_sql?${sql}`;
         return this.http.get<DatastoreSearchSql[]>(url);
     }
