@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy, signal } from '@angular/core';
 import { CoinApiStore, Filter } from '../../../stores/coin-api.store';
 import { Observable, Subscription, debounceTime } from 'rxjs';
-import { Asset } from 'src/app/interfaces/coin-api/asset';
+import { Asset } from 'src/app/types/coin-api/asset';
 import { FormControl, FormGroup, NonNullableFormBuilder } from '@angular/forms';
 
 @Component({

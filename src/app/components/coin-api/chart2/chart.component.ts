@@ -1,9 +1,9 @@
 import { Component, Input, OnChanges, OnInit, OnDestroy, SimpleChanges } from '@angular/core';
 import { Observable, Subscription } from 'rxjs';
-import { ExchangeRate } from 'src/app/interfaces/coin-api/exchange-rate';
+import { ExchangeRate } from 'src/app/types/coin-api/exchange-rate';
 import { ExchangeRateOptions } from 'src/app/services/coin-api/coin-api.service';
 import { CoinApiStore } from 'src/app/stores/coin-api/coin-api.store';
-import { Data } from 'src/app/interfaces/d3/data';
+import { Data } from 'src/app/types/d3/data';
 
 import * as d3 from 'd3';
 import { CurrencyPipe } from '@angular/common';

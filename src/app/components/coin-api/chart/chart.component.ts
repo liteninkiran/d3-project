@@ -1,6 +1,6 @@
 import { Component, Input, OnChanges, OnInit, OnDestroy, SimpleChanges, ElementRef } from '@angular/core';
 import { Observable, Subscription } from 'rxjs';
-import { ExchangeRate } from 'src/app/interfaces/coin-api/exchange-rate';
+import { ExchangeRate } from 'src/app/types/coin-api/exchange-rate';
 import { ExchangeRateOptions } from 'src/app/services/coin-api/coin-api.service';
 import { CoinApiStore } from 'src/app/stores/coin-api/coin-api.store';
 
@@ -9,7 +9,7 @@ import { Axis } from 'd3-axis';
 import { Selection } from 'd3-selection';
 import { ScaleTime, ScaleContinuousNumeric } from 'd3-scale';
 import { Line } from 'd3-shape';
-import { Data, LineDataItem } from 'src/app/interfaces/d3/data';
+import { Data, LineDataItem } from 'src/app/types/d3/data';
 
 @Component({
     selector: 'app-coin-api-chart',

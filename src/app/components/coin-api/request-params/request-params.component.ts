@@ -4,8 +4,8 @@ import { MomentDateAdapter } from '@angular/material-moment-adapter';
 import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
 import { Observable, Subscription } from 'rxjs';
 import { MY_FORMATS } from 'src/app/config/dates';
-import { ExchangeRate } from 'src/app/interfaces/coin-api/exchange-rate';
-import { TimePeriod } from 'src/app/interfaces/coin-api/time-period';
+import { ExchangeRate } from 'src/app/types/coin-api/exchange-rate';
+import { TimePeriod } from 'src/app/types/coin-api/time-period';
 import { ExchangeRateOptions } from 'src/app/services/coin-api/coin-api.service';
 import { CoinApiStore } from 'src/app/stores/coin-api.store';
 
