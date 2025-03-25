@@ -1,7 +1,7 @@
 import { Component, OnInit, signal } from '@angular/core';
 import { MomentDateAdapter } from '@angular/material-moment-adapter';
 import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
-import { FormGroup, NonNullableFormBuilder } from '@angular/forms';
+import { FormGroup, FormBuilder } from '@angular/forms';
 import { MONTH_YEAR_FORMATS } from 'src/app/config/dates';
 
 @Component({
@@ -20,7 +20,7 @@ export class ScratchComponent implements OnInit {
     readonly panelOpenState = signal(false);
 
     constructor(
-        private fb: NonNullableFormBuilder,
+        private fb: FormBuilder,
     ) { }
 
     public ngOnInit(): void {
