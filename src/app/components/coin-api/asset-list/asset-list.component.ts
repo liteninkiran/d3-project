@@ -1,6 +1,7 @@
 import { Component, OnInit, OnDestroy, signal } from '@angular/core';
-import { CoinApiStore, Filter } from 'src/app/stores/coin-api/coin-api.store';
-import { Observable, Subscription, debounceTime } from 'rxjs';
+import { Filter } from 'src/app/stores/coin-api/coin-api.store';
+// import { CoinApiStore } from 'src/app/stores/coin-api/coin-api.store';
+import { Observable, Subscription, debounceTime, from } from 'rxjs';
 import { Asset } from 'src/app/types/coin-api/asset';
 import { FormControl, FormGroup, NonNullableFormBuilder } from '@angular/forms';
 
@@ -28,12 +29,12 @@ export class AssetListComponent implements OnInit, OnDestroy {
     readonly panelOpenState = signal(false);
 
     constructor(
-        private readonly store: CoinApiStore,
+        // private readonly store: CoinApiStore,
         private fb: NonNullableFormBuilder,
     ) { }
 
     public ngOnInit(): void {
-        this.data$ = this.store.getAssetData(this.options as Filter);
+        this.data$ = from([]); // this.store.getAssetData(this.options as Filter);
         this.setupForm();
     }
 
@@ -52,7 +53,7 @@ export class AssetListComponent implements OnInit, OnDestroy {
             .pipe(debounceTime(debounce))
             .subscribe((value: string | boolean) => {
                 this.options[name as keyof Filter] = value
-                this.data$ = this.store.getAssetData(this.options as Filter);
+                this.data$ = from([]); // this.store.getAssetData(this.options as Filter);
             });
         this.subscriptions.push(sub);
     }
