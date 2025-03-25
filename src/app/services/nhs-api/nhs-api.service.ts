@@ -25,19 +25,15 @@ export class NhsApiService {
 
     public getDatastoreSearchSql(sql: string): Observable<DatastoreSearchSql> {
         const url = `${baseUrl}_sql?${sql}`;
-        console.log(url);
         return this.http.get<DatastoreSearchSql>(url);
     }
 
     // Example of looping through array and making multiple requests
     public getDatastoreSearchSqlTest(): Observable<DatastoreSearchSql[]> {
-        return forkJoin(
-            this.urls.map(url => this.http.get<DatastoreSearchSql[]>(url))
-        ).pipe(
-            map(recordsArrays => recordsArrays.reduce((arr, r) => {
-                console.log('Store', arr, r);
-                return arr.concat(r);
-            }, []))
-        );
+        const reducer = (arr: DatastoreSearchSql[], r: DatastoreSearchSql) => arr.concat(r);
+        const combineArrays = (results: DatastoreSearchSql[]) => results.reduce(reducer, []);
+        const requestFn = (url: string) => this.http.get<DatastoreSearchSql>(url);
+        const getRequests = this.urls.map(requestFn);
+        return forkJoin(getRequests).pipe(map(combineArrays));
     }
 }
