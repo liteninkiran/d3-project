@@ -3,6 +3,7 @@ import { MomentDateAdapter } from '@angular/material-moment-adapter';
 import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { MONTH_YEAR_FORMATS } from 'src/app/config/dates';
+import * as moment from 'moment';
 
 @Component({
     selector: 'app-nhs-api-scratch',
@@ -27,13 +28,19 @@ export class ScratchComponent implements OnInit {
         this.form = this.fb.group({
             practiceCode: this.fb.control('Y03641'),
             bnfCode: this.fb.control('0410030C0AAAFAF'),
-            startDate: this.fb.control(new Date('2023-01-01')),
-            endDate: this.fb.control(new Date('2024-12-01')),
+            startDate: this.fb.control(moment('2023-01-01')),
+            endDate: this.fb.control(moment('2023-12-01')),
         });
     }
 
     public onSubmit() {
         const values = this.form.value;
-        console.log(values);
+        const startDate = values.startDate.startOf('month');
+        const endDate = values.endDate.startOf('month');
+
+        for (let m = moment(startDate); m.isSameOrBefore(endDate); m.add(1, 'month')) {
+            // Make requests for data month-by-month
+            // console.log(moment(m).format('YYYY-MM-DD'));
+        }
     }
 }
