@@ -1,15 +1,39 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, signal } from '@angular/core';
+import { MomentDateAdapter } from '@angular/material-moment-adapter';
+import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
+import { FormGroup, NonNullableFormBuilder } from '@angular/forms';
+import { MY_FORMATS } from 'src/app/config/dates';
 
 @Component({
     selector: 'app-nhs-api-scratch',
     templateUrl: './scratch.component.html',
     styleUrls: ['./scratch.component.scss'],
+    providers: [
+        { provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE] },
+        { provide: MAT_DATE_FORMATS, useValue: MY_FORMATS },
+    ],
 })
 export class ScratchComponent implements OnInit {
 
-    constructor( ) { }
+    public form!: FormGroup;
+
+    readonly panelOpenState = signal(false);
+
+    constructor(
+        private fb: NonNullableFormBuilder,
+    ) { }
 
     public ngOnInit(): void {
+        this.form = this.fb.group({
+            practiceCode: this.fb.control('Y03641'),
+            bnfCode: this.fb.control('0410030C0AAAFAF'),
+            startDate: this.fb.control(new Date('2023-01-01')),
+            endDate: this.fb.control(new Date('2024-12-01')),
+        });
+    }
 
+    public onSubmit() {
+        const values = this.form.value;
+        console.log(values);
     }
 }
