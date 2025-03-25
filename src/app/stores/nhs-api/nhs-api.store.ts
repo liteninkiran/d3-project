@@ -8,23 +8,30 @@ import { DatastoreSearch, DatastoreSearchSql } from 'src/app/types/nhs-api/epd';
 })
 export class NhsApiStore {
 
-    private datastoreSearchSubject = new BehaviorSubject<DatastoreSearch[]>([]);
-    private datastoreSearchSqlSubject = new BehaviorSubject<DatastoreSearchSql[]>([]);
+    private datastoreSearchSubject = new BehaviorSubject<DatastoreSearch>({} as DatastoreSearch);
+    private datastoreSearchSqlSubject = new BehaviorSubject<DatastoreSearchSql>({} as DatastoreSearchSql);
+    private datastoreSearchSqlArraySubject = new BehaviorSubject<DatastoreSearchSql[]>([]);
 
-    private datastoreSearch$ : Observable<DatastoreSearch[]> = this.datastoreSearchSubject.asObservable();
-    private datastoreSearchSql$ : Observable<DatastoreSearchSql[]> = this.datastoreSearchSqlSubject.asObservable();
+    private datastoreSearch$: Observable<DatastoreSearch> = this.datastoreSearchSubject.asObservable();
+    private datastoreSearchSql$: Observable<DatastoreSearchSql> = this.datastoreSearchSqlSubject.asObservable();
+    private datastoreSearchSqlArray$: Observable<DatastoreSearchSql[]> = this.datastoreSearchSqlArraySubject.asObservable();
 
     constructor(
         private readonly service: NhsApiService
     ) { }
 
-    public getDatastoreSearch(options: string): Observable<DatastoreSearch[]> {
+    public getDatastoreSearch(options: string): Observable<DatastoreSearch> {
         this.datastoreSearch$ = this.service.getDatastoreSearch(options).pipe(shareReplay());
         return this.datastoreSearch$;
     }
 
-    public getDatastoreSearchSql(sql: string): Observable<DatastoreSearchSql[]> {
+    public getDatastoreSearchSql(sql: string): Observable<DatastoreSearchSql> {
         this.datastoreSearchSql$ = this.service.getDatastoreSearchSql(sql).pipe(shareReplay());
         return this.datastoreSearchSql$;
+    }
+
+    public getDatastoreSearchSqlTest(): Observable<DatastoreSearchSql[]> {
+        this.datastoreSearchSqlArray$ = this.service.getDatastoreSearchSqlTest().pipe(shareReplay());
+        return this.datastoreSearchSqlArray$;
     }
 }
