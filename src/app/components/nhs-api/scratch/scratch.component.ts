@@ -2,7 +2,7 @@ import { Component, OnInit, signal } from '@angular/core';
 import { MomentDateAdapter } from '@angular/material-moment-adapter';
 import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
 import { FormGroup, NonNullableFormBuilder } from '@angular/forms';
-import { MY_FORMATS } from 'src/app/config/dates';
+import { MONTH_YEAR_FORMATS } from 'src/app/config/dates';
 
 @Component({
     selector: 'app-nhs-api-scratch',
@@ -10,7 +10,7 @@ import { MY_FORMATS } from 'src/app/config/dates';
     styleUrls: ['./scratch.component.scss'],
     providers: [
         { provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE] },
-        { provide: MAT_DATE_FORMATS, useValue: MY_FORMATS },
+        { provide: MAT_DATE_FORMATS, useValue: MONTH_YEAR_FORMATS },
     ],
 })
 export class ScratchComponent implements OnInit {
