@@ -10,11 +10,9 @@ export class NhsApiStore {
 
     private datastoreSearchSubject = new BehaviorSubject<DatastoreSearch>({} as DatastoreSearch);
     private datastoreSearchSqlSubject = new BehaviorSubject<DatastoreSearchSql>({} as DatastoreSearchSql);
-    private datastoreSearchSqlArraySubject = new BehaviorSubject<DatastoreSearchSql[]>([]);
 
     private datastoreSearch$: Observable<DatastoreSearch> = this.datastoreSearchSubject.asObservable();
     private datastoreSearchSql$: Observable<DatastoreSearchSql> = this.datastoreSearchSqlSubject.asObservable();
-    private datastoreSearchSqlArray$: Observable<DatastoreSearchSql[]> = this.datastoreSearchSqlArraySubject.asObservable();
 
     constructor(
         private readonly service: NhsApiService
@@ -25,13 +23,8 @@ export class NhsApiStore {
         return this.datastoreSearch$;
     }
 
-    public getDatastoreSearchSql(sql: string): Observable<DatastoreSearchSql> {
-        this.datastoreSearchSql$ = this.service.getDatastoreSearchSql(sql).pipe(shareReplay());
+    public getDatastoreSearchSql(resourceId: string, sql: string): Observable<DatastoreSearchSql> {
+        this.datastoreSearchSql$ = this.service.getDatastoreSearchSql(resourceId, sql).pipe(shareReplay());
         return this.datastoreSearchSql$;
-    }
-
-    public getDatastoreSearchSqlTest(): Observable<DatastoreSearchSql[]> {
-        this.datastoreSearchSqlArray$ = this.service.getDatastoreSearchSqlTest().pipe(shareReplay());
-        return this.datastoreSearchSqlArray$;
     }
 }

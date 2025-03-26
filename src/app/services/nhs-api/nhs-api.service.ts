@@ -1,20 +1,21 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { forkJoin, map, Observable } from 'rxjs';
+import { from, mergeMap, Observable } from 'rxjs';
 import { DatastoreSearch, DatastoreSearchSql } from 'src/app/types/nhs-api/epd';
+import * as moment from 'moment';
 
 const baseUrl = 'https://opendata.nhsbsa.net/api/3/action/datastore_search';
+type Options = {
+    startDate: moment.Moment,
+    endDate: moment.Moment,
+    practiceCode: string,
+    bnfCode: string,
+}
 
 @Injectable({
     providedIn: 'root'
 })
 export class NhsApiService {
-
-    private urls: string[] = [
-        'https://opendata.nhsbsa.net/api/3/action/datastore_search_sql?resource_id=EPD_202401&sql=SELECT * from `EPD_202401` WHERE BNF_CODE = "0410030C0AAAFAF" AND PRACTICE_CODE="Y03641" LIMIT 5',
-        'https://opendata.nhsbsa.net/api/3/action/datastore_search_sql?resource_id=EPD_202402&sql=SELECT * from `EPD_202402` WHERE BNF_CODE = "0410030C0AAAFAF" AND PRACTICE_CODE="Y03641" LIMIT 5',
-        'https://opendata.nhsbsa.net/api/3/action/datastore_search_sql?resource_id=EPD_202403&sql=SELECT * from `EPD_202403` WHERE BNF_CODE = "0410030C0AAAFAF" AND PRACTICE_CODE="Y03641" LIMIT 5',
-    ];
 
     constructor(private http: HttpClient) { }
 
@@ -23,17 +24,48 @@ export class NhsApiService {
         return this.http.get<DatastoreSearch>(url);
     }
 
-    public getDatastoreSearchSql(sql: string): Observable<DatastoreSearchSql> {
-        const url = `${baseUrl}_sql?${sql}`;
+    public getDatastoreSearchSql(resourceId: string, sql: string): Observable<DatastoreSearchSql> {
+        const url = `${baseUrl}?resource_id=${resourceId}&sql=${sql}`;
         return this.http.get<DatastoreSearchSql>(url);
     }
 
-    // Example of looping through array and making multiple requests
-    public getDatastoreSearchSqlTest(): Observable<DatastoreSearchSql[]> {
-        const reducer = (arr: DatastoreSearchSql[], r: DatastoreSearchSql) => arr.concat(r);
-        const combineArrays = (results: DatastoreSearchSql[]) => results.reduce(reducer, []);
-        const requestFn = (url: string) => this.http.get<DatastoreSearchSql>(url);
-        const getRequests = this.urls.map(requestFn);
-        return forkJoin(getRequests).pipe(map(combineArrays));
+    private getDatastoreSearchMonthly(url: string): Observable<DatastoreSearchSql> {
+        return this.http.get<DatastoreSearchSql>(url);
+    }
+
+    public getMonthlyData(options: Options): Observable<DatastoreSearchSql> {
+        // Ensure first day of month is selected
+        const startDate = options.startDate.startOf('month');
+        const endDate = options.endDate.startOf('month');
+
+        const urls = [];
+
+        const includeSearchTerm = (key: string, field: string) => options[key] ? `${field} = '${options[key]}' AND ` : '';
+        const removeJoiningTerm = (sql: string, term: string) => sql.endsWith(term) ? sql.substring(0, sql.length - term.length).trim() : sql;
+
+        const getSql = (resourceId: string): string => {
+            const tableName = '`' + resourceId + '`';
+            let sql = `SELECT * from ${tableName} WHERE `;
+            sql += includeSearchTerm('bnfCode', 'BNF_CODE');
+            sql += includeSearchTerm('practiceCode', 'PRACTICE_CODE');
+            sql = sql.trim();
+            sql = removeJoiningTerm(sql, 'AND');
+            sql = removeJoiningTerm(sql, 'WHERE');
+            sql = `${sql} LIMIT 5`
+            return sql;
+        }
+
+        for (const m = startDate; m.isSameOrBefore(endDate); m.add(1, 'month')) {
+            const dt = m.format('YYYYMM');
+            const resourceId = `EPD_${dt}`;
+            const sql = getSql(resourceId);
+            const url = `${baseUrl}?resource_id=${resourceId}&sql=${sql}`;
+            urls.push(url);
+        }
+
+        // Convert array of URLs to observable and make requests
+        return from(urls).pipe(
+            mergeMap(url => this.getDatastoreSearchMonthly(url), urls.length)
+        );
     }
 }
