@@ -5,7 +5,6 @@ import { FormGroup, NonNullableFormBuilder } from '@angular/forms';
 import { MONTH_YEAR_FORMATS } from 'src/app/config/dates';
 import { DatastoreSearch } from 'src/app/types/nhs-api/epd';
 import { Observable } from 'rxjs';
-import { NhsApiStore } from 'src/app/stores/nhs-api/nhs-api.store';
 import { NhsApiService } from 'src/app/services/nhs-api/nhs-api.service';
 import * as moment from 'moment';
 
@@ -28,7 +27,6 @@ export class ScratchComponent implements OnInit {
 
     constructor(
         private fb: NonNullableFormBuilder,
-        private readonly store: NhsApiStore,
         private readonly service: NhsApiService,
     ) { }
 
