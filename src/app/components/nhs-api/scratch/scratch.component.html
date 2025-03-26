@@ -76,4 +76,10 @@
 
     </mat-accordion>
 
+    <div *ngIf="data$ | async as results">
+        <div *ngFor="let item of results">
+          <p>{{ item.help }}</p>
+        </div>
+    </div>
+
 </div>

@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { from, mergeMap, Observable } from 'rxjs';
+import { scan, from, mergeMap, Observable } from 'rxjs';
 import { DatastoreSearch, DatastoreSearchSql } from 'src/app/types/nhs-api/epd';
 import * as moment from 'moment';
 
@@ -33,7 +33,7 @@ export class NhsApiService {
         return this.http.get<DatastoreSearchSql>(url);
     }
 
-    public getMonthlyData(options: Options): Observable<DatastoreSearchSql> {
+    public getMonthlyData(options: Options): Observable<DatastoreSearchSql[]> {
         // Ensure first day of month is selected
         const startDate = options.startDate.startOf('month');
         const endDate = options.endDate.startOf('month');
@@ -65,7 +65,8 @@ export class NhsApiService {
 
         // Convert array of URLs to observable and make requests
         return from(urls).pipe(
-            mergeMap(url => this.getDatastoreSearchMonthly(url), urls.length)
+            mergeMap(url => this.getDatastoreSearchMonthly(url), urls.length),
+            scan((acc, data) => [...acc, data], []),
         );
     }
 }
