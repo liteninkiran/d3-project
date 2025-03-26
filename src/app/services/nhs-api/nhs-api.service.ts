@@ -29,11 +29,11 @@ export class NhsApiService {
         return this.http.get<DatastoreSearchSql>(url);
     }
 
-    private getDatastoreSearchMonthly(url: string): Observable<DatastoreSearchSql> {
-        return this.http.get<DatastoreSearchSql>(url);
+    private getDatastoreSearchMonthly(url: string): Observable<DatastoreSearch> {
+        return this.http.get<DatastoreSearch>(url);
     }
 
-    public getMonthlyData(options: Options): Observable<DatastoreSearchSql[]> {
+    public getMonthlyData(options: Options): Observable<DatastoreSearch[]> {
         // Ensure first day of month is selected
         const startDate = options.startDate.startOf('month');
         const endDate = options.endDate.startOf('month');

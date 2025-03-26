@@ -78,7 +78,7 @@
 
     <div *ngIf="data$ | async as results">
         <div *ngFor="let item of results">
-          <p>{{ item.help }}</p>
+          <p>{{ item.result.resource_id }}</p>
         </div>
     </div>
 
