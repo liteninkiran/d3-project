@@ -35,8 +35,8 @@ export class NhsApiService {
 
     private getUrls(options: Options): string[] {
         // Ensure first day of month is selected
-        const startDate = options.startDate.startOf('month');
-        const endDate = options.endDate.startOf('month');
+        const startDate = options.startDate.startOf('month').clone();
+        const endDate = options.endDate.startOf('month').clone();
 
         const urls = [];
 
@@ -69,12 +69,8 @@ export class NhsApiService {
 
     public getMonthlyData(options: Options): Observable<DatastoreSearch[]> {
         const urls = this.getUrls(options);
-        console.log('Fetching data from URLs:', urls);
         return from(urls).pipe(
-            mergeMap((url: string) => {
-                console.log('Requesting:', url);
-                return this.getDatastoreSearchMonthly(url)
-            }, 4),
+            mergeMap((url: string) => this.getDatastoreSearchMonthly(url), 4),
             scan((acc, data) => [...acc, data], []),
         );
     }

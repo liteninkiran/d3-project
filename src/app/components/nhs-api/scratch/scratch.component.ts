@@ -40,15 +40,11 @@ export class ScratchComponent implements OnInit {
             endDate: this.fb.control(moment('2023-12-01')),
         });
         this.data$ = this.fetchData$.pipe(
-            switchMap(params => {
-                console.log('Fetching new data with params:', params);
-                return this.service.getMonthlyData(params);
-            }),
+            switchMap(params => this.service.getMonthlyData(params)),
         );
     }
 
     public onSubmit() {
-        console.log('Form Value:', this.form.value);
         this.fetchData$.next(this.form.value);
     }
 }
