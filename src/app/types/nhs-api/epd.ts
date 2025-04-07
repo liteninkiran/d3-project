@@ -1,6 +1,6 @@
 export type DatastoreSearch = {
     help: string;
-    success: boolean;
+    success: boolean | string;
     result: Result;
 }
 

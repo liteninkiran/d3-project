@@ -47,7 +47,7 @@ export class ScratchComponent implements OnInit {
             practiceCode: this.fb.control('Y03641'),
             bnfCode: this.fb.control('0410030C0AAAFAF'),
             startDate: this.fb.control(moment('2023-01-01')),
-            endDate: this.fb.control(moment('2023-03-01')),
+            endDate: this.fb.control(moment('2023-12-01')),
         });
     }
 }

@@ -1,7 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { from, mergeMap, Observable, scan, toArray } from 'rxjs';
+import { from, mergeMap, Observable, of, scan } from 'rxjs';
 import { DatastoreSearch, DatastoreSearchSql } from 'src/app/types/nhs-api/epd';
+import { allData } from 'src/app/mocks/nhs-api/prescribingData';
 import * as moment from 'moment';
 
 const baseUrl1 = 'https://opendata.nhsbsa.net/api/3/action/datastore_search';
@@ -46,7 +47,7 @@ export class NhsApiService {
 
         const getSql = (resourceId: string): string => {
             const tableName = '`' + resourceId + '`';
-            const limit = 5;
+            const limit = 1000;
             let sql = `SELECT * from ${tableName} WHERE `;
             sql += includeSearchTerm('bnfCode', 'BNF_CODE');
             sql += includeSearchTerm('practiceCode', 'PRACTICE_CODE');
@@ -69,10 +70,14 @@ export class NhsApiService {
     }
 
     public getMonthlyData(options: Options): Observable<DatastoreSearchSql[]> {
+        const useMocks = true;
         const urls = this.getUrls(options);
-        return from(urls).pipe(
-            mergeMap((url: string) => this.getDatastoreSearchMonthly(url), 4),
-            scan((acc, data) => [...acc, data], []),
-        );
+        const pipes = {
+            "merge": mergeMap((url: string) => this.getDatastoreSearchMonthly(url), 4),
+            "scan": scan((acc, data) => [...acc, data], []),
+        }
+        return useMocks
+            ? of(allData)
+            : from(urls).pipe(pipes.merge, pipes.scan);
     }
 }
