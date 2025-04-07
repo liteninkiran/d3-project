@@ -4,7 +4,8 @@ import { from, mergeMap, Observable, scan, toArray } from 'rxjs';
 import { DatastoreSearch, DatastoreSearchSql } from 'src/app/types/nhs-api/epd';
 import * as moment from 'moment';
 
-const baseUrl = 'https://opendata.nhsbsa.net/api/3/action/datastore_search';
+const baseUrl1 = 'https://opendata.nhsbsa.net/api/3/action/datastore_search';
+const baseUrl2 = 'https://opendata.nhsbsa.net/api/3/action/datastore_search_sql';
 export type Options = {
     startDate: moment.Moment,
     endDate: moment.Moment,
@@ -20,17 +21,17 @@ export class NhsApiService {
     constructor(private http: HttpClient) { }
 
     public getDatastoreSearch(options: string): Observable<DatastoreSearch> {
-        const url = `${baseUrl}?${options}`;
+        const url = `${baseUrl1}?${options}`;
         return this.http.get<DatastoreSearch>(url);
     }
 
     public getDatastoreSearchSql(resourceId: string, sql: string): Observable<DatastoreSearchSql> {
-        const url = `${baseUrl}?resource_id=${resourceId}&sql=${sql}`;
+        const url = `${baseUrl2}?resource_id=${resourceId}&sql=${sql}`;
         return this.http.get<DatastoreSearchSql>(url);
     }
 
-    private getDatastoreSearchMonthly(url: string): Observable<DatastoreSearch> {
-        return this.http.get<DatastoreSearch>(url);
+    private getDatastoreSearchMonthly(url: string): Observable<DatastoreSearchSql> {
+        return this.http.get<DatastoreSearchSql>(url);
     }
 
     private getUrls(options: Options): string[] {
@@ -60,14 +61,14 @@ export class NhsApiService {
             const dt = m.format('YYYYMM');
             const resourceId = `EPD_${dt}`;
             const sql = getSql(resourceId);
-            const url = `${baseUrl}?resource_id=${resourceId}&sql=${sql}`;
+            const url = `${baseUrl2}?resource_id=${resourceId}&sql=${sql}`;
             urls.push(url);
         }
 
         return urls;
     }
 
-    public getMonthlyData(options: Options): Observable<DatastoreSearch[]> {
+    public getMonthlyData(options: Options): Observable<DatastoreSearchSql[]> {
         const urls = this.getUrls(options);
         return from(urls).pipe(
             mergeMap((url: string) => this.getDatastoreSearchMonthly(url), 4),
