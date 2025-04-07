@@ -1,11 +1,11 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { scan, from, mergeMap, Observable } from 'rxjs';
+import { from, mergeMap, Observable, scan, toArray } from 'rxjs';
 import { DatastoreSearch, DatastoreSearchSql } from 'src/app/types/nhs-api/epd';
 import * as moment from 'moment';
 
 const baseUrl = 'https://opendata.nhsbsa.net/api/3/action/datastore_search';
-type Options = {
+export type Options = {
     startDate: moment.Moment,
     endDate: moment.Moment,
     practiceCode: string,
@@ -33,7 +33,7 @@ export class NhsApiService {
         return this.http.get<DatastoreSearch>(url);
     }
 
-    public getMonthlyData(options: Options): Observable<DatastoreSearch[]> {
+    private getUrls(options: Options): string[] {
         // Ensure first day of month is selected
         const startDate = options.startDate.startOf('month');
         const endDate = options.endDate.startOf('month');
@@ -45,13 +45,14 @@ export class NhsApiService {
 
         const getSql = (resourceId: string): string => {
             const tableName = '`' + resourceId + '`';
+            const limit = 5;
             let sql = `SELECT * from ${tableName} WHERE `;
             sql += includeSearchTerm('bnfCode', 'BNF_CODE');
             sql += includeSearchTerm('practiceCode', 'PRACTICE_CODE');
             sql = sql.trim();
             sql = removeJoiningTerm(sql, 'AND');
             sql = removeJoiningTerm(sql, 'WHERE');
-            sql = `${sql} LIMIT 5`
+            sql = `${sql} LIMIT ${limit}`
             return sql;
         }
 
@@ -63,9 +64,17 @@ export class NhsApiService {
             urls.push(url);
         }
 
-        // Convert array of URLs to observable and make requests
+        return urls;
+    }
+
+    public getMonthlyData(options: Options): Observable<DatastoreSearch[]> {
+        const urls = this.getUrls(options);
+        console.log('Fetching data from URLs:', urls);
         return from(urls).pipe(
-            mergeMap(url => this.getDatastoreSearchMonthly(url), urls.length),
+            mergeMap((url: string) => {
+                console.log('Requesting:', url);
+                return this.getDatastoreSearchMonthly(url)
+            }, 4),
             scan((acc, data) => [...acc, data], []),
         );
     }
