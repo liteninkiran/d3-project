@@ -1,9 +1,12 @@
-import { Component, Input, OnChanges, OnInit, OnDestroy, SimpleChanges, ElementRef } from '@angular/core';
+// Angular | RxJS
+import { Component, ElementRef, OnInit, OnDestroy } from '@angular/core';
 import { Observable, Subscription } from 'rxjs';
-import { ExchangeRate } from 'src/app/types/coin-api/exchange-rate';
-import { ExchangeRateOptions } from 'src/app/services/coin-api/coin-api.service';
-import { CoinApiStore } from 'src/app/stores/coin-api/coin-api.store';
 
+// Local Imports
+import { defaultOptions, NhsApiService } from 'src/app/services/nhs-api/nhs-api.service';
+import { DatastoreSearchSql } from 'src/app/types/nhs-api/epd';
+
+// D3 Imports
 import * as d3 from 'd3';
 import { Axis } from 'd3-axis';
 import { Selection } from 'd3-selection';
@@ -12,19 +15,16 @@ import { Line } from 'd3-shape';
 import { Data, LineDataItem } from 'src/app/types/d3/data';
 
 @Component({
-    selector: 'app-coin-api-chart',
-    templateUrl: './chart.component.html',
-    styleUrls: ['./chart.component.scss'],
+    selector: 'app-line-chart',
+    templateUrl: './line-chart.component.html',
+    styleUrls: ['./line-chart.component.scss'],
 })
-export class ChartComponent implements OnInit, OnDestroy, OnChanges {
-
-    @Input() public options: ExchangeRateOptions = {} as ExchangeRateOptions;
-
-    private subscriptions: Subscription[] = [];
+export class LineChartComponent implements OnInit, OnDestroy {
 
     // Data
-    public data$: Observable<ExchangeRate[]> = new Observable();
-    private data: ExchangeRate[] = [];
+    public data$: Observable<DatastoreSearchSql[]> = new Observable();
+    private data: DatastoreSearchSql[] = [];
+    private subscriptions: Subscription[] = [];
 
     // Main elements
     public host: any;
@@ -42,7 +42,7 @@ export class ChartComponent implements OnInit, OnDestroy, OnChanges {
     };
 
     // Containers
-    public dataContainer: any; // Selection<SVGGElement, {}, HTMLElement, any>;
+    public dataContainer: any;
     public xAxisContainer: Selection<SVGGElement, {}, HTMLElement, any>;
     public yAxisContainer: Selection<SVGGElement, {}, HTMLElement, any>;
     public legendContainer: Selection<SVGGElement, {}, HTMLElement, any>;
@@ -62,23 +62,35 @@ export class ChartComponent implements OnInit, OnDestroy, OnChanges {
     // Line generator
     public line: Line<any>;
 
+    private testData: LineDataItem[] = [
+        {
+            name: 'Test',
+            data: [
+                { x: new Date(2025, 3, 1), y: 10 },
+                { x: new Date(2025, 3, 2), y: 15 },
+                { x: new Date(2025, 3, 3), y: 20 },
+                { x: new Date(2025, 3, 4), y: 30 },
+            ]
+        }
+    ];
+
     get lineData(): LineDataItem[] {
-        // const names = ['open', 'close', 'high', 'low'];
-        const names = ['close'];
-        return names.map(name => ({ name, data: this.transformData(`rate_${name}`) }));
+        return this.testData;
     }
 
     constructor(
-        private readonly store: CoinApiStore,
+        private readonly service: NhsApiService,
         element: ElementRef
     ) {
         this.host = d3.select(element.nativeElement);
+        console.log(this.testData);
     }
 
     public ngOnInit(): void {
         this.svg = this.host.select('svg');
         this.setDimensions();
         this.setContainers();
+        this.getData();
     }
 
     public ngOnDestroy(): void {
@@ -86,25 +98,15 @@ export class ChartComponent implements OnInit, OnDestroy, OnChanges {
         this.subscriptions.map((sub) => sub.unsubscribe());
     }
 
-    public ngOnChanges(changes: SimpleChanges): void {
-        this.getData();
-    }
-
     public getData() {
-        this.data$ = this.store.getExchangeRateData(this.options);
+        this.data$ = this.service.getMonthlyData(defaultOptions);
         this.subscribeToData();
-    }
-
-    private transformData(prop: string): Data[] {
-        return this.data.map(d => ({
-            x: this.getParsedDate(d.time_period_start),
-            y: +d[prop],
-        }));
     }
 
     private subscribeToData() {
         const sub = this.data$.subscribe(data => {
             this.data = data;
+            console.log(this.data);
             this.updateChart();
         });
         this.subscriptions.push(sub);
@@ -148,28 +150,23 @@ export class ChartComponent implements OnInit, OnDestroy, OnChanges {
     }
 
     private updateChart(): void {
-        if (this.data.length > 0) {
-            this.setParams();
-            this.setLabels();
-            this.setAxis();
-            this.setLegend();
-            this.draw();
-        }
-    }
-
-    private getParsedDate(date: string): Date {
-        return this.timeParse(date.substring(0, 19));
+        this.setParams();
+        this.setLabels();
+        this.setAxis();
+        this.setLegend();
+        this.draw();
     }
 
     private setParams(): void {
+        // Helper Functions
+        const dataItemMap = (dataItem: Data) => dataItem.x
+        const lineDataItemMap = (lineDataItem: LineDataItem) => lineDataItem.data.map(dataItemMap);
+        const reducer = (max: number, point: Data) => Math.max(max, point.y);
+        const maxMap = (item: LineDataItem) => item.data.reduce(reducer, -Infinity);
+
         // Parse dates / values
-        const parsedDates = this.data.map((d: ExchangeRate) => this.getParsedDate(d.time_period_start));
-        const maxValues = [
-            Math.max(...this.data.map(o => o.rate_open)),
-            Math.max(...this.data.map(o => o.rate_high)),
-            Math.max(...this.data.map(o => o.rate_low)),
-            Math.max(...this.data.map(o => o.rate_close)),
-        ];
+        const parsedDates = this.lineData.map(lineDataItemMap).flat();
+        const maxValues = this.testData.map(maxMap);
 
         // Set Domains
         const xDomain = d3.extent(parsedDates);
@@ -194,7 +191,7 @@ export class ChartComponent implements OnInit, OnDestroy, OnChanges {
     }
 
     private setLabels(): void {
-        const title = 'BTC to GBP between 01/01/2024 and 31/12/2024';
+        const title = 'Update This Label';
         this.titleContainer
             .text(title)
             .style('font-size', '20px')

@@ -13,6 +13,12 @@ export type Options = {
     practiceCode: string,
     bnfCode: string,
 }
+export const defaultOptions: Options = {
+    startDate: moment('2023-01-01'),
+    endDate: moment('2023-12-01'),
+    practiceCode: 'Y03641',
+    bnfCode: '0410030C0AAAFAF',
+}
 
 @Injectable({
     providedIn: 'root'

@@ -4,7 +4,7 @@ import { CommonModule } from '@angular/common';
 import { MaterialModule } from './material.module';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ScratchComponent } from '../components/nhs-api/scratch/scratch.component';
-import { LineChartComponent } from '../components/line-chart/line-chart.component';
+import { LineChartComponent } from '../components/nhs-api/line-chart/line-chart.component';
 
 @NgModule({
     declarations: [
