@@ -5,7 +5,7 @@ import { FormGroup, NonNullableFormBuilder } from '@angular/forms';
 import { MONTH_YEAR_FORMATS } from 'src/app/config/dates';
 import { DatastoreSearchSql } from 'src/app/types/nhs-api/epd';
 import { Observable, Subject, switchMap } from 'rxjs';
-import { NhsApiService, Options } from 'src/app/services/nhs-api/nhs-api.service';
+import { NhsApiService, FilterOptions } from 'src/app/services/nhs-api/nhs-api.service';
 import * as moment from 'moment';
 
 @Component({
@@ -21,9 +21,9 @@ export class ScratchComponent implements OnInit {
 
     public form!: FormGroup;
 
-    private fetchData$ = new Subject<Options>();
+    private fetchData$ = new Subject<FilterOptions>();
 
-    private getData = switchMap((params: Options) => this.service.getMonthlyData(params));
+    private getData = switchMap((params: FilterOptions) => this.service.getMonthlyData(params));
 
     public data$: Observable<DatastoreSearchSql[]> = this.fetchData$.pipe(this.getData);
 

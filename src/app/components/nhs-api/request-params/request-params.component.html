@@ -1,0 +1,79 @@
+<div class="container">
+    <mat-accordion>
+
+        <mat-expansion-panel (opened)="panelOpenState.set(true)" (closed)="panelOpenState.set(false)">
+
+            <mat-expansion-panel-header>
+
+                <mat-panel-title [ngClass]="{'accordion-title-open' : panelOpenState()}">
+                    Request Parameters
+                </mat-panel-title>
+
+                <mat-panel-description *ngIf="!panelOpenState()">
+                    <span>Click to change the request parameters</span>
+                </mat-panel-description>
+
+            </mat-expansion-panel-header>
+
+            <form [formGroup]="form" (ngSubmit)="onSubmit()">
+
+                <div class="form-row">
+
+                    <!-- Practice Code -->
+                    <mat-form-field>
+
+                        <mat-label>
+                            Practice Code
+                        </mat-label>
+
+                        <input matInput type="text" name="practiceCode" placeholder="Enter practice code" formControlName="practiceCode" />
+
+                        <button matSuffix mat-icon-button aria-label="Clear" (click)="form.controls['practiceCode'].setValue('')" *ngIf="form.value.practiceCode">
+                            <mat-icon>close</mat-icon>
+                        </button>
+
+                    </mat-form-field>
+
+                    <!-- BNF Code -->
+                    <mat-form-field>
+
+                        <mat-label>
+                            BNF Code
+                        </mat-label>
+
+                        <input matInput type="text" name="bnfCode" placeholder="Enter BNF code" formControlName="bnfCode" />
+
+                        <button matSuffix mat-icon-button aria-label="Clear" (click)="form.controls['bnfCode'].setValue('')" *ngIf="form.value.bnfCode">
+                            <mat-icon>close</mat-icon>
+                        </button>
+
+                    </mat-form-field>
+
+                    <!-- Start / End Date -->
+                    <mat-form-field>
+
+                        <mat-label>Select a date range (mmm yyyy)</mat-label>
+
+                        <mat-date-range-input [formGroup]="form" [rangePicker]="picker">
+                            <input matStartDate formControlName="startDate" placeholder="Start date">
+                            <input matEndDate formControlName="endDate" placeholder="End date">
+                        </mat-date-range-input>
+
+                        <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                        <mat-date-range-picker #picker></mat-date-range-picker>
+
+                    </mat-form-field>
+
+                </div>
+
+                <button mat-raised-button color="primary" type="submit">
+                    Submit
+                </button>
+
+            </form>
+
+        </mat-expansion-panel>
+
+    </mat-accordion>
+
+</div>

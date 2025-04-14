@@ -7,13 +7,13 @@ import * as moment from 'moment';
 
 const baseUrl1 = 'https://opendata.nhsbsa.net/api/3/action/datastore_search';
 const baseUrl2 = 'https://opendata.nhsbsa.net/api/3/action/datastore_search_sql';
-export type Options = {
+export type FilterOptions = {
     startDate: moment.Moment,
     endDate: moment.Moment,
     practiceCode: string,
     bnfCode: string,
 }
-export const defaultOptions: Options = {
+export const defaultOptions: FilterOptions = {
     startDate: moment('2023-01-01'),
     endDate: moment('2023-12-01'),
     practiceCode: 'Y03641',
@@ -41,7 +41,7 @@ export class NhsApiService {
         return this.http.get<DatastoreSearchSql>(url);
     }
 
-    private getUrls(options: Options): string[] {
+    private getUrls(options: FilterOptions): string[] {
         // Ensure first day of month is selected
         const startDate = options.startDate.startOf('month').clone();
         const endDate = options.endDate.startOf('month').clone();
@@ -75,7 +75,7 @@ export class NhsApiService {
         return urls;
     }
 
-    public getMonthlyData(options: Options): Observable<DatastoreSearchSql[]> {
+    public getMonthlyData(options: FilterOptions): Observable<DatastoreSearchSql[]> {
         const useMocks = true;
         const urls = this.getUrls(options);
         const merged = mergeMap((url: string) => this.getDatastoreSearchMonthly(url), 4);

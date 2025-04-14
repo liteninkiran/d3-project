@@ -5,12 +5,14 @@ import { MaterialModule } from './material.module';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ScratchComponent } from '../components/nhs-api/scratch/scratch.component';
 import { LineChartComponent } from '../components/nhs-api/line-chart/line-chart.component';
+import { RequestParamsComponent } from '../components/nhs-api/request-params/request-params.component';
 
 @NgModule({
     declarations: [
         NhsApiComponent,
         ScratchComponent,
         LineChartComponent,
+        RequestParamsComponent,
     ],
     imports: [
         CommonModule,
@@ -21,6 +23,7 @@ import { LineChartComponent } from '../components/nhs-api/line-chart/line-chart.
         NhsApiComponent,
         ScratchComponent,
         LineChartComponent,
+        RequestParamsComponent,
     ],
     providers: [
     ],

@@ -54,7 +54,7 @@ export type Record = {
     BNF_DESCRIPTION: string;
 }
 
-type Link = {
+export type Link = {
     start: string;
     next: string;
 }
