@@ -4,7 +4,7 @@ import { Observable, Subscription } from 'rxjs';
 
 // Local Imports
 import { defaultOptions, NhsApiService } from 'src/app/services/nhs-api/nhs-api.service';
-import { DatastoreSearchSql } from 'src/app/types/nhs-api/epd';
+import { DatastoreSearchSql, Record } from 'src/app/types/nhs-api/epd';
 
 // D3 Imports
 import * as d3 from 'd3';
@@ -13,6 +13,11 @@ import { Selection } from 'd3-selection';
 import { ScaleTime, ScaleContinuousNumeric } from 'd3-scale';
 import { Line } from 'd3-shape';
 import { Data, LineDataItem } from 'src/app/types/d3/data';
+
+type MonthData = {
+    YEAR_MONTH: number;
+    TOTAL_QUANTITY: number;
+}
 
 @Component({
     selector: 'app-line-chart',
@@ -24,6 +29,7 @@ export class LineChartComponent implements OnInit, OnDestroy {
     // Data
     public data$: Observable<DatastoreSearchSql[]> = new Observable();
     private data: DatastoreSearchSql[] = [];
+    private lineData: LineDataItem[] = [];
     private subscriptions: Subscription[] = [];
 
     // Main elements
@@ -62,28 +68,11 @@ export class LineChartComponent implements OnInit, OnDestroy {
     // Line generator
     public line: Line<any>;
 
-    private testData: LineDataItem[] = [
-        {
-            name: 'Test',
-            data: [
-                { x: new Date(2025, 3, 1), y: 10 },
-                { x: new Date(2025, 3, 2), y: 15 },
-                { x: new Date(2025, 3, 3), y: 20 },
-                { x: new Date(2025, 3, 4), y: 30 },
-            ]
-        }
-    ];
-
-    get lineData(): LineDataItem[] {
-        return this.testData;
-    }
-
     constructor(
         private readonly service: NhsApiService,
         element: ElementRef
     ) {
         this.host = d3.select(element.nativeElement);
-        console.log(this.testData);
     }
 
     public ngOnInit(): void {
@@ -106,10 +95,39 @@ export class LineChartComponent implements OnInit, OnDestroy {
     private subscribeToData() {
         const sub = this.data$.subscribe(data => {
             this.data = data;
-            console.log(this.data);
+            this.transformData();
             this.updateChart();
         });
         this.subscriptions.push(sub);
+    }
+
+    private transformData() {
+        const initObj = (item: Record) => ({
+            YEAR_MONTH: item.YEAR_MONTH,
+            TOTAL_QUANTITY: 0,
+        })
+        const reducer = (acc: any, item: Record) => {
+            if (!acc[item.YEAR_MONTH]) {
+                acc[item.YEAR_MONTH] = initObj(item);
+            }
+            acc[item.YEAR_MONTH].TOTAL_QUANTITY += item.TOTAL_QUANTITY;
+            return acc;
+        }
+        const getDatePart = (num: number, start: number, end: number) => parseInt(num.toString().slice(start, end), 10);
+        const getMonth = (num: number) => getDatePart(num, 4, 6) - 1;
+        const getYear = (num: number) => getDatePart(num, 0, 4);
+        const getDate = (num: number) => new Date(getYear(num), getMonth(num));
+        const mapData = (month: MonthData) => ({
+            x: getDate(month.YEAR_MONTH),
+            y: month.TOTAL_QUANTITY,
+        });
+
+        const records = this.data.flatMap(month => month.result.result.records);
+        const reduced = records.reduce(reducer, {});
+        const months: MonthData[] = Object.values(reduced);
+        const data = months.map(mapData);
+        const name = 'Data';
+        this.lineData = [ { name, data } ];
     }
 
     private setDimensions(): void {
@@ -161,16 +179,22 @@ export class LineChartComponent implements OnInit, OnDestroy {
         // Helper Functions
         const dataItemMap = (dataItem: Data) => dataItem.x
         const lineDataItemMap = (lineDataItem: LineDataItem) => lineDataItem.data.map(dataItemMap);
-        const reducer = (max: number, point: Data) => Math.max(max, point.y);
-        const maxMap = (item: LineDataItem) => item.data.reduce(reducer, -Infinity);
+        const minReducer = (min: number, point: Data) => Math.min(min, point.y);
+        const maxReducer = (max: number, point: Data) => Math.max(max, point.y);
+        const minMap = (item: LineDataItem) => item.data.reduce(minReducer, Infinity);
+        const maxMap = (item: LineDataItem) => item.data.reduce(maxReducer, -Infinity);
 
         // Parse dates / values
         const parsedDates = this.lineData.map(lineDataItemMap).flat();
-        const maxValues = this.testData.map(maxMap);
+        const minValues = this.lineData.map(minMap);
+        const maxValues = this.lineData.map(maxMap);
+        // const min = d3.min(minValues);
+        const min = 0;
+        const max = d3.max(maxValues);
 
         // Set Domains
         const xDomain = d3.extent(parsedDates);
-        const yDomain = [0, d3.max(maxValues)];
+        const yDomain = [min, max];
 
         // Set Ranges
         const xRange = [0, this.innerWidth];
@@ -191,7 +215,7 @@ export class LineChartComponent implements OnInit, OnDestroy {
     }
 
     private setLabels(): void {
-        const title = 'Update This Label';
+        const title = 'Prescribing Data';
         this.titleContainer
             .text(title)
             .style('font-size', '20px')

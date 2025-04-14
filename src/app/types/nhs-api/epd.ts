@@ -10,7 +10,7 @@ export type DatastoreSearchSql = {
     result: DatastoreSearch;
 }
 
-type Result = {
+export type Result = {
     include_total?: boolean;
     resource_id?: string;
     fields: Field[];
@@ -20,12 +20,12 @@ type Result = {
     total?: number;
 }
 
-type Field = {
+export type Field = {
     type: string;
     id: string;
 }
 
-type Record = {
+export type Record = {
     BNF_CODE: string;
     TOTAL_QUANTITY: number;
     POSTCODE: string;
