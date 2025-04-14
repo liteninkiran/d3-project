@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { defaultOptions } from 'src/app/services/nhs-api/nhs-api.service';
+import { defaultOptions, FilterOptions } from 'src/app/services/nhs-api/nhs-api.service';
 
 @Component({
     selector: 'app-nhs-api',
@@ -8,8 +8,7 @@ import { defaultOptions } from 'src/app/services/nhs-api/nhs-api.service';
 })
 export class NhsApiComponent implements OnInit {
 
-    public defaultOptions = defaultOptions;
-    public options = this.defaultOptions;
+    public options = defaultOptions;
     
     constructor( ) { }
 
@@ -17,8 +16,7 @@ export class NhsApiComponent implements OnInit {
 
     }
 
-    public storeUserOptions(options: any) {
+    public storeUserOptions(options: FilterOptions) {
         this.options = options;
-        console.log(this.options);
     }
 }

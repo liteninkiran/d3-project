@@ -1,9 +1,9 @@
 // Angular | RxJS
-import { Component, ElementRef, OnInit, OnDestroy } from '@angular/core';
+import { Component, ElementRef, OnInit, OnDestroy, OnChanges, SimpleChanges, Input } from '@angular/core';
 import { Observable, Subscription } from 'rxjs';
 
 // Local Imports
-import { defaultOptions, NhsApiService } from 'src/app/services/nhs-api/nhs-api.service';
+import { FilterOptions, NhsApiService } from 'src/app/services/nhs-api/nhs-api.service';
 import { DatastoreSearchSql, Record } from 'src/app/types/nhs-api/epd';
 
 // D3 Imports
@@ -24,7 +24,9 @@ type MonthData = {
     templateUrl: './line-chart.component.html',
     styleUrls: ['./line-chart.component.scss'],
 })
-export class LineChartComponent implements OnInit, OnDestroy {
+export class LineChartComponent implements OnInit, OnDestroy, OnChanges {
+
+    @Input() public options: FilterOptions = {} as FilterOptions;
 
     // Data
     public data$: Observable<DatastoreSearchSql[]> = new Observable();
@@ -76,23 +78,38 @@ export class LineChartComponent implements OnInit, OnDestroy {
     }
 
     public ngOnInit(): void {
-        this.svg = this.host.select('svg');
-        this.setDimensions();
-        this.setContainers();
-        this.getData();
+        console.log('ngOnInit');
+        this.setupChart();
     }
 
     public ngOnDestroy(): void {
-        console.log('Remove', this.subscriptions.length);
+        console.log('ngOnDestroy');
+        // console.log('Remove', this.subscriptions.length);
         this.subscriptions.map((sub) => sub.unsubscribe());
     }
 
+    public ngOnChanges(changes: SimpleChanges): void {
+        console.log('ngOnChanges');
+        if (!changes['options'].firstChange) {
+            this.getData();
+        }
+    }
+
     public getData() {
-        this.data$ = this.service.getMonthlyData(defaultOptions);
+        console.log('getData');
+        this.data$ = this.service.getMonthlyData(this.options);
         this.subscribeToData();
     }
 
+    private setupChart() {
+        console.log('setupChart');
+        this.svg = this.host.select('svg');
+        this.setDimensions();
+        this.setContainers();
+    }
+
     private subscribeToData() {
+        console.log('subscribeToData');
         const sub = this.data$.subscribe(data => {
             this.data = data;
             this.transformData();
@@ -102,6 +119,7 @@ export class LineChartComponent implements OnInit, OnDestroy {
     }
 
     private transformData() {
+        console.log('transformData');
         const initObj = (item: Record) => ({
             YEAR_MONTH: item.YEAR_MONTH,
             TOTAL_QUANTITY: 0,
@@ -131,6 +149,7 @@ export class LineChartComponent implements OnInit, OnDestroy {
     }
 
     private setDimensions(): void {
+        console.log('setDimensions');
         this.dimensions = this.svg.node().getBoundingClientRect();
         this.innerWidth = this.dimensions.width - this.margins.left - this.margins.right;
         this.innerHeight = this.dimensions.height - this.margins.top - this.margins.bottom;
@@ -138,6 +157,7 @@ export class LineChartComponent implements OnInit, OnDestroy {
     }
 
     private setContainers(): void {
+        console.log('setContainers');
         this.xAxisContainer = this.svg
             .append('g')
             .attr('class', 'x-axis-container')
@@ -168,6 +188,7 @@ export class LineChartComponent implements OnInit, OnDestroy {
     }
 
     private updateChart(): void {
+        console.log('updateChart');
         this.setParams();
         this.setLabels();
         this.setAxis();
@@ -176,6 +197,7 @@ export class LineChartComponent implements OnInit, OnDestroy {
     }
 
     private setParams(): void {
+        console.log('setParams');
         // Helper Functions
         const dataItemMap = (dataItem: Data) => dataItem.x
         const lineDataItemMap = (lineDataItem: LineDataItem) => lineDataItem.data.map(dataItemMap);
@@ -215,6 +237,7 @@ export class LineChartComponent implements OnInit, OnDestroy {
     }
 
     private setLabels(): void {
+        console.log('setLabels');
         const title = 'Prescribing Data';
         this.titleContainer
             .text(title)
@@ -223,6 +246,7 @@ export class LineChartComponent implements OnInit, OnDestroy {
     }
 
     private setAxis(): void {
+        console.log('setAxis');
         this.xAxis = d3
             .axisBottom(this.x)
             .ticks(d3.timeMonth.every(3))
@@ -255,6 +279,7 @@ export class LineChartComponent implements OnInit, OnDestroy {
     private setLegend(): void { }
 
     private draw(): void {
+        console.log('draw');
         // Bind data
         const lines = this.dataContainer
             .selectAll('path.data')
