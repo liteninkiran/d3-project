@@ -385,7 +385,7 @@ export class LineChartComponent implements OnInit, OnDestroy, OnChanges {
             // Add in our tooltip
             tooltip.style('display', 'block')
                 .style('left', `${xPos + 175}px`)
-                .style('top', `${yPos + 100}px`)
+                .style('top', `${yPos + 50}px`)
                 .html(htmlLines.join('<br>'));
         }
 

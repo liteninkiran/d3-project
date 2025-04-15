@@ -1,5 +1,6 @@
 <h1>NHS API</h1>
 
+<app-line-chart [options]="options" />
+
 <app-nhs-api-request-params [defaultOptions]="options" (userOptions)="storeUserOptions($event)" />
 
-<app-line-chart [options]="options" />
