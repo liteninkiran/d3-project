@@ -14,10 +14,10 @@ export type FilterOptions = {
     bnfCode: string,
 }
 export const defaultOptions: FilterOptions = {
-    startDate: moment('2023-01-01'),
-    endDate: moment('2023-12-01'),
-    practiceCode: 'Y03641',
-    bnfCode: '0410030C0AAAFAF',
+    startDate: moment('2024-01-01'),
+    endDate: moment('2024-12-01'),
+    practiceCode: 'J83601',
+    bnfCode: '0407010H0AAAMAM',
 }
 
 @Injectable({
@@ -78,7 +78,7 @@ export class NhsApiService {
     public getMonthlyData(options: FilterOptions): Observable<DatastoreSearchSql[]> {
         const useMocks = false;
         const urls = this.getUrls(options);
-        const merged = mergeMap((url: string) => this.getDatastoreSearchMonthly(url), 4);
+        const merged = mergeMap((url: string) => this.getDatastoreSearchMonthly(url), 6);
         const scanned = scan((acc, data) => [...acc, data], []);
         return useMocks
             ? of(allData)
