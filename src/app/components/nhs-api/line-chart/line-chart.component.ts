@@ -1,6 +1,7 @@
 // Angular | RxJS
 import { Component, ElementRef, OnInit, OnDestroy, OnChanges, SimpleChanges, Input } from '@angular/core';
 import { Observable, Subscription } from 'rxjs';
+import { DatePipe, DecimalPipe } from '@angular/common';
 
 // Local Imports
 import { FilterOptions, NhsApiService } from 'src/app/services/nhs-api/nhs-api.service';
@@ -55,6 +56,7 @@ export class LineChartComponent implements OnInit, OnDestroy, OnChanges {
     public yAxisContainer: Selection<SVGGElement, {}, HTMLElement, any>;
     public legendContainer: Selection<SVGGElement, {}, HTMLElement, any>;
     public titleContainer: Selection<SVGGElement, {}, HTMLElement, any>;
+    public tooltipContainer: any;
 
     // Date/time formatters
     public timeParse = d3.timeParse('%Y-%m-%dT%H:%M:%S');
@@ -72,7 +74,9 @@ export class LineChartComponent implements OnInit, OnDestroy, OnChanges {
 
     constructor(
         private readonly service: NhsApiService,
-        element: ElementRef
+        public element: ElementRef,
+        private decimalPipe: DecimalPipe,
+        private datePipe: DatePipe,
     ) {
         this.host = d3.select(element.nativeElement);
     }
@@ -80,6 +84,7 @@ export class LineChartComponent implements OnInit, OnDestroy, OnChanges {
     public ngOnInit(): void {
         console.log('ngOnInit');
         this.setupChart();
+        //this.getData();
     }
 
     public ngOnDestroy(): void {
@@ -90,7 +95,8 @@ export class LineChartComponent implements OnInit, OnDestroy, OnChanges {
 
     public ngOnChanges(changes: SimpleChanges): void {
         console.log('ngOnChanges');
-        if (!changes['options'].firstChange) {
+        const firstChange = changes['options'].firstChange;
+        if (!firstChange) {
             this.getData();
         }
     }
@@ -145,7 +151,7 @@ export class LineChartComponent implements OnInit, OnDestroy, OnChanges {
         const months: MonthData[] = Object.values(reduced);
         const data = months.map(mapData);
         const name = 'Data';
-        this.lineData = [ { name, data } ];
+        this.lineData = [{ name, data }];
     }
 
     private setDimensions(): void {
@@ -185,6 +191,10 @@ export class LineChartComponent implements OnInit, OnDestroy, OnChanges {
             .append('g')
             .attr('class', 'legend-container')
             .attr('transform', `translate(${this.margins.left}, ${this.dimensions.height - 0.5 * this.margins.bottom + 10})`);
+
+        this.tooltipContainer = this.svg
+            .append('g')
+            .attr('transform', `translate(${this.margins.left}, ${this.margins.top})`);
     }
 
     private updateChart(): void {
@@ -194,6 +204,7 @@ export class LineChartComponent implements OnInit, OnDestroy, OnChanges {
         this.setAxis();
         this.setLegend();
         this.draw();
+        this.addTooltip();
     }
 
     private setParams(): void {
@@ -299,5 +310,90 @@ export class LineChartComponent implements OnInit, OnDestroy, OnChanges {
 
         // Exit
         lines.exit().remove();
+    }
+
+    private addTooltip() {
+        console.log('addTooltip');
+        // Add a DIV element
+        const tooltip = d3.select('body')
+            .append('div')
+            .attr('class', 'tooltip')
+            .style('position', 'absolute')
+            .style('padding', '10px')
+            .style('background-color', 'steelblue')
+            .style('color', 'white')
+            .style('border', '1px solid white')
+            .style('border-radius', '10px')
+            .style('display', 'none')
+            .style('opacity', 0.75)
+            .style('z-index', 5);
+
+        // Add a circle element
+        const circle = this.tooltipContainer
+            .append('circle')
+            .attr('r', 0)
+            .attr('fill', 'steelblue')
+            .style('stroke', 'white')
+            .attr('opacity', .70)
+            .style('pointer-events', 'none');
+
+        // Create a listening rectangle
+        const listeningRect = this.tooltipContainer
+            .append('rect')
+            .attr('width', this.innerWidth)
+            .attr('height', this.innerHeight)
+            .style('pointer-events', 'all')
+            .style('fill-opacity', 0)
+            .style('stroke-opacity', 0)
+            .style('z-index', 1);
+
+        const mousemoveFn = (event: MouseEvent) => {
+            // Find the closest data item
+            const dAttribute = (event: MouseEvent) => {
+                const data = this.lineData[0].data;
+                const rect = this.tooltipContainer.select('rect')._groups[0][0];
+                const [xCoord] = d3.pointer(event, rect);
+                const bisectDate = d3.bisector((d: Data) => d.x).left;
+                const x0 = this.x.invert(xCoord);
+                const i = bisectDate(data, x0, 1);
+                const d0 = data[i - 1];
+                const d1 = data[i];
+                const diff0 = x0.valueOf() - d0.x.valueOf();
+                const diff1 = d1.x.valueOf() - x0.valueOf();
+                return diff0 > diff1 ? d1 : d0;
+            }
+
+            // Store the closest data item
+            const dataItem = dAttribute(event);
+
+            // Calculate x, y positions
+            const xPos = this.x(dataItem.x);
+            const yPos = this.y(dataItem.y);
+
+            // Update the circle position
+            circle.attr('cx', xPos).attr('cy', yPos);
+
+            // Add transition for the circle radius
+            circle.transition().duration(50).attr('r', 5);
+
+            const htmlLines = [
+                `<strong>DATE:</strong> ${this.datePipe.transform(dataItem.x, 'LLLL y')}<br>`,
+                `<strong>VALUE:</strong> ${this.decimalPipe.transform(dataItem.y)}`,
+            ];
+
+            // Add in our tooltip
+            tooltip.style('display', 'block')
+                .style('left', `${xPos + 175}px`)
+                .style('top', `${yPos + 100}px`)
+                .html(htmlLines.join('<br>'));
+        }
+
+        const mouseleaveFn = () => {
+            circle.transition().duration(50).attr('r', 0);
+            tooltip.style('display', 'none');
+        }
+
+        listeningRect.on('mousemove', mousemoveFn);
+        listeningRect.on('mouseleave', mouseleaveFn);
     }
 }
