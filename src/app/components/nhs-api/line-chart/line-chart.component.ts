@@ -84,7 +84,7 @@ export class LineChartComponent implements OnInit, OnDestroy, OnChanges {
     public ngOnInit(): void {
         console.log('ngOnInit');
         this.setupChart();
-        //this.getData();
+        this.getData();
     }
 
     public ngOnDestroy(): void {
@@ -194,6 +194,7 @@ export class LineChartComponent implements OnInit, OnDestroy, OnChanges {
 
         this.tooltipContainer = this.svg
             .append('g')
+            .attr('class', 'tooltip-container')
             .attr('transform', `translate(${this.margins.left}, ${this.margins.top})`);
     }
 
@@ -340,7 +341,7 @@ export class LineChartComponent implements OnInit, OnDestroy, OnChanges {
         // Create a listening rectangle
         const listeningRect = this.tooltipContainer
             .append('rect')
-            .attr('width', this.innerWidth)
+            .attr('width', this.innerWidth - 1)
             .attr('height', this.innerHeight)
             .style('pointer-events', 'all')
             .style('fill-opacity', 0)
