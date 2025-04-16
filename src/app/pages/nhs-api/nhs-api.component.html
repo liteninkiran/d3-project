@@ -1,4 +1,18 @@
-<h1>NHS API</h1>
+<div class="header-container">
+
+    <h1>NHS API</h1>
+
+    <button
+        mat-fab
+        matTooltip="Get GP data"
+        matTooltipPosition="above"
+        matTooltipHideDelay="100"
+        (click)="getGpData()"
+    >
+        <mat-icon>sick</mat-icon>
+    </button>
+
+</div>
 
 <app-line-chart [options]="options" />
 
