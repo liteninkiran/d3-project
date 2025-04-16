@@ -29,7 +29,7 @@
                         <input matInput type="text" name="baseAssetId" placeholder="Enter base asset ID, e.g. BTC"
                             formControlName="baseAssetId" />
 
-                        <button matSuffix mat-icon-button aria-label="Clear"
+                        <button matSuffix mat-icon-button
                             (click)="form.controls['baseAssetId'].setValue('')" *ngIf="form.value.baseAssetId">
                             <mat-icon>close</mat-icon>
                         </button>
@@ -46,7 +46,7 @@
                         <input matInput type="text" name="quoteAssetId" placeholder="Enter quote asset ID, e.g. GBP"
                             formControlName="quoteAssetId" />
 
-                        <button matSuffix mat-icon-button aria-label="Clear"
+                        <button matSuffix mat-icon-button
                             (click)="form.controls['quoteAssetId'].setValue('')" *ngIf="form.value.quoteAssetId">
                             <mat-icon>close</mat-icon>
                         </button>

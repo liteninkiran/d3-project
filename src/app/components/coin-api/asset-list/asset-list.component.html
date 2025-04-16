@@ -25,7 +25,7 @@
 
                     <input matInput type="text" name="nameOrId" [placeholder]="placeHolder" formControlName="nameOrId" />
 
-                    <button matSuffix mat-icon-button aria-label="Clear" (click)="form.controls['nameOrId'].setValue('')" *ngIf="form.value.nameOrId">
+                    <button matSuffix mat-icon-button (click)="form.controls['nameOrId'].setValue('')" *ngIf="form.value.nameOrId">
                         <mat-icon>close</mat-icon>
                     </button>
 
