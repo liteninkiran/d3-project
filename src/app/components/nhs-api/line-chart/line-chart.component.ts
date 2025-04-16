@@ -378,7 +378,7 @@ export class LineChartComponent implements OnInit, OnDestroy, OnChanges {
             circle.transition().duration(50).attr('r', 5);
 
             const htmlLines = [
-                `<strong>DATE:</strong> ${this.datePipe.transform(dataItem.x, 'LLLL y')}<br>`,
+                `<strong>DATE:</strong> ${this.datePipe.transform(dataItem.x, 'LLLL y')}`,
                 `<strong>VALUE:</strong> ${this.decimalPipe.transform(dataItem.y)}`,
             ];
 
