@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
+import { ScratchComponent } from 'src/app/components/nhs-api/scratch/scratch.component';
 import { defaultOptions, FilterOptions } from 'src/app/services/nhs-api/nhs-api.service';
 import { SpineService } from 'src/app/services/nhs-api/spine.service';
 
@@ -8,11 +10,11 @@ import { SpineService } from 'src/app/services/nhs-api/spine.service';
     styleUrls: ['./nhs-api.component.scss'],
 })
 export class NhsApiComponent implements OnInit {
-
     public options = defaultOptions;
 
     constructor(
         private readonly service: SpineService,
+        private dialog: MatDialog
     ) { }
 
     public ngOnInit(): void {
@@ -31,5 +33,13 @@ export class NhsApiComponent implements OnInit {
                 error: (err) => console.error('Error fetching organisations:', err)
             });
         }
+    }
+
+    public openModal() {
+        const dialogRef = this.dialog.open(ScratchComponent);
+
+        dialogRef.afterClosed().subscribe(result => {
+            console.log(`Dialog result: ${result}`);
+        });
     }
 }

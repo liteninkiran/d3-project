@@ -2,16 +2,27 @@
 
     <h1>NHS API</h1>
 
-    <button
-        mat-fab
-        matTooltip="Get GP data"
-        matTooltipPosition="above"
-        matTooltipHideDelay="100"
-        (click)="getGpData()"
-    >
-        <mat-icon>sick</mat-icon>
-    </button>
+    <div>
+        <button
+            mat-fab
+            matTooltip="Get GP data"
+            matTooltipPosition="above"
+            matTooltipHideDelay="100"
+            (click)="getGpData()"
+        >
+            <mat-icon>sick</mat-icon>
+        </button>
 
+        <button
+            mat-fab
+            matTooltip="Request Parameters"
+            matTooltipPosition="above"
+            matTooltipHideDelay="100"
+            (click)="openModal()"
+        >
+            <mat-icon>apps</mat-icon>
+        </button>
+    </div>
 </div>
 
 <app-line-chart [options]="options" />
