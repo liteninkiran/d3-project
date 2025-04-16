@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { ScratchComponent } from 'src/app/components/nhs-api/scratch/scratch.component';
 import { defaultOptions, FilterOptions } from 'src/app/services/nhs-api/nhs-api.service';
 import { SpineService } from 'src/app/services/nhs-api/spine.service';
@@ -36,10 +36,12 @@ export class NhsApiComponent implements OnInit {
     }
 
     public openModal() {
-        const dialogRef = this.dialog.open(ScratchComponent);
+        const dialogConfig = new MatDialogConfig();
+        dialogConfig.data = this.options
+        const dialogRef = this.dialog.open(ScratchComponent, dialogConfig);
 
         dialogRef.afterClosed().subscribe(result => {
-            console.log(`Dialog result: ${result}`);
+            console.log(result);
         });
     }
 }
