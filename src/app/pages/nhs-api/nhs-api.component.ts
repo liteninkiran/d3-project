@@ -40,8 +40,8 @@ export class NhsApiComponent implements OnInit {
         dialogConfig.data = this.options
         const dialogRef = this.dialog.open(ScratchComponent, dialogConfig);
 
-        dialogRef.afterClosed().subscribe(result => {
-            console.log(result);
+        dialogRef.afterClosed().subscribe((options: FilterOptions) => {
+            this.options = options;
         });
     }
 }
