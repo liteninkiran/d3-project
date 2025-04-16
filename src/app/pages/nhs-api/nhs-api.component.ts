@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
-import { ScratchComponent } from 'src/app/components/nhs-api/scratch/scratch.component';
+import { RequestParamsComponent } from 'src/app/components/nhs-api/request-params/request-params.component';
 import { defaultOptions, FilterOptions } from 'src/app/services/nhs-api/nhs-api.service';
 import { SpineService } from 'src/app/services/nhs-api/spine.service';
 
@@ -38,7 +38,7 @@ export class NhsApiComponent implements OnInit {
     public openModal() {
         const dialogConfig = new MatDialogConfig();
         dialogConfig.data = this.options
-        const dialogRef = this.dialog.open(ScratchComponent, dialogConfig);
+        const dialogRef = this.dialog.open(RequestParamsComponent, dialogConfig);
 
         dialogRef.afterClosed().subscribe((options: FilterOptions) => {
             this.options = options;

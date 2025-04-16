@@ -7,22 +7,22 @@ import { FilterOptions } from 'src/app/services/nhs-api/nhs-api.service';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 
 @Component({
-    selector: 'app-nhs-api-scratch',
-    templateUrl: './scratch.component.html',
-    styleUrls: ['./scratch.component.scss'],
+    selector: 'app-nhs-api-request-params',
+    templateUrl: './request-params.component.html',
+    styleUrls: ['./request-params.component.scss'],
     providers: [
         { provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE] },
         { provide: MAT_DATE_FORMATS, useValue: MONTH_YEAR_FORMATS },
     ],
 })
-export class ScratchComponent implements OnInit {
+export class RequestParamsComponent implements OnInit {
 
     public defaultOptions: FilterOptions;
     public form: FormGroup;
 
     constructor(
         private fb: NonNullableFormBuilder,
-        private dialogRef: MatDialogRef<ScratchComponent>,
+        private dialogRef: MatDialogRef<RequestParamsComponent>,
         @Inject(MAT_DIALOG_DATA) data: FilterOptions,
     ) {
         this.defaultOptions = data;
