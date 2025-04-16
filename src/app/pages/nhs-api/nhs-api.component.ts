@@ -21,10 +21,6 @@ export class NhsApiComponent implements OnInit {
 
     }
 
-    public storeUserOptions(options: FilterOptions) {
-        this.options = options;
-    }
-
     public getGpData() {
         const confirmation = confirm('Would you like to fetch GP data? This will take about 2 mins.');
         if (confirmation) {
@@ -37,11 +33,13 @@ export class NhsApiComponent implements OnInit {
 
     public openModal() {
         const dialogConfig = new MatDialogConfig();
-        dialogConfig.data = this.options
+        dialogConfig.data = this.options;
         const dialogRef = this.dialog.open(RequestParamsComponent, dialogConfig);
 
-        dialogRef.afterClosed().subscribe((options: FilterOptions) => {
-            this.options = options;
+        dialogRef.afterClosed().subscribe((options?: FilterOptions) => {
+            if (options) {
+                this.options = options;
+            }
         });
     }
 }
