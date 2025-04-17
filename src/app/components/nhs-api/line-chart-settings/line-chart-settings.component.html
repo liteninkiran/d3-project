@@ -1,0 +1,42 @@
+<div class="container">
+
+    <div class="header-row">
+        <h1>Chart Settings</h1>
+        <button
+            mat-mini-fab
+            matTooltip="Close Form"
+            matTooltipPosition="above"
+            (click)="handleClose()"
+            class="close-button"
+        >
+            <mat-icon>close</mat-icon>
+        </button>
+    </div>
+
+    <mat-dialog-content [formGroup]="form">
+
+        <div class="full-width">
+
+            <!-- Setting 1 -->
+            <mat-form-field class="full-width">
+
+                <mat-label>
+                    Setting 1
+                </mat-label>
+
+                <input matInput type="text" name="settingOne" placeholder="Enter something" formControlName="settingOne" appearance="fill" />
+
+            </mat-form-field>
+
+        </div>
+
+        <button
+            mat-raised-button
+            color="primary"
+            (click)="handleSubmit()"
+        >
+            SAVE
+        </button>
+
+    </mat-dialog-content>
+</div>

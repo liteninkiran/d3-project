@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
+import { LineChartSettingsComponent } from 'src/app/components/nhs-api/line-chart-settings/line-chart-settings.component';
 import { RequestParamsComponent } from 'src/app/components/nhs-api/request-params/request-params.component';
 import { defaultOptions, FilterOptions } from 'src/app/services/nhs-api/nhs-api.service';
 import { SpineService } from 'src/app/services/nhs-api/spine.service';
@@ -31,7 +32,7 @@ export class NhsApiComponent implements OnInit {
         }
     }
 
-    public openModal() {
+    public openRequestParamsModal() {
         const dialogConfig = new MatDialogConfig();
         dialogConfig.data = this.options;
         const dialogRef = this.dialog.open(RequestParamsComponent, dialogConfig);
@@ -39,6 +40,18 @@ export class NhsApiComponent implements OnInit {
         dialogRef.afterClosed().subscribe((options?: FilterOptions) => {
             if (options) {
                 this.options = options;
+            }
+        });
+    }
+
+    public openChartSettingsModal() {
+        const dialogConfig = new MatDialogConfig();
+        dialogConfig.data = { settingOne: 'Howdy' };
+        const dialogRef = this.dialog.open(LineChartSettingsComponent, dialogConfig);
+
+        dialogRef.afterClosed().subscribe((data?: any) => {
+            if (data) {
+                console.log(data);
             }
         });
     }

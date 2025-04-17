@@ -5,11 +5,13 @@ import { MaterialModule } from './material.module';
 import { ReactiveFormsModule } from '@angular/forms';
 import { LineChartComponent } from '../components/nhs-api/line-chart/line-chart.component';
 import { RequestParamsComponent } from '../components/nhs-api/request-params/request-params.component';
+import { LineChartSettingsComponent } from '../components/nhs-api/line-chart-settings/line-chart-settings.component';
 
 @NgModule({
     declarations: [
         NhsApiComponent,
         LineChartComponent,
+        LineChartSettingsComponent,
         RequestParamsComponent,
     ],
     imports: [
@@ -20,6 +22,7 @@ import { RequestParamsComponent } from '../components/nhs-api/request-params/req
     exports: [
         NhsApiComponent,
         LineChartComponent,
+        LineChartSettingsComponent,
         RequestParamsComponent,
     ],
     providers: [
