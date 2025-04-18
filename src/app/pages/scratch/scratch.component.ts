@@ -13,10 +13,6 @@ export class ScratchComponent implements OnInit {
         width: 1500,
         height: 700,
     }
-    public labels = {
-        x: 'Date',
-        y: 'Value',
-    }
 
     constructor( ) { }
 
