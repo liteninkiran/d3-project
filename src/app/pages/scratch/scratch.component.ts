@@ -13,6 +13,14 @@ export class ScratchComponent implements OnInit {
         { date: '2025-04-03', value: 45 },
         { date: '2025-04-04', value: 60 },
     ];
+    public dimensions = {
+        width: 1500,
+        height: 700,
+    }
+    public labels = {
+        x: 'Date',
+        y: 'Value',
+    }
 
     constructor( ) { }
 

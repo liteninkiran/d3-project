@@ -19,26 +19,28 @@ type ChartData = {
 export class TimeSeriesComponent implements OnInit, AfterViewInit {
 
     @Input() data: ChartData[] = [];
-    @Input() width: number = 500;
-    @Input() height: number = 300;
+    @Input() width: number = 1200;
+    @Input() height: number = 600;
     @Input() margin = { top: 20, right: 30, bottom: 40, left: 80 };
     @Input() xAxisLabel: string = '';
     @Input() yAxisLabel: string = '';
+    @Input() showMarkers: boolean = true;
 
     @ViewChild('chart', { static: true }) private chartContainer: ElementRef;
+    @ViewChild('tooltip', { static: true }) private tooltipRef: ElementRef;
 
     private svg: any;
     private g: any;
 
     constructor() { }
 
-    ngOnInit() { }
+    public ngOnInit(): void { }
 
-    ngAfterViewInit() {
+    public ngAfterViewInit(): void {
         this.createChart();
     }
 
-    private createChart() {
+    private createChart(): void {
         const { margin, width, height } = this;
         const chartWidth = width - margin.left - margin.right;
         const chartHeight = height - margin.top - margin.bottom;
@@ -80,11 +82,12 @@ export class TimeSeriesComponent implements OnInit, AfterViewInit {
     private createLine(
         xScale: ScaleTime<number, number, never>,
         yScale: ScaleContinuousNumeric<number, number, never>
-    ) {
+    ): void {
         const line = d3.line<ChartData>()
             .x(d => xScale(d.date))
             .y(d => yScale(d.value));
 
+        // Draw the line
         this.g.append('path')
             .data([this.data])
             .attr('class', 'line')
@@ -92,6 +95,49 @@ export class TimeSeriesComponent implements OnInit, AfterViewInit {
             .style('stroke', 'steelblue')
             .style('fill', 'none')
             .style('stroke-width', 2);
+
+        // Draw markers
+        if (this.showMarkers) {
+            const tooltip = d3.select(this.tooltipRef.nativeElement);
+            const markers = this.g.selectAll('.marker')
+                .data(this.data)
+                .enter()
+                .append('circle')
+                .attr('class', 'marker')
+                .attr('cx', d => xScale(d.date))
+                .attr('cy', d => yScale(d.value))
+                .attr('r', 4)
+                .attr('fill', 'steelblue')
+                .attr('stroke', 'white')
+                .attr('stroke-width', 0)
+                .style('cursor', 'pointer');
+
+            markers.on('mouseover', function (event: MouseEvent, d: ChartData) {
+                d3.select(this)
+                    .transition()
+                    .duration(200)
+                    .attr('r', 8);
+
+                tooltip
+                    .style('opacity', 1)
+                    .html(`<strong>${d3.timeFormat('%d/%m/%Y')(d.date)}</strong><br>Value: ${d.value}`);
+            });
+
+            markers.on('mousemove', function (event: MouseEvent) {
+                tooltip
+                  .style('left', (event.pageX + 10) + 'px')
+                  .style('top', (event.pageY - 28) + 'px');
+            });
+
+            markers.on('mouseout', function (event: MouseEvent) {
+                d3.select(this)
+                    .transition()
+                    .duration(200)
+                    .attr('r', 4);
+
+                tooltip.style('opacity', 0);
+            });
+        }
     }
 
     private createAxes(
@@ -99,16 +145,15 @@ export class TimeSeriesComponent implements OnInit, AfterViewInit {
         yScale: ScaleContinuousNumeric<number, number, never>,
         chartWidth: number,
         chartHeight: number
-    ) {
+    ): void {
         // Add X Axis
+        const axis = d3.axisBottom(xScale)
+        .tickValues(this.data.map(d => d.date))
+        .tickFormat(d3.timeFormat('%d/%m/%Y'));
         this.g.append('g')
             .attr('class', 'x-axis')
             .attr('transform', `translate(0,${chartHeight})`)
-            .call(
-                d3.axisBottom(xScale)
-                    .tickValues(this.data.map(d => d.date))
-                    .tickFormat(d3.timeFormat('%d/%m/%Y'))
-            );
+            .call(axis);
 
         // Add Y Axis
         this.g.append('g')
