@@ -3,18 +3,9 @@ import { Injectable } from '@angular/core';
 import { from, mergeMap, Observable, of, scan } from 'rxjs';
 import { DatastoreSearch, DatastoreSearchSql, FilterOptions } from 'src/app/types/nhs-api/epd';
 import { allData } from 'src/app/mocks/nhs-api/prescribingData';
-import * as moment from 'moment';
 
 const baseUrl1 = 'https://opendata.nhsbsa.net/api/3/action/datastore_search';
 const baseUrl2 = 'https://opendata.nhsbsa.net/api/3/action/datastore_search_sql';
-
-export const defaultOptions: FilterOptions = {
-    startDate: moment('2024-01-01'),
-    endDate: moment('2024-12-01'),
-    practiceCode: 'J83601',
-    bnfCode: '0407010H0AAAMAM',
-    concurrent: 3,
-}
 
 @Injectable({
     providedIn: 'root'

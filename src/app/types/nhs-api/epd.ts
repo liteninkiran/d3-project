@@ -1,3 +1,5 @@
+import * as moment from "moment";
+
 export type DatastoreSearch = {
     help: string;
     success: boolean | string;
@@ -65,4 +67,12 @@ export type FilterOptions = {
     practiceCode: string;
     bnfCode: string;
     concurrent: number;
+}
+
+export const defaultOptions: FilterOptions = {
+    startDate: moment('2024-01-01'),
+    endDate: moment('2024-12-01'),
+    practiceCode: 'J83601',
+    bnfCode: '0407010H0AAAMAM',
+    concurrent: 3,
 }

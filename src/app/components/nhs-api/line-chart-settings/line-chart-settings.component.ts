@@ -36,7 +36,8 @@ export class LineChartSettingsComponent implements OnInit {
 
     private setupForm(): void {
         this.form = this.fb.group({
-            concurrent: this.fb.control(this.data.concurrent),
+            markers: this.fb.control(this.data.markers),
+            markerSize: this.fb.control(this.data.markerSize),
         });
     }
 }

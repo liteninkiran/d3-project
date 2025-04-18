@@ -15,20 +15,42 @@
 
     <mat-dialog-content [formGroup]="form">
 
-        <div class="full-width">
 
-            <!-- Concurrent -->
-            <mat-form-field class="full-width">
 
-                <mat-label>
-                    Concurrency
-                </mat-label>
+        <mat-card appearance="outlined">
 
-                <input matInput type="number" name="concurrent" placeholder="Select concurrency" formControlName="concurrent" appearance="fill" />
+            <mat-card-header>
 
-            </mat-form-field>
+                <mat-card-title>Line Markers</mat-card-title>
 
-        </div>
+            </mat-card-header>
+
+            <mat-card-content>
+
+                <div class="full-width form-row">
+                    <!-- Concurrent -->
+                    <mat-checkbox formControlName="markers">Enable Markers</mat-checkbox>
+                </div>
+                        
+
+                <div class="full-width form-row" *ngIf="form.value.markers">
+
+                    <!-- Marker Size -->
+                    <mat-form-field class="full-width">
+        
+                        <mat-label>
+                            Marker Size
+                        </mat-label>
+        
+                        <input matInput type="number" placeholder="Marker size" formControlName="markerSize" appearance="fill" />
+        
+                    </mat-form-field>
+        
+                </div>
+        
+            </mat-card-content>
+
+        </mat-card>
 
         <button
             mat-raised-button

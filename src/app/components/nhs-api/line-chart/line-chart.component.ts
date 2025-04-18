@@ -14,6 +14,7 @@ import { Selection } from 'd3-selection';
 import { ScaleTime, ScaleContinuousNumeric } from 'd3-scale';
 import { Line } from 'd3-shape';
 import { Data, LineDataItem } from 'src/app/types/d3/data';
+import { ChartControl } from 'src/app/types/nhs-api/chart';
 
 type MonthData = {
     YEAR_MONTH: number;
@@ -27,7 +28,8 @@ type MonthData = {
 })
 export class LineChartComponent implements OnInit, OnDestroy, OnChanges {
 
-    @Input() public options: FilterOptions = {} as FilterOptions;
+    @Input() public requestOptions: FilterOptions = {} as FilterOptions;
+    @Input() public chartOptions: ChartControl = {} as ChartControl;
 
     // Data
     public data$: Observable<DatastoreSearchSql[]> = new Observable();
@@ -95,15 +97,16 @@ export class LineChartComponent implements OnInit, OnDestroy, OnChanges {
 
     public ngOnChanges(changes: SimpleChanges): void {
         console.log('ngOnChanges');
-        const firstChange = changes['options'].firstChange;
-        if (!firstChange) {
+        const reqChanges = changes['requestOptions'];
+        const firstReqChange = reqChanges && reqChanges.firstChange;
+        if (reqChanges && !firstReqChange) {
             this.getData();
         }
     }
 
     public getData() {
         console.log('getData');
-        this.data$ = this.service.getMonthlyData(this.options);
+        this.data$ = this.service.getMonthlyData(this.requestOptions);
         this.subscribeToData();
     }
 

@@ -2,10 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { LineChartSettingsComponent } from 'src/app/components/nhs-api/line-chart-settings/line-chart-settings.component';
 import { RequestParamsComponent } from 'src/app/components/nhs-api/request-params/request-params.component';
-import { defaultOptions } from 'src/app/services/nhs-api/nhs-api.service';
 import { SpineService } from 'src/app/services/nhs-api/spine.service';
-import { ChartControl } from 'src/app/types/nhs-api/chart';
-import { FilterOptions } from 'src/app/types/nhs-api/epd';
+import { ChartControl, defaultChartOptions } from 'src/app/types/nhs-api/chart';
+import { defaultOptions, FilterOptions } from 'src/app/types/nhs-api/epd';
 
 @Component({
     selector: 'app-nhs-api',
@@ -13,7 +12,8 @@ import { FilterOptions } from 'src/app/types/nhs-api/epd';
     styleUrls: ['./nhs-api.component.scss'],
 })
 export class NhsApiComponent implements OnInit {
-    public options = defaultOptions;
+    public requestOptions = defaultOptions;
+    public chartOptions = defaultChartOptions;
 
     constructor(
         private readonly service: SpineService,
@@ -36,24 +36,24 @@ export class NhsApiComponent implements OnInit {
 
     public openRequestParamsModal() {
         const dialogConfig = new MatDialogConfig();
-        dialogConfig.data = this.options;
+        dialogConfig.data = this.requestOptions;
         const dialogRef = this.dialog.open(RequestParamsComponent, dialogConfig);
 
         dialogRef.afterClosed().subscribe((options?: FilterOptions) => {
             if (options) {
-                this.options = options;
+                this.requestOptions = options;
             }
         });
     }
 
     public openChartSettingsModal() {
         const dialogConfig = new MatDialogConfig<ChartControl>();
-        dialogConfig.data = { concurrent: 6 };
+        dialogConfig.data = this.chartOptions;
         const dialogRef = this.dialog.open(LineChartSettingsComponent, dialogConfig);
 
-        dialogRef.afterClosed().subscribe((data?: ChartControl) => {
-            if (data) {
-                console.log(data);
+        dialogRef.afterClosed().subscribe((options?: ChartControl) => {
+            if (options) {
+                this.chartOptions = options;
             }
         });
     }
