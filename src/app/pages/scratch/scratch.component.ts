@@ -8,7 +8,7 @@ import { dataset1 } from 'src/app/mocks/d3/data';
 })
 export class ScratchComponent implements OnInit {
 
-    public chartData = dataset1;
+    public chartData = dataset1.filter(data => Date.parse(data.date) >= Date.parse('2025-01-01'));
     public dimensions = {
         width: 1500,
         height: 700,
@@ -21,7 +21,7 @@ export class ScratchComponent implements OnInit {
     constructor( ) { }
 
     public ngOnInit(): void {
-
+        
     }
 
 }
