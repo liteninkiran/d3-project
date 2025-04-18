@@ -1,7 +1,7 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { FormGroup, NonNullableFormBuilder } from '@angular/forms';
-import { FilterOptions } from 'src/app/services/nhs-api/nhs-api.service';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { ChartControl } from 'src/app/types/nhs-api/chart';
 
 @Component({
     selector: 'app-nhs-api-line-chart-settings',
@@ -10,13 +10,13 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 })
 export class LineChartSettingsComponent implements OnInit {
 
-    private data: any;
+    private data: ChartControl;
     public form: FormGroup;
 
     constructor(
         private fb: NonNullableFormBuilder,
         private dialogRef: MatDialogRef<LineChartSettingsComponent>,
-        @Inject(MAT_DIALOG_DATA) data: FilterOptions,
+        @Inject(MAT_DIALOG_DATA) data: ChartControl,
     ) {
         console.log(data);
         this.data = data;
@@ -36,7 +36,7 @@ export class LineChartSettingsComponent implements OnInit {
 
     private setupForm(): void {
         this.form = this.fb.group({
-            settingOne: this.fb.control(this.data.settingOne),
+            concurrent: this.fb.control(this.data.concurrent),
         });
     }
 }

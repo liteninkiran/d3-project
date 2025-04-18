@@ -4,6 +4,7 @@ import { LineChartSettingsComponent } from 'src/app/components/nhs-api/line-char
 import { RequestParamsComponent } from 'src/app/components/nhs-api/request-params/request-params.component';
 import { defaultOptions, FilterOptions } from 'src/app/services/nhs-api/nhs-api.service';
 import { SpineService } from 'src/app/services/nhs-api/spine.service';
+import { ChartControl } from 'src/app/types/nhs-api/chart';
 
 @Component({
     selector: 'app-nhs-api',
@@ -45,11 +46,11 @@ export class NhsApiComponent implements OnInit {
     }
 
     public openChartSettingsModal() {
-        const dialogConfig = new MatDialogConfig();
-        dialogConfig.data = { settingOne: 'Howdy' };
+        const dialogConfig = new MatDialogConfig<ChartControl>();
+        dialogConfig.data = { concurrent: 6 };
         const dialogRef = this.dialog.open(LineChartSettingsComponent, dialogConfig);
 
-        dialogRef.afterClosed().subscribe((data?: any) => {
+        dialogRef.afterClosed().subscribe((data?: ChartControl) => {
             if (data) {
                 console.log(data);
             }

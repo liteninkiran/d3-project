@@ -103,7 +103,7 @@ export class LineChartComponent implements OnInit, OnDestroy, OnChanges {
 
     public getData() {
         console.log('getData');
-        this.data$ = this.service.getMonthlyData(this.options);
+        this.data$ = this.service.getMonthlyData(this.options, 6);
         this.subscribeToData();
     }
 
