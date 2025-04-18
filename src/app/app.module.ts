@@ -11,6 +11,7 @@ import { MaterialModule } from './modules/material.module';
 import { CoinApiModule } from './modules/coin-api.module';
 import { NhsApiModule } from './modules/nhs-api.module';
 import { ScratchComponent } from './pages/scratch/scratch.component';
+import { D3ChartsModule } from './modules/d3-charts.module';
 
 @NgModule({
     declarations: [
@@ -27,6 +28,7 @@ import { ScratchComponent } from './pages/scratch/scratch.component';
         MaterialModule,
         CoinApiModule,
         NhsApiModule,
+        D3ChartsModule,
     ],
     providers: [],
     bootstrap: [AppComponent],

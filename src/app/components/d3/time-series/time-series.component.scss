@@ -1,0 +1,16 @@
+svg {
+    font-family: 'Arial', sans-serif;
+}
+
+.line {
+    fill: none;
+    stroke: steelblue;
+    stroke-width: 2;
+}
+
+.x-axis path,
+.x-axis line,
+.y-axis path,
+.y-axis line {
+    shape-rendering: crispEdges;
+}
