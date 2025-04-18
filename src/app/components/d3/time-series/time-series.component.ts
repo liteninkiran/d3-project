@@ -3,7 +3,6 @@ import { Component, OnInit, Input, ElementRef, AfterViewInit, ViewChild, ChangeD
 
 // D3 Imports
 import * as d3 from 'd3';
-import { ScaleContinuousNumeric, ScaleTime } from 'd3';
 
 // Local Imports
 import { ChartData } from 'src/app/types/d3/data';
@@ -26,7 +25,6 @@ export class TimeSeriesComponent implements OnInit, AfterViewInit {
     @Input() showMarkers: boolean = true;
 
     @ViewChild('chart', { static: true }) private chartContainer: ElementRef;
-    @ViewChild('tooltip', { static: true }) private tooltipRef: ElementRef;
 
     private svg: any;
     private g: any;
