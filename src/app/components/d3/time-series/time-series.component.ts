@@ -5,10 +5,8 @@ import { Component, OnInit, Input, ElementRef, AfterViewInit, ViewChild, ChangeD
 import * as d3 from 'd3';
 import { ScaleContinuousNumeric, ScaleTime } from 'd3';
 
-type ChartData = {
-    date: any;
-    value: number;
-}
+// Local Imports
+import { ChartData } from 'src/app/types/d3/data';
 
 @Component({
     selector: 'app-time-series',
@@ -21,7 +19,7 @@ export class TimeSeriesComponent implements OnInit, AfterViewInit {
     @Input() data: ChartData[] = [];
     @Input() width: number = 1200;
     @Input() height: number = 600;
-    @Input() margin = { top: 20, right: 30, bottom: 40, left: 80 };
+    @Input() margin = { top: 20, right: 30, bottom: 50, left: 80 };
     @Input() xAxisLabel: string = '';
     @Input() yAxisLabel: string = '';
     @Input() showMarkers: boolean = true;
@@ -104,8 +102,8 @@ export class TimeSeriesComponent implements OnInit, AfterViewInit {
                 .enter()
                 .append('circle')
                 .attr('class', 'marker')
-                .attr('cx', d => xScale(d.date))
-                .attr('cy', d => yScale(d.value))
+                .attr('cx', (d: ChartData) => xScale(d.date))
+                .attr('cy', (d: ChartData) => yScale(d.value))
                 .attr('r', 4)
                 .attr('fill', 'steelblue')
                 .attr('stroke', 'white')
@@ -147,13 +145,14 @@ export class TimeSeriesComponent implements OnInit, AfterViewInit {
         chartHeight: number
     ): void {
         // Add X Axis
-        const axis = d3.axisBottom(xScale)
-        .tickValues(this.data.map(d => d.date))
-        .tickFormat(d3.timeFormat('%d/%m/%Y'));
+        const xAxis = d3.axisBottom(xScale)
+            .ticks(d3.timeMonth.every(12))
+            .tickFormat(d3.timeFormat('%d/%m/%Y'));
+
         this.g.append('g')
             .attr('class', 'x-axis')
-            .attr('transform', `translate(0,${chartHeight})`)
-            .call(axis);
+            .attr('transform', `translate(0, ${chartHeight})`)
+            .call(xAxis);
 
         // Add Y Axis
         this.g.append('g')
@@ -163,7 +162,7 @@ export class TimeSeriesComponent implements OnInit, AfterViewInit {
         // Add X axis label
         this.g.append('text')
             .attr('class', 'x-axis-label')
-            .attr('transform', `translate(${chartWidth / 2}, ${chartHeight + 30})`)
+            .attr('transform', `translate(${chartWidth / 2}, ${chartHeight + 40})`)
             .style('text-anchor', 'middle')
             .text(this.xAxisLabel);
 
@@ -171,7 +170,7 @@ export class TimeSeriesComponent implements OnInit, AfterViewInit {
         this.g.append('text')
             .attr('class', 'y-axis-label')
             .attr('transform', 'rotate(-90)')
-            .attr('y', -40)
+            .attr('y', -60)
             .attr('x', -chartHeight / 2)
             .style('text-anchor', 'middle')
             .text(this.yAxisLabel);

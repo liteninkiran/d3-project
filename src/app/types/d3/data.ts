@@ -6,3 +6,8 @@ export type Data = {
     x: Date;
     y: number;
 }
+
+export type ChartData = {
+    date: any;
+    value: number;
+}
