@@ -4,8 +4,8 @@ import { Observable, Subscription } from 'rxjs';
 import { DatePipe, DecimalPipe } from '@angular/common';
 
 // Local Imports
-import { FilterOptions, NhsApiService } from 'src/app/services/nhs-api/nhs-api.service';
-import { DatastoreSearchSql, Record } from 'src/app/types/nhs-api/epd';
+import { NhsApiService } from 'src/app/services/nhs-api/nhs-api.service';
+import { DatastoreSearchSql, FilterOptions, Record } from 'src/app/types/nhs-api/epd';
 
 // D3 Imports
 import * as d3 from 'd3';
@@ -103,7 +103,7 @@ export class LineChartComponent implements OnInit, OnDestroy, OnChanges {
 
     public getData() {
         console.log('getData');
-        this.data$ = this.service.getMonthlyData(this.options, 6);
+        this.data$ = this.service.getMonthlyData(this.options);
         this.subscribeToData();
     }
 

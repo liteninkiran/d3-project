@@ -2,9 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { LineChartSettingsComponent } from 'src/app/components/nhs-api/line-chart-settings/line-chart-settings.component';
 import { RequestParamsComponent } from 'src/app/components/nhs-api/request-params/request-params.component';
-import { defaultOptions, FilterOptions } from 'src/app/services/nhs-api/nhs-api.service';
+import { defaultOptions } from 'src/app/services/nhs-api/nhs-api.service';
 import { SpineService } from 'src/app/services/nhs-api/spine.service';
 import { ChartControl } from 'src/app/types/nhs-api/chart';
+import { FilterOptions } from 'src/app/types/nhs-api/epd';
 
 @Component({
     selector: 'app-nhs-api',

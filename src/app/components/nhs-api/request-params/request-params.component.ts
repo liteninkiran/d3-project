@@ -3,8 +3,8 @@ import { MomentDateAdapter } from '@angular/material-moment-adapter';
 import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
 import { FormGroup, NonNullableFormBuilder } from '@angular/forms';
 import { MONTH_YEAR_FORMATS } from 'src/app/config/dates';
-import { FilterOptions } from 'src/app/services/nhs-api/nhs-api.service';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { FilterOptions } from 'src/app/types/nhs-api/epd';
 
 @Component({
     selector: 'app-nhs-api-request-params',
@@ -46,6 +46,7 @@ export class RequestParamsComponent implements OnInit {
             bnfCode: this.fb.control(this.defaultOptions.bnfCode),
             startDate: this.fb.control(this.defaultOptions.startDate),
             endDate: this.fb.control(this.defaultOptions.endDate),
+            concurrent: this.fb.control(this.defaultOptions.concurrent),
         });
     }
 }

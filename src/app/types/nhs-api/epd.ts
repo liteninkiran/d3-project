@@ -58,3 +58,11 @@ export type Link = {
     start: string;
     next: string;
 }
+
+export type FilterOptions = {
+    startDate: moment.Moment;
+    endDate: moment.Moment;
+    practiceCode: string;
+    bnfCode: string;
+    concurrent: number;
+}
