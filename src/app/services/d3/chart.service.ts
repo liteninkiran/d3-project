@@ -111,7 +111,7 @@ export class TimeSeriesChartService {
 
         if (!showMarkers) return;
 
-        this.gMarkers.selectAll('circle')
+        const markers = this.gMarkers.selectAll('circle')
             .data(this.data)
             .enter()
             .append('circle')
@@ -119,7 +119,22 @@ export class TimeSeriesChartService {
             .attr('cy', d => this.yScale(d.value))
             .attr('r', 4)
             .attr('fill', 'steelblue')
-            .attr('class', 'marker');
+            .attr('class', 'marker')
+            .style('cursor', 'pointer');
+
+        markers.on('mouseover', function (_event: MouseEvent, _d: ChartData) {
+            d3.select(this)
+                .transition()
+                .duration(200)
+                .attr('r', 8);
+        });
+    
+        markers.on('mouseout', function (_event: MouseEvent) {
+            d3.select(this)
+                .transition()
+                .duration(200)
+                .attr('r', 4);
+        });
     }
 
     public clear(): void {
