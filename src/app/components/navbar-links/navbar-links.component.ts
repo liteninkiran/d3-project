@@ -23,6 +23,11 @@ export class NavbarLinksComponent {
             icon: 'personal_injury',
             text: 'NHS API',
         },
+        {
+            link: '/scratch',
+            icon: 'construction',
+            text: 'Scratch',
+        },
     ]
 }
 

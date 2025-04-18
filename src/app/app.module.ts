@@ -10,11 +10,13 @@ import { NavbarLinksComponent } from './components/navbar-links/navbar-links.com
 import { MaterialModule } from './modules/material.module';
 import { CoinApiModule } from './modules/coin-api.module';
 import { NhsApiModule } from './modules/nhs-api.module';
+import { ScratchComponent } from './pages/scratch/scratch.component';
 
 @NgModule({
     declarations: [
         AppComponent,
         NavbarLinksComponent,
+        ScratchComponent,
     ],
     imports: [
         HttpClientModule,
