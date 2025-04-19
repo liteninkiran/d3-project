@@ -1,3 +1,13 @@
-svg {
-    background-color: rgb(240, 240, 230);
+.header-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    h1 {
+        margin: 0;
+    }
+}
+
+button {
+    margin-left: 10px;
 }

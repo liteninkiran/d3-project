@@ -1,0 +1,32 @@
+.container {
+    width: 600px;
+}
+
+.header-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+
+h1 {
+    margin-left: 20px;
+    margin-bottom: 0;
+}
+
+.close-button {
+    margin-right: 20px;
+}
+
+.full-width {
+    width: 100%;
+}
+
+.form-row {
+    margin-bottom: 10px;
+}
+
+mat-card {
+    margin-bottom: 10px;
+}
+

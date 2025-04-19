@@ -3,7 +3,7 @@ import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { LineChartSettingsComponent } from 'src/app/components/nhs-api/line-chart-settings/line-chart-settings.component';
 import { RequestParamsComponent } from 'src/app/components/nhs-api/request-params/request-params.component';
 import { SpineService } from 'src/app/services/nhs-api/spine.service';
-import { ChartControl, defaultChartOptions } from 'src/app/types/nhs-api/chart';
+import { ChartControl, defaultChartOptions } from 'src/app/types/d3/chart-controls';
 import { defaultOptions, FilterOptions } from 'src/app/types/nhs-api/epd';
 
 @Component({

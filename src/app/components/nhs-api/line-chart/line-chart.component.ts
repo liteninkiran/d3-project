@@ -14,7 +14,7 @@ import { Selection } from 'd3-selection';
 import { ScaleTime, ScaleContinuousNumeric } from 'd3-scale';
 import { Line } from 'd3-shape';
 import { Data, LineDataItem } from 'src/app/types/d3/data';
-import { ChartControl } from 'src/app/types/nhs-api/chart';
+import { ChartControl } from 'src/app/types/d3/chart-controls';
 
 type MonthData = {
     YEAR_MONTH: number;

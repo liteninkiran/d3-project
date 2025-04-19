@@ -38,26 +38,7 @@ export class LineChartRendererService {
                 .attr('cy', d => y(d.value))
                 .attr('r', 4)
                 .attr('fill', 'steelblue')
-                .attr('class', 'marker')
-                .style('cursor', 'pointer');
-
-            markerLayer
-                .selectAll('circle')
-                .on('mouseover', function (_event: MouseEvent, _d: ChartData) {
-                    d3.select(this)
-                        .transition()
-                        .duration(200)
-                        .attr('r', 8);
-                });
-        
-            markerLayer
-                .selectAll('circle')
-                .on('mouseout', function (_event: MouseEvent) {
-                    d3.select(this)
-                        .transition()
-                        .duration(200)
-                        .attr('r', 4);
-                });
+                .attr('class', 'marker');
         }
     }
 }

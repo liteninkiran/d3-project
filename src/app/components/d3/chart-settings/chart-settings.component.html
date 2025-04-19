@@ -1,0 +1,64 @@
+<div class="container">
+
+    <div class="header-row">
+        <h1>Chart Settings</h1>
+        <button
+            mat-mini-fab
+            matTooltip="Close Form"
+            matTooltipPosition="above"
+            (click)="handleClose()"
+            class="close-button"
+        >
+            <mat-icon>close</mat-icon>
+        </button>
+    </div>
+
+    <mat-dialog-content [formGroup]="form">
+
+
+
+        <mat-card appearance="outlined">
+
+            <mat-card-header>
+
+                <mat-card-title>Line Markers</mat-card-title>
+
+            </mat-card-header>
+
+            <mat-card-content>
+
+                <div class="full-width form-row">
+                    <!-- Concurrent -->
+                    <mat-checkbox formControlName="markers">Enable Markers</mat-checkbox>
+                </div>
+                        
+
+                <div class="full-width form-row" *ngIf="form.value.markers">
+
+                    <!-- Marker Size -->
+                    <mat-form-field class="full-width">
+        
+                        <mat-label>
+                            Marker Size
+                        </mat-label>
+        
+                        <input matInput type="number" placeholder="Marker size" formControlName="markerSize" appearance="fill" />
+        
+                    </mat-form-field>
+        
+                </div>
+        
+            </mat-card-content>
+
+        </mat-card>
+
+        <button
+            mat-raised-button
+            color="primary"
+            (click)="handleSubmit()"
+        >
+            SAVE
+        </button>
+
+    </mat-dialog-content>
+</div>

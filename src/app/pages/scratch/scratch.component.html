@@ -1,9 +1,30 @@
-<h1>Scratch</h1>
+
+
+
+
+
+
+<div class="header-container">
+
+    <h1>Scratch</h1>
+
+    <div>
+        <button
+            mat-fab
+            matTooltip="Chart Settings"
+            matTooltipPosition="above"
+            matTooltipHideDelay="100"
+            (click)="openChartSettingsModal()"
+        >
+            <mat-icon>settings</mat-icon>
+        </button>
+    </div>
+</div>
 
 <app-time-series
     [data]="chartData"
     [width]="dimensions.width"
     [height]="dimensions.height"
-    [showMarkers]="false"
+    [showMarkers]="true"
     chartType="line"
 />

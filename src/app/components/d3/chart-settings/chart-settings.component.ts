@@ -4,18 +4,18 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { ChartControl } from 'src/app/types/d3/chart-controls';
 
 @Component({
-    selector: 'app-nhs-api-line-chart-settings',
-    templateUrl: './line-chart-settings.component.html',
-    styleUrls: ['./line-chart-settings.component.scss'],
+    selector: 'app-chart-settings',
+    templateUrl: './chart-settings.component.html',
+    styleUrls: ['./chart-settings.component.scss'],
 })
-export class LineChartSettingsComponent implements OnInit {
+export class ChartSettingsComponent implements OnInit {
 
     private data: ChartControl;
     public form: FormGroup;
 
     constructor(
         private fb: NonNullableFormBuilder,
-        private dialogRef: MatDialogRef<LineChartSettingsComponent>,
+        private dialogRef: MatDialogRef<ChartSettingsComponent>,
         @Inject(MAT_DIALOG_DATA) data: ChartControl,
     ) {
         console.log(data);
