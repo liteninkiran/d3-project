@@ -2,10 +2,11 @@
 import { Component, OnInit, Input, ElementRef, AfterViewInit, ViewChild, ChangeDetectionStrategy, SimpleChanges, OnChanges } from '@angular/core';
 
 // Local Imports
-import { ChartData, ChartType } from 'src/app/types/d3/data';
+import { ChartData } from 'src/app/types/d3/data';
 import { BarChartRendererService } from 'src/app/services/d3/bar-chart-renderer.service';
 import { LineChartRendererService } from 'src/app/services/d3/line-chart-renderer.service';
 import { TimeChartBaseService } from 'src/app/services/d3/time-chart-base.service';
+import { ChartControl } from 'src/app/types/d3/chart-controls';
 
 @Component({
     selector: 'app-time-series',
@@ -16,11 +17,7 @@ import { TimeChartBaseService } from 'src/app/services/d3/time-chart-base.servic
 export class TimeSeriesComponent implements OnInit, AfterViewInit, OnChanges {
 
     @Input() data: ChartData[] = [];
-    @Input() width: number = 1200;
-    @Input() height: number = 600;
-    @Input() margin = { top: 20, right: 30, bottom: 50, left: 80 };
-    @Input() showMarkers: boolean = true;
-    @Input() chartType: ChartType = 'line';
+    @Input() chartOptions: ChartControl;
 
     @ViewChild('svgRef', { static: true }) private svgRef: ElementRef<SVGSVGElement>;
 
@@ -41,13 +38,19 @@ export class TimeSeriesComponent implements OnInit, AfterViewInit, OnChanges {
     private createChart(): void {
         if (!this.svgRef?.nativeElement || this.data.length === 0) return;
 
-        this.baseService.init(this.svgRef.nativeElement, this.data, this.width, this.height, this.margin);
+        this.baseService.init(
+            this.svgRef.nativeElement,
+            this.data,
+            this.chartOptions.chartWidth,
+            this.chartOptions.chartHeight,
+            this.chartOptions.margins
+        );
         this.baseService.drawAxes();
 
-        if (this.chartType === 'line') {
-            this.lineChartService.draw(this.showMarkers);
+        if (this.chartOptions.chartType === 'line') {
+            this.lineChartService.drawLine(this.chartOptions.markers);
         } else {
-            this.barChartService.draw();
+            this.barChartService.drawBar();
         }
     }
 }

@@ -9,7 +9,8 @@ export class LineChartRendererService {
         private baseService: TimeChartBaseService
     ) { }
 
-    public draw(showMarkers: boolean = true): void {
+    public drawLine(showMarkers: boolean = true): void {
+        console.log('drawLine');
         const data = this.baseService.getData();
         const x = this.baseService.getXScale();
         const y = this.baseService.getYScale();

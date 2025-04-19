@@ -39,5 +39,4 @@ export class ScratchComponent implements OnInit {
             }
         });
     }
-
 }

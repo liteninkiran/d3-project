@@ -32,6 +32,7 @@ export class TimeChartBaseService {
         height: number,
         margin: Margin,
     ) {
+        console.log('init');
         this.data = data.map(d => ({ ...d, date: new Date(d.date) }));
         this.width = width;
         this.height = height;
@@ -44,11 +45,12 @@ export class TimeChartBaseService {
             .attr('width', this.width)
             .attr('height', this.height);
 
-        this.createContainers();
+        this.createContainer();
         this.createScales();
     }
 
     public drawAxes(): void {
+        console.log('drawAxes');
         const xAxis = d3.axisBottom(this.xScale).ticks(d3.timeMonth.every(1)).tickFormat(d3.timeFormat('%b %Y'));
         const yAxis = d3.axisLeft(this.yScale).ticks(6);
 
@@ -66,14 +68,17 @@ export class TimeChartBaseService {
     }
 
     public getXScale(): XScale {
+        console.log('getXScale');
         return this.xScale;
     }
     
     public getYScale(): YScale {
+        console.log('getYScale');
         return this.yScale;
     }
 
     public getLayer(name: string): Group {
+        console.log('getLayer', name);
         if (!this.groups.has(name)) {
             const g = this.container.append('g').attr('class', name);
             this.groups.set(name, g);
@@ -82,10 +87,12 @@ export class TimeChartBaseService {
     }
 
     public getData(): ChartData[] {
+        console.log('getData');
         return this.data;
     }
 
-    private createContainers(): void {
+    private createContainer(): void {
+        console.log('createContainer');
         this.container = this.svg.select('g.chart-container');
 
         if (this.container.empty()) {
@@ -96,6 +103,7 @@ export class TimeChartBaseService {
     }
 
     private createScales(): void {
+        console.log('createScales');
         this.xScale = d3.scaleTime()
             .domain(d3.extent(this.data, d => d.date) as [Date, Date])
             .range([0, this.innerWidth]);

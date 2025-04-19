@@ -22,4 +22,3 @@ export type Margin = {
     bottom: number;
     left: number;
 }
-export type ChartType = 'line' | 'bar';

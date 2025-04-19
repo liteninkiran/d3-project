@@ -38,6 +38,15 @@ export class ChartSettingsComponent implements OnInit {
         this.form = this.fb.group({
             markers: this.fb.control(this.data.markers),
             markerSize: this.fb.control(this.data.markerSize),
+            chartType: this.fb.control(this.data.chartType),
+            chartWidth: this.fb.control(this.data.chartWidth),
+            chartHeight: this.fb.control(this.data.chartHeight),
+            margins: this.fb.group({
+                top: this.fb.control(this.data.margins.top),
+                bottom: this.fb.control(this.data.margins.bottom),
+                left: this.fb.control(this.data.margins.left),
+                right: this.fb.control(this.data.margins.right),
+            }),
         });
     }
 }

@@ -7,7 +7,8 @@ export class BarChartRendererService {
         private baseService: TimeChartBaseService
     ) { }
 
-    public draw(): void {
+    public drawBar(): void {
+        console.log('drawBar');
         const data = this.baseService.getData();
         const x = this.baseService.getXScale();
         const y = this.baseService.getYScale();

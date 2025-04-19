@@ -15,50 +15,173 @@
 
     <mat-dialog-content [formGroup]="form">
 
+        <mat-tab-group>
 
+            <!-- Chart Type Tab -->
+            <mat-tab label="Chart Type">
 
-        <mat-card appearance="outlined">
+                <div class="tab-container">
 
-            <mat-card-header>
+                    <mat-radio-group formControlName="chartType">
 
-                <mat-card-title>Line Markers</mat-card-title>
+                        <mat-radio-button value="line">
+                            Line
+                        </mat-radio-button>
 
-            </mat-card-header>
+                        <mat-radio-button value="bar">
+                            Bar
+                        </mat-radio-button>
 
-            <mat-card-content>
+                    </mat-radio-group>
 
-                <div class="full-width form-row">
-                    <!-- Concurrent -->
-                    <mat-checkbox formControlName="markers">Enable Markers</mat-checkbox>
                 </div>
-                        
 
-                <div class="full-width form-row" *ngIf="form.value.markers">
+            </mat-tab>
 
-                    <!-- Marker Size -->
-                    <mat-form-field class="full-width">
-        
-                        <mat-label>
-                            Marker Size
-                        </mat-label>
-        
-                        <input matInput type="number" placeholder="Marker size" formControlName="markerSize" appearance="fill" />
-        
-                    </mat-form-field>
-        
+            <!-- Markers Tab -->
+            <mat-tab label="Markers">
+
+                <div class="tab-container">
+
+                    <mat-card appearance="outlined">
+
+                        <mat-card-header>
+            
+                            <mat-card-title>Line Markers</mat-card-title>
+            
+                        </mat-card-header>
+            
+                        <mat-card-content>
+            
+                            <!-- Enable Markers -->
+                            <div class="full-width form-row">
+                                <mat-checkbox formControlName="markers">Enable Markers</mat-checkbox>
+                            </div>
+                                    
+            
+                            <!-- Marker Size -->
+                            <div class="full-width form-row" *ngIf="form.value.markers">
+            
+                                <mat-form-field class="full-width">
+                    
+                                    <mat-label>
+                                        Marker Size
+                                    </mat-label>
+                    
+                                    <input matInput type="number" placeholder="Marker size" formControlName="markerSize" appearance="fill" />
+                    
+                                </mat-form-field>
+                    
+                            </div>
+                    
+                        </mat-card-content>
+            
+                    </mat-card>
+
                 </div>
-        
-            </mat-card-content>
 
-        </mat-card>
+            </mat-tab>
 
-        <button
-            mat-raised-button
-            color="primary"
-            (click)="handleSubmit()"
-        >
+            <!-- Dimensions Tab -->
+            <mat-tab label="Dimensions">
+
+                <div class="tab-container">
+
+                    <!-- Chart Size -->
+                    <div class="full-width form-row">
+
+                        <!-- Width -->
+                        <mat-form-field>
+
+                            <mat-label>
+                                Chart Width
+                            </mat-label>
+
+                            <input matInput type="number" placeholder="Chart Width" formControlName="chartWidth" appearance="fill" />
+
+                        </mat-form-field>
+
+                        <!-- Height -->
+                        <mat-form-field>
+
+                            <mat-label>
+                                Chart Height
+                            </mat-label>
+
+                            <input matInput type="number" placeholder="Chart Height" formControlName="chartHeight" appearance="fill" />
+
+                        </mat-form-field>
+
+                    </div>
+
+                    <mat-divider />
+
+                    <!-- Margins -->
+                    <div formGroupName="margins">
+
+                        <div class="full-width form-row">
+
+                            <!-- Top Margin -->
+                            <mat-form-field>
+
+                                <mat-label>
+                                    Top Margin
+                                </mat-label>
+
+                                <input matInput type="number" placeholder="Top Margin" formControlName="top" appearance="fill" />
+
+                            </mat-form-field>
+
+                            <!-- Bottom Margin -->
+                            <mat-form-field>
+
+                                <mat-label>
+                                    Bottom Margin
+                                </mat-label>
+
+                                <input matInput type="number" placeholder="Bottom Margin" formControlName="bottom" appearance="fill" />
+
+                            </mat-form-field>
+
+                        </div>
+
+                        <div class="full-width form-row">
+
+                            <!-- Left Margin -->
+                            <mat-form-field>
+
+                                <mat-label>
+                                    Left Margin
+                                </mat-label>
+
+                                <input matInput type="number" placeholder="Left Margin" formControlName="left" appearance="fill" />
+
+                            </mat-form-field>
+
+                            <!-- Right Margin -->
+                            <mat-form-field>
+
+                                <mat-label>
+                                    Right Margin
+                                </mat-label>
+
+                                <input matInput type="number" placeholder="Right Margin" formControlName="right" appearance="fill" />
+
+                            </mat-form-field>
+
+                        </div>
+                    </div>
+
+                </div>
+
+            </mat-tab>
+
+        </mat-tab-group>
+
+        <button mat-raised-button color="primary" (click)="handleSubmit()">
             SAVE
         </button>
 
     </mat-dialog-content>
+
 </div>
