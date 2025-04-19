@@ -1,3 +1,6 @@
+// @TODO... Use for reference
+// @TODO... Delete this file when no longer needed
+
 import { Injectable } from '@angular/core';
 import { ChartData } from 'src/app/types/d3/data';
 import * as d3 from 'd3';
@@ -42,7 +45,7 @@ export class TimeSeriesChartService {
     private innerWidth = 0;
     private innerHeight = 0;
 
-    initChart(
+    public initChart(
         svgElement: SVGSVGElement,
         data: ChartData[],
         width: number,
