@@ -18,7 +18,6 @@ export class ChartSettingsComponent implements OnInit {
         private dialogRef: MatDialogRef<ChartSettingsComponent>,
         @Inject(MAT_DIALOG_DATA) data: ChartControl,
     ) {
-        console.log(data);
         this.data = data;
     }
 
@@ -26,27 +25,25 @@ export class ChartSettingsComponent implements OnInit {
         this.setupForm();
     }
 
-    public handleSubmit() {
-        this.dialogRef.close(this.form.value);
-    }
-
     public handleClose() {
         this.dialogRef.close();
     }
 
     private setupForm(): void {
-        this.form = this.fb.group({
+        const marginGroup = {
+            top: this.fb.control(this.data.margins.top),
+            bottom: this.fb.control(this.data.margins.bottom),
+            left: this.fb.control(this.data.margins.left),
+            right: this.fb.control(this.data.margins.right),
+        }
+        const formGroup = {
             markers: this.fb.control(this.data.markers),
             markerSize: this.fb.control(this.data.markerSize),
             chartType: this.fb.control(this.data.chartType),
             chartWidth: this.fb.control(this.data.chartWidth),
             chartHeight: this.fb.control(this.data.chartHeight),
-            margins: this.fb.group({
-                top: this.fb.control(this.data.margins.top),
-                bottom: this.fb.control(this.data.margins.bottom),
-                left: this.fb.control(this.data.margins.left),
-                right: this.fb.control(this.data.margins.right),
-            }),
-        });
+            margins: this.fb.group(marginGroup),
+        }
+        this.form = this.fb.group(formGroup);
     }
 }
