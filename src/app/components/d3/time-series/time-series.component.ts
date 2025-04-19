@@ -19,7 +19,6 @@ export class TimeSeriesComponent implements OnInit, AfterViewInit, OnChanges {
     @Input() margin = { top: 20, right: 30, bottom: 50, left: 80 };
     @Input() showMarkers: boolean = true;
 
-    @ViewChild('chart', { static: true }) private chartDiv: ElementRef;
     @ViewChild('svgRef', { static: true }) private svgRef: ElementRef<SVGSVGElement>;
 
     constructor(
