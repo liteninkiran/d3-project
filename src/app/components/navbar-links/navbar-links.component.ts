@@ -14,11 +14,6 @@ export class NavbarLinksComponent {
             text: 'Home',
         },
         {
-            link: '/coin-api',
-            icon: 'currency_bitcoin',
-            text: 'Coin API',
-        },
-        {
             link: '/nhs-api',
             icon: 'personal_injury',
             text: 'NHS API',
