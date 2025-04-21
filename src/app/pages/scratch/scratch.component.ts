@@ -4,7 +4,7 @@ import { Subscription } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
 import { ChartSettingsComponent } from 'src/app/components/d3/chart-settings/chart-settings.component';
 import { dataset1 } from 'src/app/mocks/d3/data';
-import { ChartControl, defaultChartOptions } from 'src/app/types/d3/chart-controls';
+import { defaultChartOptions, defaultChartDimensions, ChartSettings } from 'src/app/types/d3/chart-controls';
 
 @Component({
     selector: 'app-scratch',
@@ -14,12 +14,11 @@ import { ChartControl, defaultChartOptions } from 'src/app/types/d3/chart-contro
 export class ScratchComponent implements OnInit, OnDestroy {
 
     public chartData = dataset1.filter(data => Date.parse(data.date) >= Date.parse('2023-01-01'));
-    public dimensions = {
-        width: 1500,
-        height: 700,
-    }
+    public width: 1200;
+    public height: 600;
     private subscriptions: Subscription[] = [];
     public chartOptions = defaultChartOptions;
+    public chartDimensions = defaultChartDimensions;
 
     constructor(
         private dialog: MatDialog
@@ -34,15 +33,20 @@ export class ScratchComponent implements OnInit, OnDestroy {
     }
 
     public openChartSettingsModal() {
-        const dialogConfig = new MatDialogConfig<ChartControl>();
-        dialogConfig.data = this.chartOptions;
+        const dialogConfig = new MatDialogConfig<ChartSettings>();
+        dialogConfig.data = {
+            options: this.chartOptions,
+            dimensions: this.chartDimensions,
+        };
         const dialogRef = this.dialog.open(ChartSettingsComponent, dialogConfig);
 
         dialogRef.afterOpened().subscribe(() => {
             const form = dialogRef.componentInstance.form;
-            const subFunction = (options?: ChartControl) => {
-                if (options) {
-                    this.chartOptions = options;
+            const subFunction = (data?: ChartSettings) => {
+                console.log(data);
+                if (data) {
+                    this.chartOptions = data.options;
+                    this.chartDimensions = data.dimensions;
                 }
             }
             const sub = form.valueChanges

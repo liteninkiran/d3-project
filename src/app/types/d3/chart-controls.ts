@@ -12,21 +12,32 @@ export type ChartControl = {
     markers: boolean;
     markerSize: number;
     chartType: ChartType;
-    chartWidth: number;
-    chartHeight: number;
     margins: Margin;
 }
 
+export type ChartDimensions = {
+    height: number;
+    width: number;
+}
+
+export type ChartSettings = {
+    options: ChartControl;
+    dimensions: ChartDimensions;
+}
+
 export const defaultChartOptions: ChartControl = {
-    markers: true,
+    markers: false,
     markerSize: 10,
     chartType: 'line',
-    chartWidth: 1200,
-    chartHeight: 600,
     margins: {
         top: 20,
         bottom: 50,
         left: 80,
         right: 30,
     }
+}
+
+export const defaultChartDimensions: ChartDimensions = {
+    height: 600,
+    width: 1200,
 }

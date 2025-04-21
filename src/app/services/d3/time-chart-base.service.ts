@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { ChartData, Group, Svg, XScale, YScale } from 'src/app/types/d3/data';
-import { ChartControl } from 'src/app/types/d3/chart-controls';
+import { ChartControl, ChartDimensions } from 'src/app/types/d3/chart-controls';
 import * as d3 from 'd3';
 
 @Injectable({ providedIn: 'root' })
@@ -21,6 +21,7 @@ export class TimeChartBaseService {
 
     // Dimensions
     private chartOptions: ChartControl;
+    private chartDimensions: ChartDimensions;
     private innerWidth = 0;
     private innerHeight = 0;
 
@@ -28,19 +29,22 @@ export class TimeChartBaseService {
         svgEl: SVGSVGElement,
         data: ChartData[],
         chartOptions: ChartControl,
+        chartDimensions: ChartDimensions,
     ) {
         console.log('init', chartOptions);
         this.data = data.map(d => ({ ...d, date: new Date(d.date) }));
         this.chartOptions = chartOptions;
+        this.chartDimensions = chartDimensions;
 
-        const { chartWidth, chartHeight, margins: { top, left, right, bottom } } = this.chartOptions;
+        const { margins: { top, left, right, bottom } } = this.chartOptions;
+        const { height, width } = this.chartDimensions;
 
-        this.innerWidth = chartWidth - left - right;
-        this.innerHeight = chartHeight - top - bottom;
+        this.innerWidth = width - left - right;
+        this.innerHeight = height - top - bottom;
 
         this.svg = d3.select(svgEl)
-            .attr('width', chartWidth + left + right)
-            .attr('height', chartHeight + top + bottom);
+            .attr('width', this.innerWidth + left + right)
+            .attr('height', this.innerHeight + top + bottom);
 
         this.createContainer();
         this.createScales();

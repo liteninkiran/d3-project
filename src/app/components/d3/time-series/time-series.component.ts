@@ -6,7 +6,7 @@ import { ChartData } from 'src/app/types/d3/data';
 import { BarChartRendererService } from 'src/app/services/d3/bar-chart-renderer.service';
 import { LineChartRendererService } from 'src/app/services/d3/line-chart-renderer.service';
 import { TimeChartBaseService } from 'src/app/services/d3/time-chart-base.service';
-import { ChartControl } from 'src/app/types/d3/chart-controls';
+import { ChartControl, ChartDimensions } from 'src/app/types/d3/chart-controls';
 
 @Component({
     selector: 'app-time-series',
@@ -18,6 +18,7 @@ export class TimeSeriesComponent implements OnInit, AfterViewInit, OnChanges {
 
     @Input() data: ChartData[] = [];
     @Input() chartOptions: ChartControl;
+    @Input() chartDimensions: ChartDimensions;
 
     @ViewChild('svgRef', { static: true }) private svgRef: ElementRef<SVGSVGElement>;
 
@@ -32,6 +33,7 @@ export class TimeSeriesComponent implements OnInit, AfterViewInit, OnChanges {
     public ngAfterViewInit(): void { }
 
     public ngOnChanges(_changes: SimpleChanges): void {
+        console.log(_changes);
         this.createChart();
     }
 
@@ -41,7 +43,8 @@ export class TimeSeriesComponent implements OnInit, AfterViewInit, OnChanges {
         this.baseService.init(
             this.svgRef.nativeElement,
             this.data,
-            this.chartOptions
+            this.chartOptions,
+            this.chartDimensions,
         );
         this.baseService.drawAxes();
 

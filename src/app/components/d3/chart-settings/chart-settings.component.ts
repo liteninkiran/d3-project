@@ -1,7 +1,7 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { FormGroup, NonNullableFormBuilder } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { ChartControl } from 'src/app/types/d3/chart-controls';
+import { ChartControl, ChartDimensions, ChartSettings } from 'src/app/types/d3/chart-controls';
 
 @Component({
     selector: 'app-chart-settings',
@@ -10,15 +10,17 @@ import { ChartControl } from 'src/app/types/d3/chart-controls';
 })
 export class ChartSettingsComponent implements OnInit {
 
-    private data: ChartControl;
+    private options: ChartControl;
+    private dimensions: ChartDimensions;
     public form: FormGroup;
 
     constructor(
         private fb: NonNullableFormBuilder,
         private dialogRef: MatDialogRef<ChartSettingsComponent>,
-        @Inject(MAT_DIALOG_DATA) data: ChartControl,
+        @Inject(MAT_DIALOG_DATA) data: ChartSettings,
     ) {
-        this.data = data;
+        this.options = data.options;
+        this.dimensions = data.dimensions;
     }
 
     public ngOnInit(): void {
@@ -30,19 +32,25 @@ export class ChartSettingsComponent implements OnInit {
     }
 
     private setupForm(): void {
-        const marginGroup = {
-            top: this.fb.control(this.data.margins.top),
-            bottom: this.fb.control(this.data.margins.bottom),
-            left: this.fb.control(this.data.margins.left),
-            right: this.fb.control(this.data.margins.right),
+        const margins = {
+            top: this.fb.control(this.options.margins.top),
+            bottom: this.fb.control(this.options.margins.bottom),
+            left: this.fb.control(this.options.margins.left),
+            right: this.fb.control(this.options.margins.right),
+        }
+        const dimensions = {
+            width: this.fb.control(this.dimensions.width),
+            height: this.fb.control(this.dimensions.height),
+        }
+        const options = {
+            markers: this.fb.control(this.options.markers),
+            markerSize: this.fb.control(this.options.markerSize),
+            chartType: this.fb.control(this.options.chartType),
+            margins: this.fb.group(margins),
         }
         const formGroup = {
-            markers: this.fb.control(this.data.markers),
-            markerSize: this.fb.control(this.data.markerSize),
-            chartType: this.fb.control(this.data.chartType),
-            chartWidth: this.fb.control(this.data.chartWidth),
-            chartHeight: this.fb.control(this.data.chartHeight),
-            margins: this.fb.group(marginGroup),
+            options: this.fb.group(options),
+            dimensions: this.fb.group(dimensions),
         }
         this.form = this.fb.group(formGroup);
     }
