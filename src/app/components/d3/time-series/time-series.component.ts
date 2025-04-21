@@ -41,9 +41,7 @@ export class TimeSeriesComponent implements OnInit, AfterViewInit, OnChanges {
         this.baseService.init(
             this.svgRef.nativeElement,
             this.data,
-            this.chartOptions.chartWidth,
-            this.chartOptions.chartHeight,
-            this.chartOptions.margins
+            this.chartOptions
         );
         this.baseService.drawAxes();
 

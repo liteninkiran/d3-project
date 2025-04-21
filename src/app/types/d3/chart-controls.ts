@@ -1,17 +1,20 @@
 export type ChartType = 'line' | 'bar';
 
+export type Margin = {
+    top: number;
+    right: number;
+    bottom: number;
+    left: number;
+}
+
+
 export type ChartControl = {
     markers: boolean;
     markerSize: number;
     chartType: ChartType;
     chartWidth: number;
     chartHeight: number;
-    margins: {
-        top: number;
-        bottom: number;
-        left: number;
-        right: number;
-    }
+    margins: Margin;
 }
 
 export const defaultChartOptions: ChartControl = {

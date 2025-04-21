@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
-import { ChartData, Group, Margin, Svg, XScale, YScale } from 'src/app/types/d3/data';
+import { ChartData, Group, Svg, XScale, YScale } from 'src/app/types/d3/data';
+import { ChartControl } from 'src/app/types/d3/chart-controls';
 import * as d3 from 'd3';
 
 @Injectable({ providedIn: 'root' })
@@ -19,31 +20,27 @@ export class TimeChartBaseService {
     private data: ChartData[] = [];
 
     // Dimensions
-    private width = 800;
-    private height = 400;
-    private margin: Margin = { top: 20, right: 20, bottom: 50, left: 50 };
+    private chartOptions: ChartControl;
     private innerWidth = 0;
     private innerHeight = 0;
 
     public init(
         svgEl: SVGSVGElement,
         data: ChartData[],
-        width: number,
-        height: number,
-        margin: Margin,
+        chartOptions: ChartControl,
     ) {
-        console.log('init');
+        console.log('init', chartOptions);
         this.data = data.map(d => ({ ...d, date: new Date(d.date) }));
-        this.width = width;
-        this.height = height;
-        this.margin = margin;
+        this.chartOptions = chartOptions;
 
-        this.innerWidth = this.width - this.margin.left - this.margin.right;
-        this.innerHeight = this.height - this.margin.top - this.margin.bottom;
+        const { chartWidth, chartHeight, margins: { top, left, right, bottom } } = this.chartOptions;
+
+        this.innerWidth = chartWidth - left - right;
+        this.innerHeight = chartHeight - top - bottom;
 
         this.svg = d3.select(svgEl)
-            .attr('width', this.width)
-            .attr('height', this.height);
+            .attr('width', chartWidth + left + right)
+            .attr('height', chartHeight + top + bottom);
 
         this.createContainer();
         this.createScales();
@@ -54,10 +51,8 @@ export class TimeChartBaseService {
         const xAxis = d3.axisBottom(this.xScale).ticks(d3.timeMonth.every(1)).tickFormat(d3.timeFormat('%b %Y'));
         const yAxis = d3.axisLeft(this.yScale).ticks(6);
 
-        const zeroY = this.yScale(0);
-
         this.getLayer('x-axis')
-            .attr('transform', `translate(0, ${zeroY})`)
+            .attr('transform', `translate(0, ${this.innerHeight})`)
             .call(xAxis)
             .selectAll('text')
             .attr('transform', 'rotate(-45)')
@@ -96,9 +91,10 @@ export class TimeChartBaseService {
         this.container = this.svg.select('g.chart-container');
 
         if (this.container.empty()) {
+            const { margins: { top, left } } = this.chartOptions;
             this.container = this.svg.append('g')
                 .attr('class', 'chart-container')
-                .attr('transform', `translate(${this.margin.left}, ${this.margin.top})`);
+                .attr('transform', `translate(${left}, ${top})`);
         }
     }
 
