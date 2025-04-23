@@ -33,7 +33,6 @@ export class TimeSeriesComponent implements OnInit, AfterViewInit, OnChanges {
     public ngAfterViewInit(): void { }
 
     public ngOnChanges(_changes: SimpleChanges): void {
-        console.log(_changes);
         this.createChart();
     }
 

@@ -31,7 +31,7 @@ export class TimeChartBaseService {
         chartOptions: ChartControl,
         chartDimensions: ChartDimensions,
     ) {
-        console.log('init', chartOptions);
+        console.log('init', chartOptions, chartDimensions);
         this.data = data.map(d => ({ ...d, date: new Date(d.date) }));
         this.chartOptions = chartOptions;
         this.chartDimensions = chartDimensions;

@@ -18,7 +18,6 @@ export class LineChartSettingsComponent implements OnInit {
         private dialogRef: MatDialogRef<LineChartSettingsComponent>,
         @Inject(MAT_DIALOG_DATA) data: ChartControl,
     ) {
-        console.log(data);
         this.data = data;
     }
 

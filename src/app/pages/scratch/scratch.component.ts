@@ -43,7 +43,6 @@ export class ScratchComponent implements OnInit, OnDestroy {
         dialogRef.afterOpened().subscribe(() => {
             const form = dialogRef.componentInstance.form;
             const subFunction = (data?: ChartSettings) => {
-                console.log(data);
                 if (data) {
                     this.chartOptions = data.options;
                     this.chartDimensions = data.dimensions;
