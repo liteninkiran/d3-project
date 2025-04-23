@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnChanges, OnInit } from '@angular/core';
 import * as d3 from 'd3';
 
 type Data = {
@@ -11,12 +11,13 @@ type Data = {
     templateUrl: './demo-chart.component.html',
     styleUrls: ['./demo-chart.component.scss'],
 })
-export class DemoChartComponent implements OnInit {
-    private width = 1600;
-    private height = 750;
-    private margin = { top: 10, right: 50, bottom: 50, left: 50 };
-    private innerWidth = this.width - this.margin.left - this.margin.right;
-    private innerHeight = this.height - this.margin.top - this.margin.bottom;
+export class DemoChartComponent implements OnInit, OnChanges {
+    @Input() public width = 800;
+    @Input() public height = 400;
+    @Input() public margin = { top: 50, right: 50, bottom: 50, left: 50 };
+
+    private innerWidth = 0;
+    private innerHeight = 0;
 
     private data: Data[] = [
         { date: "2023-01-01", value: 54 },
@@ -30,6 +31,10 @@ export class DemoChartComponent implements OnInit {
     private parseDate = d3.timeParse("%Y-%m-%d");
 
     public ngOnInit(): void {
+
+    }
+
+    public ngOnChanges(): void {
         this.createChart();
     }
 
@@ -39,7 +44,10 @@ export class DemoChartComponent implements OnInit {
                 d.date = this.parseDate(d.date);
             }
         });
-        
+
+        this.innerWidth = this.width - this.margin.left - this.margin.right;
+        this.innerHeight = this.height - this.margin.top - this.margin.bottom;
+    
         // Create SVG container
         const svg = d3.select("#chart")
             .attr("width", this.innerWidth + this.margin.left + this.margin.right)
