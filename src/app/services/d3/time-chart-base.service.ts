@@ -95,11 +95,17 @@ export class TimeChartBaseService {
         this.container = this.svg.select('g.chart-container');
 
         if (this.container.empty()) {
-            const { margins: { top, left } } = this.chartOptions;
-            this.container = this.svg.append('g')
-                .attr('class', 'chart-container')
-                .attr('transform', `translate(${left}, ${top})`);
+            this.container = this.svg
+                .append('g')
+                .attr('class', 'chart-container');
         }
+        this.updateMargins();
+    }
+
+    private updateMargins() {
+        const { margins: { top, left } } = this.chartOptions;
+        d3.select('.chart-container')
+          .attr('transform', `translate(${left}, ${top})`);
     }
 
     private createScales(): void {

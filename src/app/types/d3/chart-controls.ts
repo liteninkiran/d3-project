@@ -30,10 +30,10 @@ export const defaultChartOptions: ChartControl = {
     markerSize: 10,
     chartType: 'line',
     margins: {
-        top: 20,
-        bottom: 50,
+        top: 10,
+        bottom: 10,
         left: 80,
-        right: 30,
+        right: 10,
     }
 }
 

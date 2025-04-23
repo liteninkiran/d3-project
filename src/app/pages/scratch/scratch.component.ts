@@ -14,8 +14,6 @@ import { defaultChartOptions, defaultChartDimensions, ChartSettings } from 'src/
 export class ScratchComponent implements OnInit, OnDestroy {
 
     public chartData = dataset1.filter(data => Date.parse(data.date) >= Date.parse('2023-01-01'));
-    public width: 1200;
-    public height: 600;
     private subscriptions: Subscription[] = [];
     public chartOptions = defaultChartOptions;
     public chartDimensions = defaultChartDimensions;
