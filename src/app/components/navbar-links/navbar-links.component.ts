@@ -21,7 +21,12 @@ export class NavbarLinksComponent {
         {
             link: '/scratch',
             icon: 'construction',
-            text: 'Scratch',
+            text: 'Scratch 1',
+        },
+        {
+            link: '/scratch2',
+            icon: 'construction',
+            text: 'Scratch 2',
         },
     ]
 }

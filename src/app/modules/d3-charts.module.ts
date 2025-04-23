@@ -4,11 +4,13 @@ import { TimeSeriesComponent } from '../components/d3/time-series/time-series.co
 import { MaterialModule } from './material.module';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ChartSettingsComponent } from '../components/d3/chart-settings/chart-settings.component';
+import { DemoChartComponent } from '../components/d3/demo-chart/demo-chart.component';
 
 @NgModule({
     declarations: [
         TimeSeriesComponent,
         ChartSettingsComponent,
+        DemoChartComponent,
     ],
     imports: [
         CommonModule,
@@ -18,6 +20,7 @@ import { ChartSettingsComponent } from '../components/d3/chart-settings/chart-se
     exports: [
         TimeSeriesComponent,
         ChartSettingsComponent,
+        DemoChartComponent,
     ],
     providers: [
     ],
