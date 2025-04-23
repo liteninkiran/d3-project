@@ -13,7 +13,7 @@ type Data = {
 })
 export class DemoChartComponent implements OnInit {
     private width = 1600;
-    private height = 800;
+    private height = 750;
     private margin = { top: 10, right: 50, bottom: 50, left: 50 };
     private innerWidth = this.width - this.margin.left - this.margin.right;
     private innerHeight = this.height - this.margin.top - this.margin.bottom;
