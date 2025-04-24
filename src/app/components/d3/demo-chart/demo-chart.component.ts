@@ -35,6 +35,7 @@ export class DemoChartComponent implements OnInit, OnChanges {
     }
 
     public ngOnChanges(): void {
+        d3.select("#chart").select('g').remove();
         this.createChart();
     }
 
