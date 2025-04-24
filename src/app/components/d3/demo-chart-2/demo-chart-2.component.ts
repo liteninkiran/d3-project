@@ -50,13 +50,17 @@ export class DemoChart2Component implements OnInit, OnChanges {
             console.log('ngOnChanges', 'Returning on first change');
             return;
         }
-        this.setInnerDimensions();
-        this.resizeSvg();
-        this.repositionContainers();
+        this.updateChart();
     }
 
     private firstChange(changes: SimpleChanges, key: string): boolean {
         return changes[key] && changes[key].firstChange;
+    }
+
+    private updateChart() {
+        this.setInnerDimensions();
+        this.resizeSvg();
+        this.repositionContainers();
     }
 
     private setupChart(): void {
@@ -114,11 +118,12 @@ export class DemoChart2Component implements OnInit, OnChanges {
     private repositionContainers(): void {
         console.log('repositionContainers');
         const { left, top, bottom } = this.chartOptions.margin;
+        const { height } = this.chartOptions.dimensions;
         this.repositionContainer('xAxisContainer', left, top + this.innerHeight);
         this.repositionContainer('yAxisContainer', left, top);
         this.repositionContainer('titleContainer', left + 0.5 * this.innerWidth, top * 0.5);
         this.repositionContainer('dataContainer', left, top);
-        this.repositionContainer('legendContainer', left, (bottom * -0.5) + this.innerHeight + 10);
+        this.repositionContainer('legendContainer', left, (bottom * -0.5) + height + 10);
     }
 
     private repositionContainer(container: string, left: number, top: number): void {
