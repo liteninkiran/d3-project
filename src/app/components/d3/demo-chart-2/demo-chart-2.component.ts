@@ -1,6 +1,7 @@
 import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { ChartOptions2 } from '../chart-settings-2/chart-settings-2.component';
 import * as d3 from 'd3';
+import { ChartData2 } from 'src/app/types/d3/data';
 
 @Component({
     selector: 'app-demo-chart-2',
@@ -10,6 +11,7 @@ import * as d3 from 'd3';
 export class DemoChart2Component implements OnInit, OnChanges {
 
     @Input() chartOptions: ChartOptions2;
+    @Input() chartData: ChartData2[] = [];
 
     private svg: d3.Selection<SVGElement, {}, HTMLElement, any>;
 
@@ -18,6 +20,7 @@ export class DemoChart2Component implements OnInit, OnChanges {
     private yAxisContainer: d3.Selection<SVGGElement, {}, HTMLElement, any>;
     private legendContainer: d3.Selection<SVGGElement, {}, HTMLElement, any>;
     private titleContainer: d3.Selection<SVGGElement, {}, HTMLElement, any>;
+    private titleText: d3.Selection<SVGGElement, {}, HTMLElement, any>;
 
     // Dimensions
     public innerWidth: number = 0;
@@ -42,11 +45,11 @@ export class DemoChart2Component implements OnInit, OnChanges {
     public ngOnChanges(changes: SimpleChanges): void {
         // Ignore the first change as this will be triggered before 
         // ngOnInit() and we need to setup the chart first
+        console.log('ngOnChanges', changes);
         if (this.firstChange(changes, 'chartOptions')) {
             console.log('ngOnChanges', 'Returning on first change');
             return;
         }
-        console.log('ngOnChanges', changes);
         this.setInnerDimensions();
         this.resizeSvg();
         this.repositionContainers();
@@ -88,41 +91,38 @@ export class DemoChart2Component implements OnInit, OnChanges {
 
     private storeContainers(): void {
         console.log('storeContainers');
-        this.xAxisContainer = this.svg
-            .append('g')
-            .attr('class', 'x-axis-container')
+        this.storeContainer('xAxisContainer', 'x-axis-container');
+        this.storeContainer('yAxisContainer', 'y-axis-container');
+        this.storeContainer('titleContainer', 'title-container');
+        this.storeContainer('dataContainer', 'data-container');
+        this.storeContainer('legendContainer', 'legend-container');
+        this.storeText();
+    }
 
-        this.yAxisContainer = this.svg
-            .append('g')
-            .attr('class', 'y-axis-container')
+    private storeContainer(container: string, className: string): void {
+        // console.log('storeContainer', container);
+        this[container] = this.svg.append('g').attr('class', className);
+    }
 
-        this.titleContainer = this.svg
-            .append('g')
-            .attr('class', 'title-container');
-
-        this.titleContainer
+    private storeText(): void {
+        this.titleText = this.titleContainer
             .append('text')
             .attr('class', 'title')
             .style('text-anchor', 'middle');
-
-        this.dataContainer = this.svg
-            .append('g')
-            .attr('class', 'data-container');
-
-        this.legendContainer = this.svg
-            .append('g')
-            .attr('class', 'legend-container');
     }
 
     private repositionContainers(): void {
-        console.log('setContainerAttributes');
+        console.log('repositionContainers');
         const { left, top, bottom } = this.chartOptions.margin;
-        const legendTop = this.innerHeight - 0.5 * bottom + 10;
-        const titleLeft = left + 0.5 * this.innerWidth;
-        this.xAxisContainer.attr('transform', `translate(${left}, ${top + this.innerHeight})`);
-        this.yAxisContainer.attr('transform', `translate(${left}, ${top})`);
-        this.titleContainer.attr('transform', `translate(${titleLeft}, ${0.5 * top})`);
-        this.dataContainer.attr('transform', `translate(${left}, ${top})`);
-        this.legendContainer.attr('transform', `translate(${left}, ${legendTop})`);
+        this.repositionContainer('xAxisContainer', left, top + this.innerHeight);
+        this.repositionContainer('yAxisContainer', left, top);
+        this.repositionContainer('titleContainer', left + 0.5 * this.innerWidth, top * 0.5);
+        this.repositionContainer('dataContainer', left, top);
+        this.repositionContainer('legendContainer', left, (bottom * -0.5) + this.innerHeight + 10);
+    }
+
+    private repositionContainer(container: string, left: number, top: number): void {
+        // console.log('repositionContainer', `${container} | ${left} | ${top}`);
+        this[container].attr('transform', `translate(${left}, ${top})`);
     }
 }
