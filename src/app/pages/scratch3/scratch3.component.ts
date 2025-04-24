@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { ChartOptions2 } from 'src/app/components/d3/chart-settings-2/chart-settings-2.component';
 
 @Component({
     selector: 'app-scratch3',
@@ -7,4 +8,16 @@ import { Component } from '@angular/core';
 })
 export class Scratch3Component {
 
+    public chartOptions: ChartOptions2;
+
+    constructor() { }
+
+    public ngOnInit(): void {
+
+    }
+
+    public chartOptionsUpdated(event: ChartOptions2): void {
+        this.chartOptions = event;
+        console.log(this.chartOptions);
+    }
 }
