@@ -5,44 +5,41 @@
         [margin]="margin"
     />
 </div>
+
 <div class="form-container">
-<form [formGroup]="form">
-    <!-- Chart Size -->
-    <div formGroupName="dimensions">
-        <div class="full-width form-row">
 
-            <!-- Width -->
-            <mat-form-field>
+    <form [formGroup]="form">
 
-                <mat-label>
-                    Chart Width
-                </mat-label>
+        <!-- Chart Size -->
+        <div formGroupName="dimensions">
 
-                <input matInput type="number" placeholder="Chart Width" formControlName="width" appearance="fill" />
+                <!-- Width -->
+                <mat-form-field>
 
-            </mat-form-field>
+                    <mat-label>
+                        Chart Width
+                    </mat-label>
 
-            <!-- Height -->
-            <mat-form-field>
+                    <input matInput type="number" placeholder="Chart Width" formControlName="width" appearance="fill" />
 
-                <mat-label>
-                    Chart Height
-                </mat-label>
+                </mat-form-field>
 
-                <input matInput type="number" placeholder="Chart Height" formControlName="height" appearance="fill" />
+                <!-- Height -->
+                <mat-form-field>
 
-            </mat-form-field>
+                    <mat-label>
+                        Chart Height
+                    </mat-label>
+
+                    <input matInput type="number" placeholder="Chart Height" formControlName="height" appearance="fill" />
+
+                </mat-form-field>
 
         </div>
-    </div>
 
-    <mat-divider />
-
-    <!-- Margins -->
-    <div>
-        <div formGroupName="margins">
-
-            <div class="full-width form-row">
+        <!-- Margins -->
+        <div>
+            <div formGroupName="margins">
 
                 <!-- Top Margin -->
                 <mat-form-field>
@@ -65,10 +62,6 @@
                     <input matInput type="number" placeholder="Bottom Margin" formControlName="bottom" appearance="fill" />
 
                 </mat-form-field>
-
-            </div>
-
-            <div class="full-width form-row">
 
                 <!-- Left Margin -->
                 <mat-form-field>
@@ -93,9 +86,9 @@
                 </mat-form-field>
 
             </div>
-        </div>
-    </div>
-</form>
 
+        </div>
+
+    </form>
 
 </div>
