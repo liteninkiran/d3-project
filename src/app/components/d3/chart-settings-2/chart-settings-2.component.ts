@@ -8,6 +8,19 @@ export type ChartOptions2 = {
     dimensions: ChartDimensions;
 }
 
+export const defaultOptions: ChartOptions2 = {
+    margin: {
+        top: 100,
+        right: 50,
+        bottom: 50,
+        left: 50
+    },
+    dimensions: {
+        width: 1600,
+        height: 600,
+    },
+}
+
 @Component({
     selector: 'app-chart-settings-2',
     templateUrl: './chart-settings-2.component.html',
@@ -15,18 +28,8 @@ export type ChartOptions2 = {
 })
 export class ChartSettings2Component {
     public form: FormGroup;
-    public chartOptions: ChartOptions2 = {
-        margin: {
-            top: 100,
-            right: 50,
-            bottom: 50,
-            left: 50
-        },
-        dimensions: {
-            width: 1600,
-            height: 600,
-        },
-    }
+    public chartOptions: ChartOptions2 = defaultOptions;
+
     @Output() public chartOptionsUpdated = new EventEmitter<ChartOptions2>();
 
     private subscriptions: Subscription[] = [];
