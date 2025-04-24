@@ -5,12 +5,14 @@ import { MaterialModule } from './material.module';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ChartSettingsComponent } from '../components/d3/chart-settings/chart-settings.component';
 import { DemoChartComponent } from '../components/d3/demo-chart/demo-chart.component';
+import { DemoChart2Component } from '../components/d3/demo-chart-2/demo-chart-2.component';
 
 @NgModule({
     declarations: [
         TimeSeriesComponent,
         ChartSettingsComponent,
         DemoChartComponent,
+        DemoChart2Component,
     ],
     imports: [
         CommonModule,
@@ -21,6 +23,7 @@ import { DemoChartComponent } from '../components/d3/demo-chart/demo-chart.compo
         TimeSeriesComponent,
         ChartSettingsComponent,
         DemoChartComponent,
+        DemoChart2Component,
     ],
     providers: [
     ],

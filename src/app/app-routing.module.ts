@@ -4,6 +4,7 @@ import { HomeComponent } from './pages/home/home.component';
 import { NhsApiComponent } from './pages/nhs-api/nhs-api.component';
 import { ScratchComponent } from './pages/scratch/scratch.component';
 import { Scratch2Component } from './pages/scratch2/scratch2.component';
+import { Scratch3Component } from './pages/scratch3/scratch3.component';
 
 const routes: Routes = [
     {
@@ -21,6 +22,10 @@ const routes: Routes = [
     {
         path: 'scratch2',
         component: Scratch2Component,
+    },
+    {
+        path: 'scratch3',
+        component: Scratch3Component,
     },
     {
         path: '**',
