@@ -79,10 +79,10 @@ export class DemoChart2Component implements OnInit, OnChanges {
 
     private resizeSvg(): void {
         console.log('resizeSvg');
-        const { left, right, top, bottom } = this.chartOptions.margin;
-        this.svg
-            .attr("width", this.innerWidth + left + right)
-            .attr("height", this.innerHeight + top + bottom);
+        const { height, width } = this.chartOptions.dimensions;
+        const div = d3.select('.svg-container');
+        div.style('max-width', `${width}px`);
+        this.svg.attr('viewBox', [0, 0, width, height]);
     }
 
     private setInnerDimensions(): void {
