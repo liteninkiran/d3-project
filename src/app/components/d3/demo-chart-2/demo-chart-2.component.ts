@@ -13,6 +13,7 @@ export class DemoChart2Component implements OnInit, OnChanges {
     @Input() chartOptions: ChartOptions2;
     @Input() chartData: ChartData2[] = [];
 
+    private div: d3.Selection<SVGElement, {}, HTMLElement, any>;
     private svg: d3.Selection<SVGElement, {}, HTMLElement, any>;
 
     private dataContainer: any;
@@ -74,14 +75,16 @@ export class DemoChart2Component implements OnInit, OnChanges {
 
     private storeSvg(): void {
         console.log('storeSvg');
-        this.svg = d3.select("#chart");
+        this.div = d3.select('.svg-container');
+        this.svg = this.div.select('#chart');
     }
 
     private resizeSvg(): void {
         console.log('resizeSvg');
         const { height, width } = this.chartOptions.dimensions;
-        const div = d3.select('.svg-container');
-        div.style('max-width', `${width}px`);
+        this.div
+            .style('max-width', `${width}px`)
+            .style('max-height', `${height}px`);
         this.svg.attr('viewBox', [0, 0, width, height]);
     }
 

@@ -16,7 +16,7 @@ export const defaultOptions: ChartOptions2 = {
         left: 50
     },
     dimensions: {
-        width: 1600,
+        width: 1400,
         height: 600,
     },
 }
