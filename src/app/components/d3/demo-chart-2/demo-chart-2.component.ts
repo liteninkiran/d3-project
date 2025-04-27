@@ -1,7 +1,7 @@
 import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { ChartOptions2 } from '../chart-settings-2/chart-settings-2.component';
-import * as d3 from 'd3';
 import { ChartData2 } from 'src/app/types/d3/data';
+import * as d3 from 'd3';
 
 @Component({
     selector: 'app-demo-chart-2',
