@@ -27,21 +27,28 @@ export class TimeSeriesBaseService {
     private y: d3.ScaleContinuousNumeric<number, number, never>;
 
     public setupChart(
-        data: ChartData2[],
+        divEl: HTMLDivElement,
+        svgEl: SVGSVGElement,
+        chartData: ChartData2[],
         chartOptions: ChartOptions2,
-        container = '.svg-container'
     ): void {
-        this.chartData = data;
+        this.chartData = chartData;
         this.chartOptions = chartOptions;
+        this.div = d3.select(divEl);
+        this.svg = d3.select(svgEl);
 
-        this.storeSvg(container);
         this.setInnerDimensions();
         this.resizeSvg();
         this.storeContainers();
         this.repositionContainers();
     }
 
-    public updateChart() {
+    public updateChart(
+        chartData: ChartData2[],
+        chartOptions: ChartOptions2,
+    ) {
+        this.chartData = chartData;
+        this.chartOptions = chartOptions;
         this.setInnerDimensions();
         this.resizeSvg();
         this.repositionContainers();
@@ -53,12 +60,6 @@ export class TimeSeriesBaseService {
         const { height, width } = this.chartOptions.dimensions;
         this.innerWidth = width - left - right;
         this.innerHeight = height - top - bottom;
-    }
-
-    private storeSvg(container: string): void {
-        console.log('storeSvg');
-        this.div = d3.select(container);
-        this.svg = this.div.select('svg');
     }
 
     private resizeSvg(): void {

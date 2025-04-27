@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { Component, ElementRef, Input, OnChanges, OnInit, SimpleChanges, ViewChild } from '@angular/core';
 import { ChartOptions2 } from '../chart-settings-2/chart-settings-2.component';
 import { ChartData2 } from 'src/app/types/d3/data';
 import { TimeSeriesBaseService } from 'src/app/services/d3/time-series-base.service';
@@ -14,8 +14,8 @@ export class DemoChart2Component implements OnInit, OnChanges {
     @Input() chartOptions: ChartOptions2;
     @Input() chartData: ChartData2[] = [];
 
-    private div: d3.Selection<HTMLDivElement, {}, HTMLElement, any>;
-    private svg: d3.Selection<SVGElement, {}, HTMLElement, any>;
+    @ViewChild('divRef', { static: true }) private divRef: ElementRef<HTMLDivElement>;
+    @ViewChild('svgRef', { static: true }) private svgRef: ElementRef<SVGSVGElement>;
 
     // Axes
     public xAxis: d3.Axis<Date | d3.NumberValue>;
@@ -30,7 +30,9 @@ export class DemoChart2Component implements OnInit, OnChanges {
 
     public ngOnInit(): void {
         console.log('ngOnInit');
-        this.service.setupChart(this.chartData, this.chartOptions);
+        const div = this.divRef.nativeElement;
+        const svg = this.svgRef.nativeElement;
+        this.service.setupChart(div, svg, this.chartData, this.chartOptions);
     }
 
     public ngOnChanges(changes: SimpleChanges): void {
@@ -41,7 +43,7 @@ export class DemoChart2Component implements OnInit, OnChanges {
             console.log('ngOnChanges', 'Returning on first change');
             return;
         }
-        this.service.updateChart();
+        this.service.updateChart(this.chartData, this.chartOptions);
     }
 
     private firstChange(changes: SimpleChanges, key: string): boolean {
