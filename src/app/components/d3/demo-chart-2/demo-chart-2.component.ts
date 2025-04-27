@@ -15,7 +15,6 @@ export class DemoChart2Component implements OnInit, OnChanges {
     @Input() chartData: ChartData2[] = [];
 
     @ViewChild('divRef', { static: true }) private divRef: ElementRef<HTMLDivElement>;
-    @ViewChild('svgRef', { static: true }) private svgRef: ElementRef<SVGSVGElement>;
 
     // Axes
     public xAxis: d3.Axis<Date | d3.NumberValue>;
@@ -31,8 +30,7 @@ export class DemoChart2Component implements OnInit, OnChanges {
     public ngOnInit(): void {
         console.log('ngOnInit');
         const div = this.divRef.nativeElement;
-        const svg = this.svgRef.nativeElement;
-        this.service.setupChart(div, svg, this.chartData, this.chartOptions);
+        this.service.setupChart(div, this.chartData, this.chartOptions);
     }
 
     public ngOnChanges(changes: SimpleChanges): void {

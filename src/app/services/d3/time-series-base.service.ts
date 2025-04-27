@@ -28,14 +28,13 @@ export class TimeSeriesBaseService {
 
     public setupChart(
         divEl: HTMLDivElement,
-        svgEl: SVGSVGElement,
         chartData: ChartData2[],
         chartOptions: ChartOptions2,
     ): void {
         this.chartData = chartData;
         this.chartOptions = chartOptions;
         this.div = d3.select(divEl);
-        this.svg = d3.select(svgEl);
+        this.svg = this.div.select('svg');
 
         this.setInnerDimensions();
         this.resizeSvg();
@@ -82,7 +81,6 @@ export class TimeSeriesBaseService {
     }
 
     private storeContainer(container: string, className: string): void {
-        // console.log('storeContainer', container);
         this[container] = this.svg.append('g').attr('class', className);
     }
 
@@ -105,7 +103,6 @@ export class TimeSeriesBaseService {
     }
 
     private repositionContainer(container: string, left: number, top: number): void {
-        // console.log('repositionContainer', `${container} | ${left} | ${top}`);
         this[container].attr('transform', `translate(${left}, ${top})`);
     }
 }
