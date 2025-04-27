@@ -2,6 +2,7 @@ import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/cor
 import { ChartOptions2 } from '../chart-settings-2/chart-settings-2.component';
 import { ChartData2 } from 'src/app/types/d3/data';
 import * as d3 from 'd3';
+import { TimeSeriesBaseService } from 'src/app/services/d3/time-series-base.service';
 
 @Component({
     selector: 'app-demo-chart-2',
@@ -13,7 +14,7 @@ export class DemoChart2Component implements OnInit, OnChanges {
     @Input() chartOptions: ChartOptions2;
     @Input() chartData: ChartData2[] = [];
 
-    private div: d3.Selection<SVGElement, {}, HTMLElement, any>;
+    private div: d3.Selection<HTMLDivElement, {}, HTMLElement, any>;
     private svg: d3.Selection<SVGElement, {}, HTMLElement, any>;
 
     private dataContainer: any;
@@ -37,6 +38,10 @@ export class DemoChart2Component implements OnInit, OnChanges {
 
     // Line generator
     public line: d3.Line<any>;
+
+    constructor(
+        private service: TimeSeriesBaseService,
+    ) { } 
 
     public ngOnInit(): void {
         console.log('ngOnInit');
@@ -76,7 +81,7 @@ export class DemoChart2Component implements OnInit, OnChanges {
     private storeSvg(): void {
         console.log('storeSvg');
         this.div = d3.select('.svg-container');
-        this.svg = this.div.select('#chart');
+        this.svg = this.div.select('svg');
     }
 
     private resizeSvg(): void {
