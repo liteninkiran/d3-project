@@ -26,7 +26,7 @@ export class TimeSeriesBaseService {
     private x: d3.ScaleTime<number, number, never>;
     private y: d3.ScaleContinuousNumeric<number, number, never>;
 
-    public init(
+    public setupChart(
         data: ChartData2[],
         chartOptions: ChartOptions2,
         container = '.svg-container'
@@ -34,8 +34,17 @@ export class TimeSeriesBaseService {
         this.chartData = data;
         this.chartOptions = chartOptions;
 
-        this.setInnerDimensions();
         this.storeSvg(container);
+        this.setInnerDimensions();
+        this.resizeSvg();
+        this.storeContainers();
+        this.repositionContainers();
+    }
+
+    public updateChart() {
+        this.setInnerDimensions();
+        this.resizeSvg();
+        this.repositionContainers();
     }
 
     private setInnerDimensions(): void {
@@ -50,5 +59,52 @@ export class TimeSeriesBaseService {
         console.log('storeSvg');
         this.div = d3.select(container);
         this.svg = this.div.select('svg');
+    }
+
+    private resizeSvg(): void {
+        console.log('resizeSvg');
+        const { height, width } = this.chartOptions.dimensions;
+        this.div
+            .style('max-width', `${width}px`)
+            .style('max-height', `${height}px`);
+        this.svg.attr('viewBox', [0, 0, width, height]);
+    }
+
+    private storeContainers(): void {
+        console.log('storeContainers');
+        this.storeContainer('xAxisContainer', 'x-axis-container');
+        this.storeContainer('yAxisContainer', 'y-axis-container');
+        this.storeContainer('titleContainer', 'title-container');
+        this.storeContainer('dataContainer', 'data-container');
+        this.storeContainer('legendContainer', 'legend-container');
+        this.storeText();
+    }
+
+    private storeContainer(container: string, className: string): void {
+        // console.log('storeContainer', container);
+        this[container] = this.svg.append('g').attr('class', className);
+    }
+
+    private storeText(): void {
+        this.titleText = this.titleContainer
+            .append('text')
+            .attr('class', 'title')
+            .style('text-anchor', 'middle');
+    }
+
+    private repositionContainers(): void {
+        console.log('repositionContainers');
+        const { left, top, bottom } = this.chartOptions.margin;
+        const { height } = this.chartOptions.dimensions;
+        this.repositionContainer('xAxisContainer', left, top + this.innerHeight);
+        this.repositionContainer('yAxisContainer', left, top);
+        this.repositionContainer('titleContainer', left + 0.5 * this.innerWidth, top * 0.5);
+        this.repositionContainer('dataContainer', left, top);
+        this.repositionContainer('legendContainer', left, (bottom * -0.5) + height + 10);
+    }
+
+    private repositionContainer(container: string, left: number, top: number): void {
+        // console.log('repositionContainer', `${container} | ${left} | ${top}`);
+        this[container].attr('transform', `translate(${left}, ${top})`);
     }
 }
