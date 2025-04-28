@@ -95,7 +95,7 @@ export class TimeChartBaseService {
     }
 
     public getData(): ChartData[] {
-        console.log('getData');
+        console.log('getData', this.data);
         return this.data;
     }
 

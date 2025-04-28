@@ -77,5 +77,4 @@ export class LineChartRendererService {
             markerLayer.selectAll('circle').remove();
         }
     }
-   
 }
