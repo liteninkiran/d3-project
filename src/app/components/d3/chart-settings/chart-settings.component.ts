@@ -11,7 +11,7 @@ import { ChartControl, ChartDimensions, ChartSettings } from 'src/app/types/d3/c
 export class ChartSettingsComponent implements OnInit {
 
     private options: ChartControl;
-    private dimensions: ChartDimensions;
+    public dimensions: ChartDimensions;
     public form: FormGroup;
 
     constructor(

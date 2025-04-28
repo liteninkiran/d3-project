@@ -39,7 +39,7 @@
             </mat-tab>
 
             <!-- Markers Tab -->
-            <mat-tab label="Markers">
+            <mat-tab label="Markers" *ngIf="form.value.options.chartType === 'line'">
 
                 <div class="tab-container" formGroupName="options">
 
@@ -95,10 +95,10 @@
                             <mat-form-field>
 
                                 <mat-label>
-                                    Chart Width
+                                    Chart Width (Max {{ dimensions.width }})
                                 </mat-label>
 
-                                <input matInput type="number" placeholder="Chart Width" formControlName="width" appearance="fill" step="10" />
+                                <input matInput type="number" placeholder="Chart Width" formControlName="width" appearance="fill" step="10" [max]="dimensions.width" />
 
                             </mat-form-field>
 
@@ -106,10 +106,10 @@
                             <mat-form-field>
 
                                 <mat-label>
-                                    Chart Height
+                                    Chart Height (Max {{ dimensions.height }})
                                 </mat-label>
 
-                                <input matInput type="number" placeholder="Chart Height" formControlName="height" appearance="fill" step="10" />
+                                <input matInput type="number" placeholder="Chart Height" formControlName="height" appearance="fill" step="10" [max]="dimensions.height" />
 
                             </mat-form-field>
 
@@ -131,7 +131,7 @@
                                         Top Margin
                                     </mat-label>
 
-                                    <input matInput type="number" placeholder="Top Margin" formControlName="top" appearance="fill" />
+                                    <input matInput type="number" placeholder="Top Margin" formControlName="top" appearance="fill" step="10" />
 
                                 </mat-form-field>
 
@@ -142,7 +142,7 @@
                                         Bottom Margin
                                     </mat-label>
 
-                                    <input matInput type="number" placeholder="Bottom Margin" formControlName="bottom" appearance="fill" />
+                                    <input matInput type="number" placeholder="Bottom Margin" formControlName="bottom" appearance="fill" step="10" />
 
                                 </mat-form-field>
 
@@ -157,7 +157,7 @@
                                         Left Margin
                                     </mat-label>
 
-                                    <input matInput type="number" placeholder="Left Margin" formControlName="left" appearance="fill" />
+                                    <input matInput type="number" placeholder="Left Margin" formControlName="left" appearance="fill" step="10" />
 
                                 </mat-form-field>
 
@@ -168,7 +168,7 @@
                                         Right Margin
                                     </mat-label>
 
-                                    <input matInput type="number" placeholder="Right Margin" formControlName="right" appearance="fill" />
+                                    <input matInput type="number" placeholder="Right Margin" formControlName="right" appearance="fill" step="10" />
 
                                 </mat-form-field>
 
