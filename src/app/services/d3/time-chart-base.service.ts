@@ -1,11 +1,12 @@
 import { Injectable } from '@angular/core';
-import { ChartData, Group, Svg, XScale, YScale } from 'src/app/types/d3/data';
+import { ChartData, Div, Group, Svg, XScale, YScale } from 'src/app/types/d3/data';
 import { ChartControl, ChartDimensions } from 'src/app/types/d3/chart-controls';
 import * as d3 from 'd3';
 
 @Injectable({ providedIn: 'root' })
 export class TimeChartBaseService {
     // SVG
+    private div: Div;
     private svg: Svg;
 
     // Containers
@@ -26,7 +27,7 @@ export class TimeChartBaseService {
     private innerHeight = 0;
 
     public init(
-        svgEl: SVGSVGElement,
+        divEl: HTMLDivElement,
         data: ChartData[],
         chartOptions: ChartControl,
         chartDimensions: ChartDimensions,
@@ -42,12 +43,20 @@ export class TimeChartBaseService {
         this.innerWidth = width - left - right;
         this.innerHeight = height - top - bottom;
 
-        this.svg = d3.select(svgEl)
-            .attr('width', this.innerWidth + left + right)
-            .attr('height', this.innerHeight + top + bottom);
+        this.div = d3.select(divEl);
+        this.svg = this.div.select('svg');
 
+        this.resizeSvg();
         this.createContainer();
         this.createScales();
+    }
+
+    public resizeSvg(): void {
+        const { height, width } = this.chartDimensions;
+        this.div
+            .style('max-width', `${width}px`)
+            .style('max-height', `${height}px`);
+        this.svg.attr('viewBox', [0, 0, width, height]);
     }
 
     public drawAxes(): void {

@@ -20,7 +20,7 @@ export class TimeSeriesComponent implements OnInit, AfterViewInit, OnChanges {
     @Input() chartOptions: ChartControl;
     @Input() chartDimensions: ChartDimensions;
 
-    @ViewChild('svgRef', { static: true }) private svgRef: ElementRef<SVGSVGElement>;
+    @ViewChild('divRef', { static: true }) private divRef: ElementRef<HTMLDivElement>;
 
     constructor(
         private baseService: TimeChartBaseService,
@@ -37,10 +37,10 @@ export class TimeSeriesComponent implements OnInit, AfterViewInit, OnChanges {
     }
 
     private createChart(): void {
-        if (!this.svgRef?.nativeElement || this.data.length === 0) return;
+        if (!this.divRef?.nativeElement || this.data.length === 0) return;
 
         this.baseService.init(
-            this.svgRef.nativeElement,
+            this.divRef.nativeElement,
             this.data,
             this.chartOptions,
             this.chartDimensions,
