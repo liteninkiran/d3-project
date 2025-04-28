@@ -20,11 +20,10 @@ const filter2024 = filteredData('2024-01-01');
 })
 export class ScratchComponent implements OnInit, OnDestroy {
 
-
     public chartData = filter2025;
-    private subscriptions: Subscription[] = [];
     public chartOptions = defaultChartOptions;
     public chartDimensions = defaultChartDimensions;
+    private subscriptions: Subscription[] = [];
 
     constructor(
         private dialog: MatDialog
