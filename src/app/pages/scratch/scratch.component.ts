@@ -5,6 +5,13 @@ import { debounceTime } from 'rxjs/operators';
 import { ChartSettingsComponent } from 'src/app/components/d3/chart-settings/chart-settings.component';
 import { dataset1 } from 'src/app/mocks/d3/data';
 import { defaultChartOptions, defaultChartDimensions, ChartSettings } from 'src/app/types/d3/chart-controls';
+import { ChartData, ChartData2 } from 'src/app/types/d3/data';
+
+const mapFn = (data: ChartData): ChartData2 => ({ date: new Date(data.date), value: data.value });
+const filterFn = (data: ChartData2, date: string): boolean => data.date >= new Date(date);
+const filteredData = (date: string) => dataset1.map(mapFn).filter((data) => filterFn(data, date));
+const filter2025 = filteredData('2025-01-01');
+const filter2024 = filteredData('2024-01-01');
 
 @Component({
     selector: 'app-scratch',
@@ -13,7 +20,8 @@ import { defaultChartOptions, defaultChartDimensions, ChartSettings } from 'src/
 })
 export class ScratchComponent implements OnInit, OnDestroy {
 
-    public chartData = dataset1.filter(data => Date.parse(data.date) >= Date.parse('2025-01-01'));
+
+    public chartData = filter2025;
     private subscriptions: Subscription[] = [];
     public chartOptions = defaultChartOptions;
     public chartDimensions = defaultChartDimensions;
@@ -23,7 +31,7 @@ export class ScratchComponent implements OnInit, OnDestroy {
     ) { }
 
     public ngOnInit(): void {
-
+        setTimeout(() => this.chartData = filter2024, 2000);
     }
 
     public ngOnDestroy(): void {

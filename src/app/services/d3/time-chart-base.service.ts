@@ -33,7 +33,7 @@ export class TimeChartBaseService {
         chartDimensions: ChartDimensions,
     ) {
         console.log('init', chartOptions, chartDimensions);
-        this.data = data.map(d => ({ ...d, date: new Date(d.date) }));
+        this.data = data;
         this.chartOptions = chartOptions;
         this.chartDimensions = chartDimensions;
 
