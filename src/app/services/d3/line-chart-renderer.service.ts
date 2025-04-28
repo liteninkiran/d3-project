@@ -46,13 +46,17 @@ export class LineChartRendererService {
                     .attr('stroke', 'steelblue')
                     .attr('stroke-width', 2)
                     .attr('d', line),
-                update => update.attr('d', line),
+                update => update
+                    .transition()
+                    .duration(500)
+                    .ease(d3.easeLinear)
+                    .attr('d', line),
                 exit => exit.remove()
             );
     
         if (showMarkers) {
             markerLayer.selectAll<SVGCircleElement, ChartData>('circle')
-                .data(data, d => (d as ChartData).date.toString())
+                .data(data)
                 .join(
                     enter => enter.append('circle')
                         .attr('r', 4)
@@ -61,12 +65,17 @@ export class LineChartRendererService {
                         .attr('cx', d => x(d.date))
                         .attr('cy', d => y(d.value)),
                     update => update
+                        .transition()
+                        .duration(500)
+                        .ease(d3.easeLinear)
                         .attr('cx', d => x(d.date))
-                        .attr('cy', d => y(d.value)),
+                        .attr('cy', d => y(d.value),
+                    ),
                     exit => exit.remove()
                 );
         } else {
             markerLayer.selectAll('circle').remove();
         }
     }
+   
 }
