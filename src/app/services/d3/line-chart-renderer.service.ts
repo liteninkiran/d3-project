@@ -9,6 +9,23 @@ export class LineChartRendererService {
         private baseService: TimeChartBaseService
     ) { }
 
+    public removeLineAndMarkers(): void {
+        this.removeLine();
+        this.removeMarkers();
+    }
+
+    public removeLine(): void {
+        this.removeLayer('line-layer');
+    }
+
+    public removeMarkers(): void {
+        this.removeLayer('marker-layer');
+    }
+
+    private removeLayer(layer: string): void {
+        this.baseService.getLayer(layer).selectAll('*').remove();
+    }
+
     public drawLine(showMarkers: boolean = true): void {
         console.log('drawLine');
         const data = this.baseService.getData();

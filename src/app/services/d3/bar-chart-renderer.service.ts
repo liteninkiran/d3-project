@@ -7,6 +7,14 @@ export class BarChartRendererService {
         private baseService: TimeChartBaseService
     ) { }
 
+    public removeBars(): void {
+        this.removeLayer('bar-layer');
+    }
+
+    private removeLayer(layer: string): void {
+        this.baseService.getLayer(layer).selectAll('*').remove();
+    }
+
     public drawBar(): void {
         console.log('drawBar');
         const data = this.baseService.getData();

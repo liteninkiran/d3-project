@@ -38,6 +38,6 @@ export const defaultChartOptions: ChartControl = {
 }
 
 export const defaultChartDimensions: ChartDimensions = {
-    height: 600,
-    width: 1200,
+    height: 700,
+    width: 1500,
 }
