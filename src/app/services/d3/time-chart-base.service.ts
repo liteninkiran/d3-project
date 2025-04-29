@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { ChartData, Div, Group, Svg, XScale, YScale } from 'src/app/types/d3/data';
 import { ChartControl, ChartDimensions } from 'src/app/types/d3/chart-controls';
 import * as d3 from 'd3';
+import { ChartContext } from 'src/app/types/d3/services';
 
 @Injectable({ providedIn: 'root' })
 export class TimeChartBaseService {
@@ -79,7 +80,7 @@ export class TimeChartBaseService {
         console.log('getXScale');
         return this.x;
     }
-    
+
     public getYScale(): YScale {
         console.log('getYScale');
         return this.y;
@@ -99,6 +100,21 @@ export class TimeChartBaseService {
         return this.data;
     }
 
+    public getContext(): ChartContext {
+        if (!this.x || !this.y || !this.svg || !this.container) {
+            throw new Error('Chart not initialized');
+        }
+
+        return {
+            svg: this.svg,
+            container: this.container,
+            x: this.x,
+            y: this.y,
+            getLayer: (name: string) => this.getLayer(name),
+            getData: () => this.getData()
+        };
+    }
+
     private createContainer(): void {
         console.log('createContainer');
         this.container = this.svg.select('g.chart-container');
@@ -114,7 +130,7 @@ export class TimeChartBaseService {
     private updateMargins() {
         const { margins: { top, left } } = this.chartOptions;
         d3.select('.chart-container')
-          .attr('transform', `translate(${left}, ${top})`);
+            .attr('transform', `translate(${left}, ${top})`);
     }
 
     private createScales(): void {

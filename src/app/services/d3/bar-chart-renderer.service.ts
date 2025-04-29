@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { TimeChartBaseService } from './time-chart-base.service';
+import { ChartContext } from 'src/app/types/d3/services';
 
 @Injectable({ providedIn: 'root' })
 export class BarChartRendererService {
@@ -15,12 +16,11 @@ export class BarChartRendererService {
         this.baseService.getLayer(layer).selectAll('*').remove();
     }
 
-    public drawBar(): void {
+    public drawBar(context: ChartContext): void {
         console.log('drawBar');
-        const data = this.baseService.getData();
-        const x = this.baseService.getXScale();
-        const y = this.baseService.getYScale();
-        const barLayer = this.baseService.getLayer('bar-layer');
+        const { x, y, getLayer, getData } = context;
+        const data = getData();
+        const barLayer = getLayer('bar-layer');
         const barWidth = 10;
 
         barLayer.selectAll('*').remove();
