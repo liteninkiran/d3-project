@@ -1,15 +1,12 @@
 import { Injectable } from '@angular/core';
 import { ChartData } from 'src/app/types/d3/data';
-import { TimeChartBaseService } from './time-chart-base.service';
 import { LineEnter, LineUpdate, LineExit, MarkerEnter, MarkerUpdate, MarkerExit, ChartContext } from 'src/app/types/d3/services';
 import * as d3 from 'd3';
 
 @Injectable({ providedIn: 'root' })
 export class LineChartRendererService {
 
-    constructor(
-        private baseService: TimeChartBaseService
-    ) { }
+    constructor() { }
 
     public removeLineAndMarkers(context: ChartContext): void {
         this.removeLine(context);
@@ -25,7 +22,7 @@ export class LineChartRendererService {
     }
 
     private removeLayer(context: ChartContext, layer: string): void {
-        this.baseService.getLayer(layer).selectAll('*').remove();
+        context.getLayer(layer).selectAll('*').remove();
     }
 
     public draw(context: ChartContext, showMarkers: boolean = true): void {

@@ -1,19 +1,16 @@
 import { Injectable } from '@angular/core';
-import { TimeChartBaseService } from './time-chart-base.service';
 import { ChartContext } from 'src/app/types/d3/services';
 
 @Injectable({ providedIn: 'root' })
 export class BarChartRendererService {
-    constructor(
-        private baseService: TimeChartBaseService
-    ) { }
+    constructor() { }
 
-    public removeBars(): void {
-        this.removeLayer('bar-layer');
+    public removeBars(context: ChartContext): void {
+        this.removeLayer(context, 'bar-layer');
     }
 
-    private removeLayer(layer: string): void {
-        this.baseService.getLayer(layer).selectAll('*').remove();
+    private removeLayer(context: ChartContext, layer: string): void {
+        context.getLayer(layer).selectAll('*').remove();
     }
 
     public drawBar(context: ChartContext): void {
