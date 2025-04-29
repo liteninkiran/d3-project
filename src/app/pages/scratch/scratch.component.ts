@@ -7,11 +7,17 @@ import { dataset1 } from 'src/app/mocks/d3/data';
 import { defaultChartOptions, defaultChartDimensions, ChartSettings } from 'src/app/types/d3/chart-controls';
 import { ChartData, ChartData2 } from 'src/app/types/d3/data';
 
+type DateRange = {
+    start: string;
+    end: string;
+}
+
+const getDates = (year: number) => ({ start: `${year}-01-01`, end: `${year}-12-31` })
 const mapFn = (data: ChartData): ChartData2 => ({ date: new Date(data.date), value: data.value });
-const filterFn = (data: ChartData2, date: string): boolean => data.date >= new Date(date);
-const filteredData = (date: string) => dataset1.map(mapFn).filter((data) => filterFn(data, date));
-const filter2025 = filteredData('2025-01-01');
-const filter2024 = filteredData('2024-01-01');
+const filterFn = (data: ChartData2, dates: DateRange): boolean => data.date >= new Date(dates.start) && data.date <= new Date(dates.end);
+const filteredData = (dates: DateRange) => dataset1.map(mapFn).filter((data) => filterFn(data, dates));
+const filter2024 = filteredData(getDates(2024));
+const filter2023 = filteredData(getDates(2023));
 
 @Component({
     selector: 'app-scratch',
@@ -20,7 +26,7 @@ const filter2024 = filteredData('2024-01-01');
 })
 export class ScratchComponent implements OnInit, OnDestroy {
 
-    public chartData = filter2025;
+    public chartData = filter2024;
     public chartOptions = defaultChartOptions;
     public chartDimensions = defaultChartDimensions;
     private subscriptions: Subscription[] = [];
@@ -30,7 +36,7 @@ export class ScratchComponent implements OnInit, OnDestroy {
     ) { }
 
     public ngOnInit(): void {
-        setTimeout(() => this.chartData = filter2024, 2000);
+        setTimeout(() => this.chartData = filter2023, 2000);
     }
 
     public ngOnDestroy(): void {
