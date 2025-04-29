@@ -52,14 +52,6 @@ export class TimeChartBaseService {
         this.createScales();
     }
 
-    public resizeSvg(): void {
-        const { height, width } = this.chartDimensions;
-        this.div
-            .style('max-width', `${width}px`)
-            .style('max-height', `${height}px`);
-        this.svg.attr('viewBox', [0, 0, width, height]);
-    }
-
     public drawAxes(): void {
         console.log('drawAxes');
         const xAxis = d3.axisBottom(this.x).ticks(d3.timeMonth.every(1)).tickFormat(d3.timeFormat('%b %Y'));
@@ -76,43 +68,32 @@ export class TimeChartBaseService {
             .call(yAxis);
     }
 
-    public getXScale(): XScale {
-        console.log('getXScale');
-        return this.x;
+    public getContext(): ChartContext {
+        return {
+            svg: this.svg,
+            container: this.container,
+            x: this.x,
+            y: this.y,
+            data: this.data,
+            getLayer: (name: string) => this.getLayer(name),
+        };
     }
 
-    public getYScale(): YScale {
-        console.log('getYScale');
-        return this.y;
+    private resizeSvg(): void {
+        const { height, width } = this.chartDimensions;
+        this.div
+            .style('max-width', `${width}px`)
+            .style('max-height', `${height}px`);
+        this.svg.attr('viewBox', [0, 0, width, height]);
     }
 
-    public getLayer(name: string): Group {
+    private getLayer(name: string): Group {
         console.log('getLayer', name);
         if (!this.groups.has(name)) {
             const g = this.container.append('g').attr('class', name);
             this.groups.set(name, g);
         }
         return this.groups.get(name);
-    }
-
-    public getData(): ChartData[] {
-        console.log('getData', this.data);
-        return this.data;
-    }
-
-    public getContext(): ChartContext {
-        if (!this.x || !this.y || !this.svg || !this.container) {
-            throw new Error('Chart not initialised');
-        }
-
-        return {
-            svg: this.svg,
-            container: this.container,
-            x: this.x,
-            y: this.y,
-            getLayer: (name: string) => this.getLayer(name),
-            getData: () => this.getData()
-        };
     }
 
     private createContainer(): void {

@@ -32,8 +32,7 @@ export class LineChartRendererService {
 
     private drawLine(context: ChartContext): void {
         console.log('drawLine');
-        const { x, y, getLayer, getData } = context;
-        const data = getData();
+        const { x, y, data, getLayer } = context;
         const lineLayer = getLayer('line-layer');
 
         const line = d3.line<ChartData>()
@@ -61,8 +60,7 @@ export class LineChartRendererService {
 
     private drawMarkers(context: ChartContext, showMarkers: boolean = true): void {
         console.log('drawMarkers');
-        const { x, y, getLayer, getData } = context;
-        const data = getData();
+        const { x, y, data, getLayer } = context;
         const markerLayer = getLayer('marker-layer');
 
         if (showMarkers) {

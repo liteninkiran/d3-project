@@ -15,8 +15,7 @@ export class BarChartRendererService {
 
     public drawBar(context: ChartContext): void {
         console.log('drawBar');
-        const { x, y, getLayer, getData } = context;
-        const data = getData();
+        const { x, y, data, getLayer } = context;
         const barLayer = getLayer('bar-layer');
         const barWidth = 10;
 

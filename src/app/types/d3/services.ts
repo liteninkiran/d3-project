@@ -13,6 +13,6 @@ export type ChartContext = {
     container: Group;
     x: XScale;
     y: YScale;
+    data: ChartData[];
     getLayer: (name: string) => Group;
-    getData: () => any[];
 }
