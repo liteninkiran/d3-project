@@ -1,13 +1,30 @@
 import { Injectable } from '@angular/core';
-import { ChartData } from 'src/app/types/d3/data';
+import { ChartData, XScale, YScale } from 'src/app/types/d3/data';
 import { TimeChartBaseService } from './time-chart-base.service';
 import * as d3 from 'd3';
 
+type LineEnter = d3.Selection<d3.EnterElement, ChartData[], SVGGElement, unknown>;
+type LineUpdate = d3.Selection<SVGPathElement, ChartData[], SVGGElement, unknown>;
+type LineExit = d3.Selection<SVGPathElement, ChartData[], SVGGElement, unknown>;
+
+type MarkerEnter = d3.Selection<d3.EnterElement, ChartData, SVGGElement, unknown>;
+type MarkerUpdate = d3.Selection<SVGCircleElement, ChartData, SVGGElement, unknown>;
+type MarkerExit = d3.Selection<SVGCircleElement, ChartData, SVGGElement, unknown>;
+
 @Injectable({ providedIn: 'root' })
 export class LineChartRendererService {
+
+    private x: XScale;
+    private y: YScale;
+
     constructor(
         private baseService: TimeChartBaseService
     ) { }
+
+    public setScales() {
+        this.x = this.baseService.getXScale();
+        this.y = this.baseService.getYScale();
+    }
 
     public removeLineAndMarkers(): void {
         this.removeLine();
@@ -26,53 +43,64 @@ export class LineChartRendererService {
         this.baseService.getLayer(layer).selectAll('*').remove();
     }
 
-    public drawLine(showMarkers: boolean = true): void {
+    public draw(showMarkers: boolean = true): void {
+        this.drawLine();
+        this.drawMarkers(showMarkers);
+    }
+
+    private drawLine(): void {
         console.log('drawLine');
         const data = this.baseService.getData();
-        const x = this.baseService.getXScale();
-        const y = this.baseService.getYScale();
         const lineLayer = this.baseService.getLayer('line-layer');
-        const markerLayer = this.baseService.getLayer('marker-layer');
-    
+
         const line = d3.line<ChartData>()
-            .x(d => x(d.date))
-            .y(d => y(d.value));
-    
+            .x(d => this.x(d.date))
+            .y(d => this.y(d.value));
+
+        const enterFn = (enter: LineEnter) => enter.append('path')
+            .attr('fill', 'none')
+            .attr('stroke', 'steelblue')
+            .attr('stroke-width', 2)
+            .attr('d', line);
+
+        const updateFn = (update: LineUpdate) => update
+            .transition()
+            .duration(500)
+            .ease(d3.easeLinear)
+            .attr('d', line);
+
+        const exitFn = (exit: LineExit) => exit.remove();
+
         lineLayer.selectAll<SVGPathElement, ChartData[]>('path')
             .data([data])
-            .join(
-                enter => enter.append('path')
-                    .attr('fill', 'none')
-                    .attr('stroke', 'steelblue')
-                    .attr('stroke-width', 2)
-                    .attr('d', line),
-                update => update
-                    .transition()
-                    .duration(500)
-                    .ease(d3.easeLinear)
-                    .attr('d', line),
-                exit => exit.remove()
-            );
-    
+            .join(enterFn, updateFn, exitFn);
+    }
+
+    private drawMarkers(showMarkers: boolean = true): void {
+        console.log('drawMarkers');
+        const data = this.baseService.getData();
+        const markerLayer = this.baseService.getLayer('marker-layer');
+
         if (showMarkers) {
+            const enterFn = (enter: MarkerEnter) => enter.append('circle')
+                .attr('r', 4)
+                .attr('fill', 'steelblue')
+                .attr('class', 'marker')
+                .attr('cx', d => this.x(d.date))
+                .attr('cy', d => this.y(d.value));
+
+            const updateFn = (update: MarkerUpdate) => update
+                .transition()
+                .duration(500)
+                .ease(d3.easeLinear)
+                .attr('cx', d => this.x(d.date))
+                .attr('cy', d => this.y(d.value));
+
+            const exitFn = (exit: MarkerExit) => exit.remove();
+
             markerLayer.selectAll<SVGCircleElement, ChartData>('circle')
                 .data(data)
-                .join(
-                    enter => enter.append('circle')
-                        .attr('r', 4)
-                        .attr('fill', 'steelblue')
-                        .attr('class', 'marker')
-                        .attr('cx', d => x(d.date))
-                        .attr('cy', d => y(d.value)),
-                    update => update
-                        .transition()
-                        .duration(500)
-                        .ease(d3.easeLinear)
-                        .attr('cx', d => x(d.date))
-                        .attr('cy', d => y(d.value),
-                    ),
-                    exit => exit.remove()
-                );
+                .join(enterFn, updateFn, exitFn);
         } else {
             markerLayer.selectAll('circle').remove();
         }
