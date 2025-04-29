@@ -7,7 +7,6 @@ export type Margin = {
     left: number;
 }
 
-
 export type ChartControl = {
     markers: boolean;
     markerSize: number;

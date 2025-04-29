@@ -30,7 +30,7 @@ export class ScratchComponent implements OnInit, OnDestroy {
     ) { }
 
     public ngOnInit(): void {
-        // setTimeout(() => this.chartData = filter2024, 2000);
+        setTimeout(() => this.chartData = filter2024, 2000);
     }
 
     public ngOnDestroy(): void {

@@ -14,8 +14,8 @@ export class TimeChartBaseService {
     private groups: Map<string, Group> = new Map();
 
     // Scales
-    private xScale: XScale;
-    private yScale: YScale;
+    private x: XScale;
+    private y: YScale;
 
     // Data
     private data: ChartData[] = [];
@@ -61,8 +61,8 @@ export class TimeChartBaseService {
 
     public drawAxes(): void {
         console.log('drawAxes');
-        const xAxis = d3.axisBottom(this.xScale).ticks(d3.timeMonth.every(1)).tickFormat(d3.timeFormat('%b %Y'));
-        const yAxis = d3.axisLeft(this.yScale).ticks(6);
+        const xAxis = d3.axisBottom(this.x).ticks(d3.timeMonth.every(1)).tickFormat(d3.timeFormat('%b %Y'));
+        const yAxis = d3.axisLeft(this.y).ticks(6);
 
         this.getLayer('x-axis')
             .attr('transform', `translate(0, ${this.innerHeight})`)
@@ -77,12 +77,12 @@ export class TimeChartBaseService {
 
     public getXScale(): XScale {
         console.log('getXScale');
-        return this.xScale;
+        return this.x;
     }
     
     public getYScale(): YScale {
         console.log('getYScale');
-        return this.yScale;
+        return this.y;
     }
 
     public getLayer(name: string): Group {
@@ -119,14 +119,14 @@ export class TimeChartBaseService {
 
     private createScales(): void {
         console.log('createScales');
-        this.xScale = d3.scaleTime()
+        this.x = d3.scaleTime()
             .domain(d3.extent(this.data, d => d.date) as [Date, Date])
             .range([0, this.innerWidth]);
 
         const yMin = Math.min(0, d3.min(this.data, d => d.value)!);
         const yMax = d3.max(this.data, d => d.value)!;
 
-        this.yScale = d3.scaleLinear()
+        this.y = d3.scaleLinear()
             .domain([yMin, yMax])
             .range([this.innerHeight, 0]);
     }

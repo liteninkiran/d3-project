@@ -1,15 +1,8 @@
 import { Injectable } from '@angular/core';
 import { ChartData, XScale, YScale } from 'src/app/types/d3/data';
 import { TimeChartBaseService } from './time-chart-base.service';
+import { LineEnter, LineUpdate, LineExit, MarkerEnter, MarkerUpdate, MarkerExit } from 'src/app/types/d3/services';
 import * as d3 from 'd3';
-
-type LineEnter = d3.Selection<d3.EnterElement, ChartData[], SVGGElement, unknown>;
-type LineUpdate = d3.Selection<SVGPathElement, ChartData[], SVGGElement, unknown>;
-type LineExit = d3.Selection<SVGPathElement, ChartData[], SVGGElement, unknown>;
-
-type MarkerEnter = d3.Selection<d3.EnterElement, ChartData, SVGGElement, unknown>;
-type MarkerUpdate = d3.Selection<SVGCircleElement, ChartData, SVGGElement, unknown>;
-type MarkerExit = d3.Selection<SVGCircleElement, ChartData, SVGGElement, unknown>;
 
 @Injectable({ providedIn: 'root' })
 export class LineChartRendererService {
