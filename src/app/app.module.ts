@@ -11,16 +11,12 @@ import { MaterialModule } from './modules/material.module';
 import { NhsApiModule } from './modules/nhs-api.module';
 import { ScratchComponent } from './pages/scratch/scratch.component';
 import { D3ChartsModule } from './modules/d3-charts.module';
-import { Scratch2Component } from './pages/scratch2/scratch2.component';
-import { Scratch3Component } from './pages/scratch3/scratch3.component';
 
 @NgModule({
     declarations: [
         AppComponent,
         NavbarLinksComponent,
         ScratchComponent,
-        Scratch2Component,
-        Scratch3Component,
     ],
     imports: [
         HttpClientModule,

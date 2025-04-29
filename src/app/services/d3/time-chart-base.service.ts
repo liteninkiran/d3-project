@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { ChartData, Div, Group, Svg, XScale, YScale } from 'src/app/types/d3/data';
 import { ChartControl, ChartDimensions } from 'src/app/types/d3/chart-controls';
-import * as d3 from 'd3';
 import { ChartContext } from 'src/app/types/d3/services';
+import * as d3 from 'd3';
 
 @Injectable({ providedIn: 'root' })
 export class TimeChartBaseService {
