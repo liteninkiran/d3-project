@@ -102,7 +102,7 @@ export class TimeChartBaseService {
 
     public getContext(): ChartContext {
         if (!this.x || !this.y || !this.svg || !this.container) {
-            throw new Error('Chart not initialized');
+            throw new Error('Chart not initialised');
         }
 
         return {
