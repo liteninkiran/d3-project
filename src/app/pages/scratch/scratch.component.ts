@@ -1,7 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
-import { Subscription } from 'rxjs';
-import { debounceTime } from 'rxjs/operators';
+import { Observable, Subscription } from 'rxjs';
 import { ChartSettingsComponent } from 'src/app/components/d3/chart-settings/chart-settings.component';
 import { dataset1 } from 'src/app/mocks/d3/data';
 import { defaultChartOptions, defaultChartDimensions, ChartSettings } from 'src/app/types/d3/chart-controls';
@@ -44,25 +43,28 @@ export class ScratchComponent implements OnInit, OnDestroy {
     }
 
     public openChartSettingsModal() {
+        let sub: Subscription;
         const dialogConfig = new MatDialogConfig<ChartSettings>();
         dialogConfig.data = {
             options: this.chartOptions,
             dimensions: this.chartDimensions,
         };
         const dialogRef = this.dialog.open(ChartSettingsComponent, dialogConfig);
+        const dialogOpen = dialogRef.afterOpened();
 
-        dialogRef.afterOpened().subscribe(() => {
-            const form = dialogRef.componentInstance.form;
-            const subFunction = (data?: ChartSettings) => {
-                if (data) {
-                    this.chartOptions = data.options;
-                    this.chartDimensions = data.dimensions;
-                }
+        const formChangedFn = (data?: ChartSettings) => {
+            if (data) {
+                this.chartOptions = data.options;
+                this.chartDimensions = data.dimensions;
             }
-            const sub = form.valueChanges
-                //.pipe(debounceTime(300))
-                .subscribe(subFunction);
-            this.subscriptions.push(sub);
-        });
+        }
+        const dialogOpenFn = () => this.subscribeTo(dialogRef.componentInstance.form.valueChanges, formChangedFn);
+
+        this.subscribeTo(dialogOpen, dialogOpenFn);
+    }
+
+    private subscribeTo(obs: Observable<any>, fn: () => void): void {
+        const sub = obs.subscribe(fn);
+        this.subscriptions.push(sub);
     }
 }
