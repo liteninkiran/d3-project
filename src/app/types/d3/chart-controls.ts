@@ -25,7 +25,7 @@ export type ChartSettings = {
 }
 
 export const defaultChartOptions: ChartControl = {
-    markers: true,
+    markers: false,
     markerSize: 10,
     chartType: 'line',
     margins: {
