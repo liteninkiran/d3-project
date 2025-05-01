@@ -53,15 +53,17 @@ export class ChartSettingsComponent implements OnInit {
             chartType: this.fb.control(this.options.chartType),
             margins: this.fb.group(margins),
         }
+        const line = {
+            stroke: this.fb.control(this.options.line.stroke),
+        }
+        const bar = {
+            width: this.fb.control(this.options.bar.width),
+        }
         const formGroup = {
             options: this.fb.group(options),
             dimensions: this.fb.group(dimensions),
-            line: this.fb.group({
-                stroke: this.fb.control(1),
-            }),
-            bar: this.fb.group({
-                width: this.fb.control(10),
-            }),
+            line: this.fb.group(line),
+            bar: this.fb.group(bar),
         }
         this.form = this.fb.group(formGroup);
     }
