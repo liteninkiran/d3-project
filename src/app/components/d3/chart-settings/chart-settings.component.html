@@ -78,7 +78,7 @@
             <!-- Markers Tab -->
             <mat-tab label="Markers" *ngIf="form.value.chartType === 'line'">
 
-                <div class="tab-container">
+                <div class="tab-container" formGroupName="markers">
 
                     <mat-card appearance="outlined">
 
@@ -92,7 +92,7 @@
 
                             <!-- Enable Markers -->
                             <div class="full-width form-row">
-                                <mat-checkbox formControlName="markers">Enable Markers</mat-checkbox>
+                                <mat-checkbox formControlName="enabled">Enable Markers</mat-checkbox>
                             </div>
 
                             <!-- Marker Size -->
@@ -100,11 +100,11 @@
 
                                 <mat-form-field class="full-width">
 
-                                    <mat-label for="markerSize">
+                                    <mat-label for="size">
                                         Marker Size
                                     </mat-label>
 
-                                    <input matInput type="number" placeholder="Marker size" formControlName="markerSize" appearance="fill" />
+                                    <input matInput type="number" placeholder="Marker size" formControlName="size" appearance="fill" />
 
                                 </mat-form-field>
 

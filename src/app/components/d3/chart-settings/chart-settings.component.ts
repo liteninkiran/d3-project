@@ -60,6 +60,13 @@ export class ChartSettingsComponent implements OnInit {
         }
     }
 
+    private getMarkers() {
+        return {
+            enabled: this.fb.control(this.options.markers.enabled),
+            size: this.fb.control(this.options.markers.size),
+        }
+    }
+
     private getBar() {
         return {
             width: this.fb.control(this.options.bar.width),
@@ -68,13 +75,12 @@ export class ChartSettingsComponent implements OnInit {
 
     private getOptions() {
         return {
-            line: this.fb.group(this.getLine()),
-            bar: this.fb.group(this.getBar()),
-            markers: this.fb.control(this.options.markers),
-            markerSize: this.fb.control(this.options.markerSize),
             chartType: this.fb.control(this.options.chartType),
-            margins: this.fb.group(this.getMargins()),
             dimensions: this.fb.group(this.getDimensions()),
+            margins: this.fb.group(this.getMargins()),
+            line: this.fb.group(this.getLine()),
+            markers: this.fb.group(this.getMarkers()),
+            bar: this.fb.group(this.getBar()),
         }
     }
 }

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { ChartData } from 'src/app/types/d3/data';
-import { LineEnter, LineUpdate, LineExit, MarkerEnter, MarkerUpdate, MarkerExit, ChartContext } from 'src/app/types/d3/services';
+import { MarkerEnter, MarkerUpdate, MarkerExit, ChartContext } from 'src/app/types/d3/services';
 import * as d3 from 'd3';
 
 @Injectable({ providedIn: 'root' })
@@ -25,9 +25,9 @@ export class LineChartRendererService {
         context.getLayer(layer).selectAll('*').remove();
     }
 
-    public draw(context: ChartContext, showMarkers: boolean = true): void {
+    public draw(context: ChartContext): void {
         this.drawLine(context);
-        this.drawMarkers(context, showMarkers);
+        this.drawMarkers(context);
     }
 
     private drawLine(context: ChartContext): void {
@@ -55,16 +55,13 @@ export class LineChartRendererService {
             .attr('d', line);
     }
 
-    private drawMarkers(context: ChartContext, showMarkers: boolean = true): void {
+    private drawMarkers(context: ChartContext): void {
         console.log('drawMarkers');
         const { x, y, data, getLayer } = context;
         const markerLayer = getLayer('marker-layer');
 
-        if (showMarkers) {
+        if (context.chartOptions.markers.enabled) {
             const enterFn = (enter: MarkerEnter) => enter.append('circle')
-                .attr('r', 4)
-                .attr('fill', 'steelblue')
-                .attr('class', 'marker')
                 .attr('cx', d => x(d.date))
                 .attr('cy', d => y(d.value));
 
@@ -79,7 +76,10 @@ export class LineChartRendererService {
 
             markerLayer.selectAll<SVGCircleElement, ChartData>('circle')
                 .data(data)
-                .join(enterFn, updateFn, exitFn);
+                .join(enterFn, updateFn, exitFn)
+                .attr('fill', 'steelblue')
+                .attr('class', 'marker')
+                .attr('r', context.chartOptions.markers.size);
         } else {
             markerLayer.selectAll('circle').remove();
         }

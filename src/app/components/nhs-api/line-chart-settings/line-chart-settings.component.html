@@ -15,8 +15,6 @@
 
     <mat-dialog-content [formGroup]="form">
 
-
-
         <mat-card appearance="outlined">
 
             <mat-card-header>
@@ -31,9 +29,8 @@
                     <!-- Concurrent -->
                     <mat-checkbox formControlName="markers">Enable Markers</mat-checkbox>
                 </div>
-                        
 
-                <div class="full-width form-row" *ngIf="form.value.markers">
+                <div class="full-width form-row" *ngIf="form.value.markers.enabled">
 
                     <!-- Marker Size -->
                     <mat-form-field class="full-width">

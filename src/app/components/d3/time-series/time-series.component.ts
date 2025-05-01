@@ -48,7 +48,7 @@ export class TimeSeriesComponent implements OnInit, AfterViewInit, OnChanges {
 
         if (this.chartOptions.chartType === 'line') {
             this.barChartService.removeBars(context);
-            this.lineChartService.draw(context, this.chartOptions.markers);
+            this.lineChartService.draw(context);
         } else {
             this.lineChartService.removeLineAndMarkers(context);
             this.barChartService.drawBar(context);

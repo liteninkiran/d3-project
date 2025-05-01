@@ -12,6 +12,11 @@ export type ChartDimensions = {
     width: number;
 }
 
+export type MarkerOptions = {
+    enabled: boolean;
+    size: number;
+}
+
 export type LineOptions = {
     stroke: number;
 }
@@ -21,11 +26,10 @@ export type BarOptions = {
 }
 
 export type ChartOptions = {
-    markers: boolean;
-    markerSize: number;
     chartType: ChartType;
     dimensions: ChartDimensions;
     margins: Margin;
     line: LineOptions;
+    markers: MarkerOptions;
     bar: BarOptions;
 }

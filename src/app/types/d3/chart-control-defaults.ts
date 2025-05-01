@@ -1,4 +1,4 @@
-import { Margin, LineOptions, BarOptions, ChartOptions, ChartDimensions, ChartType } from './chart-controls';
+import { Margin, LineOptions, BarOptions, ChartOptions, ChartDimensions, ChartType, MarkerOptions } from './chart-controls';
 
 export const defaultChartType: ChartType = 'line';
 
@@ -18,16 +18,20 @@ export const defaultLineOptions: LineOptions = {
     stroke: 2,
 }
 
+export const defaultMarkerOptions: MarkerOptions = {
+    enabled: true,
+    size: 4,
+}
+
 export const defaultBarOptions: BarOptions = {
     width: 10,
 }
 
 export const defaultChartOptions: ChartOptions = {
-    markers: false,
-    markerSize: 10,
     chartType: defaultChartType,
     margins: defaultChartMargins,
     dimensions: defaultChartDimensions,
     line: defaultLineOptions,
+    markers: defaultMarkerOptions,
     bar: defaultBarOptions,
 }
