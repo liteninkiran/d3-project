@@ -46,36 +46,35 @@
                     <mat-card appearance="outlined">
 
                         <mat-card-header>
-            
+
                             <mat-card-title>Line Markers</mat-card-title>
-            
+
                         </mat-card-header>
-            
+
                         <mat-card-content>
-            
+
                             <!-- Enable Markers -->
                             <div class="full-width form-row">
                                 <mat-checkbox formControlName="markers">Enable Markers</mat-checkbox>
                             </div>
-                                    
-            
+
                             <!-- Marker Size -->
                             <div class="full-width form-row" *ngIf="form.value.markers">
-            
+
                                 <mat-form-field class="full-width">
-                    
-                                    <mat-label>
+
+                                    <mat-label for="markerSize">
                                         Marker Size
                                     </mat-label>
-                    
+
                                     <input matInput type="number" placeholder="Marker size" formControlName="markerSize" appearance="fill" />
-                    
+
                                 </mat-form-field>
-                    
+
                             </div>
-                    
+
                         </mat-card-content>
-            
+
                     </mat-card>
 
                 </div>
