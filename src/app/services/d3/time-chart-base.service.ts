@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { ChartData, Div, Group, Svg, XScale, YScale } from 'src/app/types/d3/data';
-import { ChartControl, ChartDimensions } from 'src/app/types/d3/chart-controls';
+import { ChartOptions, ChartDimensions } from 'src/app/types/d3/chart-controls';
 import { ChartContext } from 'src/app/types/d3/services';
 import * as d3 from 'd3';
 
@@ -22,7 +22,7 @@ export class TimeChartBaseService {
     private data: ChartData[] = [];
 
     // Dimensions
-    private chartOptions: ChartControl;
+    private chartOptions: ChartOptions;
     private chartDimensions: ChartDimensions;
     private innerWidth = 0;
     private innerHeight = 0;
@@ -30,7 +30,7 @@ export class TimeChartBaseService {
     public init(
         divEl: HTMLDivElement,
         data: ChartData[],
-        chartOptions: ChartControl,
+        chartOptions: ChartOptions,
         chartDimensions: ChartDimensions,
     ) {
         console.log('init', chartOptions, chartDimensions);

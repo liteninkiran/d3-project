@@ -1,7 +1,7 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { FormGroup, NonNullableFormBuilder } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { ChartControl } from 'src/app/types/d3/chart-controls';
+import { ChartOptions } from 'src/app/types/d3/chart-controls';
 
 @Component({
     selector: 'app-nhs-api-line-chart-settings',
@@ -10,13 +10,13 @@ import { ChartControl } from 'src/app/types/d3/chart-controls';
 })
 export class LineChartSettingsComponent implements OnInit {
 
-    private data: ChartControl;
+    private data: ChartOptions;
     public form: FormGroup;
 
     constructor(
         private fb: NonNullableFormBuilder,
         private dialogRef: MatDialogRef<LineChartSettingsComponent>,
-        @Inject(MAT_DIALOG_DATA) data: ChartControl,
+        @Inject(MAT_DIALOG_DATA) data: ChartOptions,
     ) {
         this.data = data;
     }

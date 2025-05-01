@@ -1,7 +1,7 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { FormGroup, NonNullableFormBuilder } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { ChartControl, ChartDimensions, ChartSettings } from 'src/app/types/d3/chart-controls';
+import { ChartOptions, ChartDimensions, ChartSettings } from 'src/app/types/d3/chart-controls';
 
 @Component({
     selector: 'app-chart-settings',
@@ -10,7 +10,7 @@ import { ChartControl, ChartDimensions, ChartSettings } from 'src/app/types/d3/c
 })
 export class ChartSettingsComponent implements OnInit {
 
-    private options: ChartControl;
+    private options: ChartOptions;
     public dimensions: ChartDimensions;
     public form: FormGroup;
 
@@ -37,34 +37,49 @@ export class ChartSettingsComponent implements OnInit {
     }
 
     private setupForm(): void {
-        const margins = {
-            top: this.fb.control(this.options.margins.top),
-            bottom: this.fb.control(this.options.margins.bottom),
-            left: this.fb.control(this.options.margins.left),
-            right: this.fb.control(this.options.margins.right),
-        }
-        const dimensions = {
+        this.form = this.fb.group({
+            options: this.fb.group(this.getOptions()),
+            dimensions: this.fb.group(this.getDimensions()),
+        });
+    }
+
+    private getDimensions() {
+        return {
             width: this.fb.control(this.dimensions.width),
             height: this.fb.control(this.dimensions.height),
         }
-        const options = {
+    }
+
+    private getOptions() {
+        const margins = this.getMargins();
+        return {
+            line: this.fb.group(this.getLine()),
+            bar: this.fb.group(this.getBar()),
             markers: this.fb.control(this.options.markers),
             markerSize: this.fb.control(this.options.markerSize),
             chartType: this.fb.control(this.options.chartType),
             margins: this.fb.group(margins),
         }
-        const line = {
+    }
+
+    private getMargins() {
+        return {
+            top: this.fb.control(this.options.margins.top),
+            bottom: this.fb.control(this.options.margins.bottom),
+            left: this.fb.control(this.options.margins.left),
+            right: this.fb.control(this.options.margins.right),
+        }
+    }
+
+    private getLine() {
+        return {
             stroke: this.fb.control(this.options.line.stroke),
         }
-        const bar = {
+    }
+
+    private getBar() {
+        return {
             width: this.fb.control(this.options.bar.width),
         }
-        const formGroup = {
-            options: this.fb.group(options),
-            dimensions: this.fb.group(dimensions),
-            line: this.fb.group(line),
-            bar: this.fb.group(bar),
-        }
-        this.form = this.fb.group(formGroup);
     }
 }

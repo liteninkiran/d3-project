@@ -14,7 +14,7 @@ import { Selection } from 'd3-selection';
 import { ScaleTime, ScaleContinuousNumeric } from 'd3-scale';
 import { Line } from 'd3-shape';
 import { Data, LineDataItem } from 'src/app/types/d3/data';
-import { ChartControl } from 'src/app/types/d3/chart-controls';
+import { ChartOptions } from 'src/app/types/d3/chart-controls';
 
 type MonthData = {
     YEAR_MONTH: number;
@@ -29,7 +29,7 @@ type MonthData = {
 export class LineChartComponent implements OnInit, OnDestroy, OnChanges {
 
     @Input() public requestOptions: FilterOptions = {} as FilterOptions;
-    @Input() public chartOptions: ChartControl = {} as ChartControl;
+    @Input() public chartOptions: ChartOptions = {} as ChartOptions;
 
     // Data
     public data$: Observable<DatastoreSearchSql[]> = new Observable();

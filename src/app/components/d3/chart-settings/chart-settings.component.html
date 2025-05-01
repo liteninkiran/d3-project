@@ -41,35 +41,36 @@
             <!-- Line Tab -->
             <mat-tab label="Line" *ngIf="form.value.options.chartType === 'line'">
 
-                <div class="tab-container" formGroupName="line">
+                <div class="tab-container" formGroupName="options">
+                        <div formGroupName="line">
 
-                    <mat-card appearance="outlined">
+                        <mat-card appearance="outlined">
 
-                        <mat-card-header>
+                            <mat-card-header>
 
-                            <mat-card-title>Line Options</mat-card-title>
+                                <mat-card-title>Line Options</mat-card-title>
 
-                        </mat-card-header>
+                            </mat-card-header>
 
-                        <mat-card-content>
-                            <div class="full-width form-row">
+                            <mat-card-content>
+                                <div class="full-width form-row">
 
-                                <!-- Stroke Width -->
-                                <mat-form-field>
-    
-                                    <mat-label for="stroke">
-                                        Stroke Width
-                                    </mat-label>
-    
-                                    <input matInput type="number" placeholder="Stroke Width" formControlName="stroke" appearance="fill" step="0.1" min="0" max="10" />
-    
-                                </mat-form-field>
-    
-                            </div>
-                        </mat-card-content>
+                                    <!-- Stroke Width -->
+                                    <mat-form-field>
+        
+                                        <mat-label for="stroke">
+                                            Stroke Width
+                                        </mat-label>
+        
+                                        <input matInput type="number" placeholder="Stroke Width" formControlName="stroke" appearance="fill" step="0.1" min="0" max="10" />
+        
+                                    </mat-form-field>
+        
+                                </div>
+                            </mat-card-content>
 
-                    </mat-card>
-
+                        </mat-card>
+                    </div>
                 </div>
 
             </mat-tab>
@@ -95,7 +96,7 @@
                             </div>
 
                             <!-- Marker Size -->
-                            <div class="full-width form-row" *ngIf="form.value.markers">
+                            <div class="full-width form-row">
 
                                 <mat-form-field class="full-width">
 
@@ -120,35 +121,35 @@
             <!-- Bars Tab -->
             <mat-tab label="Bar" *ngIf="form.value.options.chartType === 'bar'">
 
-                <div class="tab-container" formGroupName="bar">
+                <div class="tab-container" formGroupName="options">
+                    <div formGroupName="bar">
+                        <mat-card appearance="outlined">
 
-                    <mat-card appearance="outlined">
+                            <mat-card-header>
 
-                        <mat-card-header>
+                                <mat-card-title>Bar Options</mat-card-title>
 
-                            <mat-card-title>Bar Options</mat-card-title>
+                            </mat-card-header>
 
-                        </mat-card-header>
+                            <mat-card-content>
+                                <div class="full-width form-row">
 
-                        <mat-card-content>
-                            <div class="full-width form-row">
+                                    <!-- Bar Width -->
+                                    <mat-form-field>
+        
+                                        <mat-label for="width">
+                                            Bar Width
+                                        </mat-label>
+        
+                                        <input matInput type="number" placeholder="Bar Width" formControlName="width" appearance="fill" step="0.1" min="0" max="10" />
+        
+                                    </mat-form-field>
+        
+                                </div>
+                            </mat-card-content>
 
-                                <!-- Bar Width -->
-                                <mat-form-field>
-    
-                                    <mat-label for="width">
-                                        Bar Width
-                                    </mat-label>
-    
-                                    <input matInput type="number" placeholder="Bar Width" formControlName="width" appearance="fill" step="0.1" min="0" max="10" />
-    
-                                </mat-form-field>
-    
-                            </div>
-                        </mat-card-content>
-
-                    </mat-card>
-
+                        </mat-card>
+                    </div>
                 </div>
 
             </mat-tab>

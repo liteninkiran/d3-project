@@ -7,7 +7,7 @@ export type Margin = {
     left: number;
 }
 
-export type ChartControl = {
+export type ChartOptions = {
     markers: boolean;
     markerSize: number;
     chartType: ChartType;
@@ -30,7 +30,7 @@ export type BarOptions = {
 }
 
 export type ChartSettings = {
-    options: ChartControl;
+    options: ChartOptions;
     dimensions: ChartDimensions;
 }
 
@@ -49,7 +49,7 @@ export const defaultBarOptions: BarOptions = {
     width: 10,
 }
 
-export const defaultChartOptions: ChartControl = {
+export const defaultChartOptions: ChartOptions = {
     markers: false,
     markerSize: 10,
     chartType: 'line',

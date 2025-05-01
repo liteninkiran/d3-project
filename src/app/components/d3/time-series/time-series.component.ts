@@ -6,7 +6,7 @@ import { ChartData } from 'src/app/types/d3/data';
 import { BarChartRendererService } from 'src/app/services/d3/bar-chart-renderer.service';
 import { LineChartRendererService } from 'src/app/services/d3/line-chart-renderer.service';
 import { TimeChartBaseService } from 'src/app/services/d3/time-chart-base.service';
-import { ChartControl, ChartDimensions } from 'src/app/types/d3/chart-controls';
+import { ChartOptions, ChartDimensions } from 'src/app/types/d3/chart-controls';
 
 @Component({
     selector: 'app-time-series',
@@ -17,7 +17,7 @@ import { ChartControl, ChartDimensions } from 'src/app/types/d3/chart-controls';
 export class TimeSeriesComponent implements OnInit, AfterViewInit, OnChanges {
 
     @Input() data: ChartData[] = [];
-    @Input() chartOptions: ChartControl;
+    @Input() chartOptions: ChartOptions;
     @Input() chartDimensions: ChartDimensions;
 
     @ViewChild('divRef', { static: true }) private divRef: ElementRef<HTMLDivElement>;

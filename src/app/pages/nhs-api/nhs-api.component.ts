@@ -3,7 +3,7 @@ import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { LineChartSettingsComponent } from 'src/app/components/nhs-api/line-chart-settings/line-chart-settings.component';
 import { RequestParamsComponent } from 'src/app/components/nhs-api/request-params/request-params.component';
 import { SpineService } from 'src/app/services/nhs-api/spine.service';
-import { ChartControl, defaultChartOptions } from 'src/app/types/d3/chart-controls';
+import { ChartOptions, defaultChartOptions } from 'src/app/types/d3/chart-controls';
 import { defaultOptions, FilterOptions } from 'src/app/types/nhs-api/epd';
 
 @Component({
@@ -47,11 +47,11 @@ export class NhsApiComponent implements OnInit {
     }
 
     public openChartSettingsModal() {
-        const dialogConfig = new MatDialogConfig<ChartControl>();
+        const dialogConfig = new MatDialogConfig<ChartOptions>();
         dialogConfig.data = this.chartOptions;
         const dialogRef = this.dialog.open(LineChartSettingsComponent, dialogConfig);
 
-        dialogRef.afterClosed().subscribe((options?: ChartControl) => {
+        dialogRef.afterClosed().subscribe((options?: ChartOptions) => {
             if (options) {
                 this.chartOptions = options;
             }
