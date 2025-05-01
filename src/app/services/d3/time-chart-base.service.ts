@@ -117,10 +117,10 @@ export class TimeChartBaseService {
     private createScales(): void {
         console.log('createScales');
         this.x = d3.scaleTime()
-            .domain(d3.extent(this.data, d => d.date) as [Date, Date])
+            .domain(d3.extent(this.data, d => d.date))
             .range([0, this.innerWidth]);
 
-        const yMin = Math.min(0, d3.min(this.data, d => d.value)!);
+        const yMin = Math.min(0, d3.min(this.data, d => d.value));
         const yMax = d3.max(this.data, d => d.value)!;
 
         this.y = d3.scaleLinear()

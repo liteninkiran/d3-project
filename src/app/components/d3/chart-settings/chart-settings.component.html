@@ -1,6 +1,6 @@
-<div class="container" cdkDrag cdkDragRootElement=".cdk-overlay-pane" cdkDragHandle>
+<div class="container">
 
-    <div class="header-row">
+    <div class="header-row" cdkDrag cdkDragRootElement=".cdk-overlay-pane" cdkDragHandle>
         <h1>Chart Settings</h1>
         <button
             mat-mini-fab
@@ -24,15 +24,51 @@
 
                     <mat-radio-group formControlName="chartType">
 
-                        <mat-radio-button value="line">
+                        <mat-radio-button value="line" (click)="onRadioClick($event)">
                             Line
                         </mat-radio-button>
 
-                        <mat-radio-button value="bar">
+                        <mat-radio-button value="bar" (click)="onRadioClick($event)">
                             Bar
                         </mat-radio-button>
 
                     </mat-radio-group>
+
+                </div>
+
+            </mat-tab>
+
+            <!-- Line Tab -->
+            <mat-tab label="Line" *ngIf="form.value.options.chartType === 'line'">
+
+                <div class="tab-container" formGroupName="line">
+
+                    <mat-card appearance="outlined">
+
+                        <mat-card-header>
+
+                            <mat-card-title>Line Options</mat-card-title>
+
+                        </mat-card-header>
+
+                        <mat-card-content>
+                            <div class="full-width form-row">
+
+                                <!-- Stroke Width -->
+                                <mat-form-field>
+    
+                                    <mat-label for="stroke">
+                                        Stroke Width
+                                    </mat-label>
+    
+                                    <input matInput type="number" placeholder="Stroke Width" formControlName="stroke" appearance="fill" step="0.1" min="0" max="10" />
+    
+                                </mat-form-field>
+    
+                            </div>
+                        </mat-card-content>
+
+                    </mat-card>
 
                 </div>
 
@@ -73,6 +109,42 @@
 
                             </div>
 
+                        </mat-card-content>
+
+                    </mat-card>
+
+                </div>
+
+            </mat-tab>
+
+            <!-- Bars Tab -->
+            <mat-tab label="Bar" *ngIf="form.value.options.chartType === 'bar'">
+
+                <div class="tab-container" formGroupName="bar">
+
+                    <mat-card appearance="outlined">
+
+                        <mat-card-header>
+
+                            <mat-card-title>Bar Options</mat-card-title>
+
+                        </mat-card-header>
+
+                        <mat-card-content>
+                            <div class="full-width form-row">
+
+                                <!-- Bar Width -->
+                                <mat-form-field>
+    
+                                    <mat-label for="width">
+                                        Bar Width
+                                    </mat-label>
+    
+                                    <input matInput type="number" placeholder="Bar Width" formControlName="width" appearance="fill" step="0.1" min="0" max="10" />
+    
+                                </mat-form-field>
+    
+                            </div>
                         </mat-card-content>
 
                     </mat-card>

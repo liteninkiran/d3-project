@@ -31,6 +31,11 @@ export class ChartSettingsComponent implements OnInit {
         this.dialogRef.close();
     }
 
+    public onRadioClick(event: Event): void {
+        const el = event.target as HTMLOptionElement;
+        el.blur();
+    }
+
     private setupForm(): void {
         const margins = {
             top: this.fb.control(this.options.margins.top),
@@ -51,6 +56,12 @@ export class ChartSettingsComponent implements OnInit {
         const formGroup = {
             options: this.fb.group(options),
             dimensions: this.fb.group(dimensions),
+            line: this.fb.group({
+                stroke: this.fb.control(1),
+            }),
+            bar: this.fb.group({
+                width: this.fb.control(10),
+            }),
         }
         this.form = this.fb.group(formGroup);
     }
