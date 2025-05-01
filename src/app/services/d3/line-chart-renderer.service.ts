@@ -31,7 +31,7 @@ export class LineChartRendererService {
     }
 
     private drawLine(context: ChartContext): void {
-        console.log('drawLine');
+        console.log('drawLine', context.chartOptions.line.stroke);
         const { x, y, data, getLayer } = context;
         const lineLayer = getLayer('line-layer');
 
@@ -39,23 +39,20 @@ export class LineChartRendererService {
             .x(d => x(d.date))
             .y(d => y(d.value));
 
-        const enterFn = (enter: LineEnter) => enter.append('path')
+        lineLayer.selectAll<SVGPathElement, ChartData[]>('path')
+            .data([data])
+            .join(
+                enter => enter.append('path'),
+                update => update,
+                exit => exit.remove(),
+            )
             .attr('fill', 'none')
             .attr('stroke', 'steelblue')
-            .attr('stroke-width', 2)
-            .attr('d', line);
-
-        const updateFn = (update: LineUpdate) => update
+            .attr('stroke-width', context.chartOptions.line.stroke)
             .transition()
             .duration(500)
             .ease(d3.easeLinear)
             .attr('d', line);
-
-        const exitFn = (exit: LineExit) => exit.remove();
-
-        lineLayer.selectAll<SVGPathElement, ChartData[]>('path')
-            .data([data])
-            .join(enterFn, updateFn, exitFn);
     }
 
     private drawMarkers(context: ChartContext, showMarkers: boolean = true): void {

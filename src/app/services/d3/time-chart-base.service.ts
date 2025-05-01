@@ -74,6 +74,7 @@ export class TimeChartBaseService {
             x: this.x,
             y: this.y,
             data: this.data,
+            chartOptions: this.chartOptions,
             getLayer: (name: string) => this.getLayer(name),
         };
     }

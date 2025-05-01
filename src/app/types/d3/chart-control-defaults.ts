@@ -15,7 +15,7 @@ export const defaultChartDimensions: ChartDimensions = {
 }
 
 export const defaultLineOptions: LineOptions = {
-    stroke: 1,
+    stroke: 2,
 }
 
 export const defaultBarOptions: BarOptions = {

@@ -1,3 +1,4 @@
+import { ChartOptions } from './chart-controls';
 import { ChartData, Group, Svg, XScale, YScale } from './data';
 
 export type LineEnter = d3.Selection<d3.EnterElement, ChartData[], SVGGElement, unknown>;
@@ -14,5 +15,6 @@ export type ChartContext = {
     x: XScale;
     y: YScale;
     data: ChartData[];
+    chartOptions: ChartOptions;
     getLayer: (name: string) => Group;
 }
