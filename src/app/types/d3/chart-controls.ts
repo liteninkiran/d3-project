@@ -7,6 +7,14 @@ export type Margin = {
     left: number;
 }
 
+export type LineOptions = {
+    stroke: number;
+}
+
+export type BarOptions = {
+    width: number;
+}
+
 export type ChartOptions = {
     markers: boolean;
     markerSize: number;
@@ -21,44 +29,7 @@ export type ChartDimensions = {
     width: number;
 }
 
-export type LineOptions = {
-    stroke: number;
-}
-
-export type BarOptions = {
-    width: number;
-}
-
 export type ChartSettings = {
     options: ChartOptions;
     dimensions: ChartDimensions;
-}
-
-export const defaultChartMargins: Margin = {
-    top: 20,
-    bottom: 80,
-    left: 80,
-    right: 20,
-}
-
-export const defaultLineOptions: LineOptions = {
-    stroke: 1,
-}
-
-export const defaultBarOptions: BarOptions = {
-    width: 10,
-}
-
-export const defaultChartOptions: ChartOptions = {
-    markers: false,
-    markerSize: 10,
-    chartType: 'line',
-    margins: defaultChartMargins,
-    line: defaultLineOptions,
-    bar: defaultBarOptions,
-}
-
-export const defaultChartDimensions: ChartDimensions = {
-    height: 700,
-    width: 1500,
 }

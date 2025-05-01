@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { ChartData, Div, Group, Svg, XScale, YScale } from 'src/app/types/d3/data';
-import { ChartOptions, ChartDimensions } from 'src/app/types/d3/chart-controls';
+import { ChartSettings } from 'src/app/types/d3/chart-controls';
 import { ChartContext } from 'src/app/types/d3/services';
 import * as d3 from 'd3';
 
@@ -22,24 +22,23 @@ export class TimeChartBaseService {
     private data: ChartData[] = [];
 
     // Dimensions
-    private chartOptions: ChartOptions;
-    private chartDimensions: ChartDimensions;
+    private chartSettings: ChartSettings;
     private innerWidth = 0;
     private innerHeight = 0;
 
     public init(
         divEl: HTMLDivElement,
         data: ChartData[],
-        chartOptions: ChartOptions,
-        chartDimensions: ChartDimensions,
+        chartSettings: ChartSettings,
     ) {
-        console.log('init', chartOptions, chartDimensions);
+        console.log('init', chartSettings);
         this.data = data;
-        this.chartOptions = chartOptions;
-        this.chartDimensions = chartDimensions;
+        this.chartSettings = chartSettings;
 
-        const { margins: { top, left, right, bottom } } = this.chartOptions;
-        const { height, width } = this.chartDimensions;
+        const {
+            options: { margins: { top, left, right, bottom } },
+            dimensions: { height, width },
+        } = this.chartSettings;
 
         this.innerWidth = width - left - right;
         this.innerHeight = height - top - bottom;
@@ -80,7 +79,7 @@ export class TimeChartBaseService {
     }
 
     private resizeSvg(): void {
-        const { height, width } = this.chartDimensions;
+        const { dimensions: { height, width } } = this.chartSettings;
         this.div
             .style('max-width', `${width}px`)
             .style('max-height', `${height}px`);
@@ -109,7 +108,7 @@ export class TimeChartBaseService {
     }
 
     private updateMargins() {
-        const { margins: { top, left } } = this.chartOptions;
+        const { options: { margins: { top, left } } } = this.chartSettings;
         d3.select('.chart-container')
             .attr('transform', `translate(${left}, ${top})`);
     }

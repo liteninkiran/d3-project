@@ -6,7 +6,7 @@ import { ChartData } from 'src/app/types/d3/data';
 import { BarChartRendererService } from 'src/app/services/d3/bar-chart-renderer.service';
 import { LineChartRendererService } from 'src/app/services/d3/line-chart-renderer.service';
 import { TimeChartBaseService } from 'src/app/services/d3/time-chart-base.service';
-import { ChartOptions, ChartDimensions } from 'src/app/types/d3/chart-controls';
+import { ChartOptions, ChartDimensions, ChartSettings } from 'src/app/types/d3/chart-controls';
 
 @Component({
     selector: 'app-time-series',
@@ -17,8 +17,7 @@ import { ChartOptions, ChartDimensions } from 'src/app/types/d3/chart-controls';
 export class TimeSeriesComponent implements OnInit, AfterViewInit, OnChanges {
 
     @Input() data: ChartData[] = [];
-    @Input() chartOptions: ChartOptions;
-    @Input() chartDimensions: ChartDimensions;
+    @Input() chartSettings: ChartSettings;
 
     @ViewChild('divRef', { static: true }) private divRef: ElementRef<HTMLDivElement>;
 
@@ -42,15 +41,14 @@ export class TimeSeriesComponent implements OnInit, AfterViewInit, OnChanges {
         this.baseService.init(
             this.divRef.nativeElement,
             this.data,
-            this.chartOptions,
-            this.chartDimensions,
+            this.chartSettings,
         );
         this.baseService.drawAxes();
         const context = this.baseService.getContext();
 
-        if (this.chartOptions.chartType === 'line') {
+        if (this.chartSettings.options.chartType === 'line') {
             this.barChartService.removeBars(context);
-            this.lineChartService.draw(context, this.chartOptions.markers);
+            this.lineChartService.draw(context, this.chartSettings.options.markers);
         } else {
             this.lineChartService.removeLineAndMarkers(context);
             this.barChartService.drawBar(context);
