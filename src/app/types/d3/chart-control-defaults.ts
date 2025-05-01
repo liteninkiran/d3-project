@@ -15,16 +15,16 @@ export const defaultChartDimensions: ChartDimensions = {
 }
 
 export const defaultLineOptions: LineOptions = {
-    stroke: 2,
+    stroke: 0.5,
 }
 
 export const defaultMarkerOptions: MarkerOptions = {
     enabled: true,
-    size: 4,
+    size: 2,
 }
 
 export const defaultBarOptions: BarOptions = {
-    width: 10,
+    width: 2.5,
 }
 
 export const defaultChartOptions: ChartOptions = {

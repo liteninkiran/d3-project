@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { ChartContext } from 'src/app/types/d3/services';
+import * as d3 from 'd3';
 
 @Injectable({ providedIn: 'root' })
 export class BarChartRendererService {
@@ -17,18 +18,26 @@ export class BarChartRendererService {
         console.log('drawBar');
         const { x, y, data, getLayer } = context;
         const barLayer = getLayer('bar-layer');
-        const barWidth = 10;
-
-        barLayer.selectAll('*').remove();
+        const barWidth = context.chartOptions.bar.width;
 
         barLayer.selectAll('rect')
             .data(data)
-            .enter()
-            .append('rect')
-            .attr('x', d => x(d.date) - barWidth / 2)
-            .attr('y', d => y(d.value))
-            .attr('width', barWidth)
-            .attr('height', d => y(0) - y(d.value))
+            .join(
+                enter => enter.append('rect')
+                .attr('x', d => x(d.date) - barWidth / 2)
+                .attr('y', d => y(d.value))
+                .attr('width', barWidth)
+                .attr('height', d => y(0) - y(d.value)),
+                update => update
+                    .transition()
+                    .duration(500)
+                    .ease(d3.easeLinear)
+                    .attr('x', d => x(d.date) - barWidth / 2)
+                    .attr('y', d => y(d.value))
+                    .attr('width', barWidth)
+                    .attr('height', d => y(0) - y(d.value)),
+                exit => exit.remove(),
+            )
             .attr('fill', 'tomato');
     }
 }
