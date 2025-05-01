@@ -36,8 +36,10 @@ export class TimeChartBaseService {
         this.chartSettings = chartSettings;
 
         const {
-            options: { margins: { top, left, right, bottom } },
-            dimensions: { height, width },
+            options: {
+                margins: { top, left, right, bottom },
+                dimensions: { height, width },
+            },
         } = this.chartSettings;
 
         this.innerWidth = width - left - right;
@@ -79,7 +81,7 @@ export class TimeChartBaseService {
     }
 
     private resizeSvg(): void {
-        const { dimensions: { height, width } } = this.chartSettings;
+        const { dimensions: { height, width } } = this.chartSettings.options;
         this.div
             .style('max-width', `${width}px`)
             .style('max-height', `${height}px`);

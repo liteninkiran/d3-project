@@ -20,7 +20,7 @@ export class ChartSettingsComponent implements OnInit {
         @Inject(MAT_DIALOG_DATA) data: ChartSettings,
     ) {
         this.options = data.options;
-        this.dimensions = data.dimensions;
+        this.dimensions = data.options.dimensions;
     }
 
     public ngOnInit(): void {
