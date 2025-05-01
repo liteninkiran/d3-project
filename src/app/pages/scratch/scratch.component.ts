@@ -43,7 +43,6 @@ export class ScratchComponent implements OnInit, OnDestroy {
     }
 
     public openChartSettingsModal() {
-        let sub: Subscription;
         const dialogConfig = new MatDialogConfig<ChartSettings>();
         dialogConfig.data = {
             options: this.chartOptions,
