@@ -29,7 +29,3 @@ export type ChartOptions = {
     line: LineOptions;
     bar: BarOptions;
 }
-
-export type ChartSettings = {
-    options: ChartOptions;
-}

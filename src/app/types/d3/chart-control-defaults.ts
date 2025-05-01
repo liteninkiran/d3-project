@@ -1,4 +1,4 @@
-import { Margin, LineOptions, BarOptions, ChartOptions, ChartDimensions, ChartType, ChartSettings } from './chart-controls';
+import { Margin, LineOptions, BarOptions, ChartOptions, ChartDimensions, ChartType } from './chart-controls';
 
 export const defaultChartType: ChartType = 'line';
 
@@ -30,8 +30,4 @@ export const defaultChartOptions: ChartOptions = {
     dimensions: defaultChartDimensions,
     line: defaultLineOptions,
     bar: defaultBarOptions,
-}
-
-export const defaultChartSettings: ChartSettings = {
-    options: defaultChartOptions,
 }

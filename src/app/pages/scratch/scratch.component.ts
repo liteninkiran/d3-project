@@ -3,8 +3,8 @@ import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { Observable, Subscription } from 'rxjs';
 import { ChartSettingsComponent } from 'src/app/components/d3/chart-settings/chart-settings.component';
 import { dataset1 } from 'src/app/mocks/d3/data';
-import { defaultChartOptions, defaultChartDimensions, defaultChartSettings } from 'src/app/types/d3/chart-control-defaults';
-import { ChartSettings } from 'src/app/types/d3/chart-controls';
+import { defaultChartOptions } from 'src/app/types/d3/chart-control-defaults';
+import { ChartOptions } from 'src/app/types/d3/chart-controls';
 import { ChartData, ChartData2 } from 'src/app/types/d3/data';
 
 type DateRange = {
@@ -27,7 +27,7 @@ const filter2023 = filteredData(getDates(2023));
 export class ScratchComponent implements OnInit, OnDestroy {
 
     public chartData = filter2024;
-    public chartSettings = defaultChartSettings;
+    public chartOptions = defaultChartOptions;
     private subscriptions: Subscription[] = [];
 
     constructor(
@@ -43,14 +43,14 @@ export class ScratchComponent implements OnInit, OnDestroy {
     }
 
     public openChartSettingsModal() {
-        const dialogConfig = new MatDialogConfig<ChartSettings>();
-        dialogConfig.data = this.chartSettings;
+        const dialogConfig = new MatDialogConfig<ChartOptions>();
+        dialogConfig.data = this.chartOptions;
         const dialogRef = this.dialog.open(ChartSettingsComponent, dialogConfig);
         const dialogOpen = dialogRef.afterOpened();
 
-        const formChangedFn = (data?: ChartSettings) => {
+        const formChangedFn = (data?: ChartOptions) => {
             if (data) {
-                this.chartSettings = data;
+                this.chartOptions = data;
             }
         }
         const dialogOpenFn = () => this.subscribeTo(dialogRef.componentInstance.form.valueChanges, formChangedFn);
