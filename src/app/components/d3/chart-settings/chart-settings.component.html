@@ -53,20 +53,43 @@
                             </mat-card-header>
 
                             <mat-card-content>
+
+                                <!-- Stroke Width -->
                                 <div class="full-width form-row">
 
-                                    <!-- Stroke Width -->
                                     <mat-form-field>
-        
+
                                         <mat-label for="stroke">
                                             Stroke Width
                                         </mat-label>
-        
+
                                         <input matInput type="number" placeholder="Stroke Width" formControlName="stroke" appearance="fill" step="0.1" min="0" max="10" />
-        
+
                                     </mat-form-field>
-        
+
                                 </div>
+
+                                <!-- Line Colour -->
+                                <div class="full-width form-row">
+
+                                    <mat-label for="stroke" class="vertical-centre">
+                                        Line Colour
+                                    </mat-label>
+
+                                    <ngx-colors class="vertical-centre" ngx-colors-trigger formControlName="colour"></ngx-colors>
+
+                                    <button
+                                        mat-mini-fab
+                                        matTooltip="Use Marker Colour"
+                                        matTooltipPosition="above"
+                                        class="horizontal-right"
+                                        (click)="setColour('line', form.value.markers.colour)"
+                                    >
+                                        <mat-icon>format_paint</mat-icon>
+                                    </button>
+ 
+                                </div>
+
                             </mat-card-content>
 
                         </mat-card>
@@ -107,6 +130,27 @@
                                     <input matInput type="number" placeholder="Marker size" formControlName="size" appearance="fill" step="0.1" min="0" max="10" />
 
                                 </mat-form-field>
+
+                            </div>
+
+                            <!-- Marker Colour -->
+                            <div class="full-width form-row">
+
+                                <mat-label for="stroke" class="vertical-centre">
+                                    Marker Colour
+                                </mat-label>
+
+                                <ngx-colors class="vertical-centre" ngx-colors-trigger formControlName="colour"></ngx-colors>
+
+                                <button
+                                    mat-mini-fab
+                                    matTooltip="Use Line Colour"
+                                    matTooltipPosition="above"
+                                    class="horizontal-right"
+                                    (click)="setColour('markers', form.value.line.colour)"
+                                >
+                                    <mat-icon>format_paint</mat-icon>
+                                </button>
 
                             </div>
 

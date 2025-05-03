@@ -4,6 +4,7 @@ import { TimeSeriesComponent } from '../components/d3/time-series/time-series.co
 import { MaterialModule } from './material.module';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ChartSettingsComponent } from '../components/d3/chart-settings/chart-settings.component';
+import { NgxColorsModule } from 'ngx-colors';
 
 @NgModule({
     declarations: [
@@ -14,6 +15,7 @@ import { ChartSettingsComponent } from '../components/d3/chart-settings/chart-se
         CommonModule,
         MaterialModule,
         ReactiveFormsModule,
+        NgxColorsModule,
     ],
     exports: [
         TimeSeriesComponent,

@@ -15,10 +15,12 @@ export type ChartDimensions = {
 export type MarkerOptions = {
     enabled: boolean;
     size: number;
+    colour: string;
 }
 
 export type LineOptions = {
     stroke: number;
+    colour: string;
 }
 
 export type BarOptions = {

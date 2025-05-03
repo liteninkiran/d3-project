@@ -16,11 +16,13 @@ export const defaultChartDimensions: ChartDimensions = {
 
 export const defaultLineOptions: LineOptions = {
     stroke: 0.5,
+    colour: 'steelblue',
 }
 
 export const defaultMarkerOptions: MarkerOptions = {
     enabled: true,
     size: 2,
+    colour: 'steelblue',
 }
 
 export const defaultBarOptions: BarOptions = {

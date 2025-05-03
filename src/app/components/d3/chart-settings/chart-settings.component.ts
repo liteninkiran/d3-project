@@ -34,6 +34,11 @@ export class ChartSettingsComponent implements OnInit {
         el.blur();
     }
 
+    public setColour(key: string, colour: string): void {
+        this.form.patchValue({ [key]: { colour } });
+        console.log(this.form.value);
+    }
+
     private setupForm(): void {
         this.form = this.fb.group(this.getOptions());
     }
@@ -57,6 +62,7 @@ export class ChartSettingsComponent implements OnInit {
     private getLine() {
         return {
             stroke: this.fb.control(this.options.line.stroke),
+            colour: this.fb.control(this.options.line.colour),
         }
     }
 
@@ -64,6 +70,7 @@ export class ChartSettingsComponent implements OnInit {
         return {
             enabled: this.fb.control(this.options.markers.enabled),
             size: this.fb.control(this.options.markers.size),
+            colour: this.fb.control(this.options.markers.colour),
         }
     }
 

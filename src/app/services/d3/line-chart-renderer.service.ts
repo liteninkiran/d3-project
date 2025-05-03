@@ -47,7 +47,7 @@ export class LineChartRendererService {
                 exit => exit.remove(),
             )
             .attr('fill', 'none')
-            .attr('stroke', 'steelblue')
+            .attr('stroke', context.chartOptions.line.colour)
             .attr('stroke-width', context.chartOptions.line.stroke)
             .transition()
             .duration(500)
@@ -77,7 +77,7 @@ export class LineChartRendererService {
             markerLayer.selectAll<SVGCircleElement, ChartData>('circle')
                 .data(data)
                 .join(enterFn, updateFn, exitFn)
-                .attr('fill', 'steelblue')
+                .attr('fill', context.chartOptions.markers.colour)
                 .attr('class', 'marker')
                 .attr('r', context.chartOptions.markers.size);
         } else {
