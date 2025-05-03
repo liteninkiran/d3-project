@@ -27,6 +27,7 @@ export const defaultMarkerOptions: MarkerOptions = {
 
 export const defaultBarOptions: BarOptions = {
     width: 2.5,
+    colour: 'tomato',
 }
 
 export const defaultChartOptions: ChartOptions = {

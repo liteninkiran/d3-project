@@ -72,7 +72,7 @@
                                 <!-- Line Colour -->
                                 <div class="full-width form-row">
 
-                                    <mat-label for="stroke" class="vertical-centre">
+                                    <mat-label for="colour" class="vertical-centre">
                                         Line Colour
                                     </mat-label>
 
@@ -136,7 +136,7 @@
                             <!-- Marker Colour -->
                             <div class="full-width form-row">
 
-                                <mat-label for="stroke" class="vertical-centre">
+                                <mat-label for="colour" class="vertical-centre">
                                     Marker Colour
                                 </mat-label>
 
@@ -176,9 +176,10 @@
                             </mat-card-header>
 
                             <mat-card-content>
+
+                                <!-- Bar Width -->
                                 <div class="full-width form-row">
 
-                                    <!-- Bar Width -->
                                     <mat-form-field>
         
                                         <mat-label for="width">
@@ -190,6 +191,29 @@
                                     </mat-form-field>
         
                                 </div>
+
+                                <!-- Bar Colour -->
+                                <div class="full-width form-row">
+
+                                    <mat-label for="colour" class="vertical-centre">
+                                        Bar Colour
+                                    </mat-label>
+
+                                    <ngx-colors class="vertical-centre" ngx-colors-trigger formControlName="colour"></ngx-colors>
+
+                                    <button
+                                        mat-mini-fab
+                                        matTooltip="Use Line Colour"
+                                        matTooltipPosition="above"
+                                        class="horizontal-right"
+                                        (click)="setColour('bar', form.value.line.colour)"
+                                    >
+                                        <mat-icon>format_paint</mat-icon>
+                                    </button>
+ 
+                                </div>
+
+
                             </mat-card-content>
 
                         </mat-card>

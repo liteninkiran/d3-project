@@ -77,6 +77,7 @@ export class ChartSettingsComponent implements OnInit {
     private getBar() {
         return {
             width: this.fb.control(this.options.bar.width),
+            colour: this.fb.control(this.options.bar.colour),
         }
     }
 

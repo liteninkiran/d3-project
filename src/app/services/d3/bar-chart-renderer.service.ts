@@ -38,6 +38,6 @@ export class BarChartRendererService {
                     .attr('height', d => y(0) - y(d.value)),
                 exit => exit.remove(),
             )
-            .attr('fill', 'tomato');
+            .attr('fill', context.chartOptions.bar.colour);
     }
 }

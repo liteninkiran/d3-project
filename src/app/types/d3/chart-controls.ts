@@ -25,6 +25,7 @@ export type LineOptions = {
 
 export type BarOptions = {
     width: number;
+    colour: string;
 }
 
 export type ChartOptions = {
