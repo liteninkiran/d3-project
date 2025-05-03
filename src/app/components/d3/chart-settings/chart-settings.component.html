@@ -107,7 +107,7 @@
 
                         <mat-card-header>
 
-                            <mat-card-title>Line Markers</mat-card-title>
+                            <mat-card-title>Marker Options</mat-card-title>
 
                         </mat-card-header>
 
@@ -118,40 +118,42 @@
                                 <mat-checkbox formControlName="enabled">Enable Markers</mat-checkbox>
                             </div>
 
-                            <!-- Marker Size -->
-                            <div class="full-width form-row">
+                            <div *ngIf="form.value.markers.enabled">
+                                <!-- Marker Size -->
+                                <div class="full-width form-row">
 
-                                <mat-form-field class="full-width">
+                                    <mat-form-field class="full-width">
 
-                                    <mat-label for="size">
-                                        Marker Size
+                                        <mat-label for="size">
+                                            Marker Size
+                                        </mat-label>
+
+                                        <input matInput type="number" placeholder="Marker size" formControlName="size" appearance="fill" step="0.1" min="0" max="10" />
+
+                                    </mat-form-field>
+
+                                </div>
+
+                                <!-- Marker Colour -->
+                                <div class="full-width form-row">
+
+                                    <mat-label for="colour" class="vertical-centre">
+                                        Marker Colour
                                     </mat-label>
 
-                                    <input matInput type="number" placeholder="Marker size" formControlName="size" appearance="fill" step="0.1" min="0" max="10" />
+                                    <ngx-colors class="vertical-centre" ngx-colors-trigger formControlName="colour"></ngx-colors>
 
-                                </mat-form-field>
+                                    <button
+                                        mat-mini-fab
+                                        matTooltip="Use Line Colour"
+                                        matTooltipPosition="above"
+                                        class="horizontal-right"
+                                        (click)="setColour('markers', form.value.line.colour)"
+                                    >
+                                        <mat-icon>format_paint</mat-icon>
+                                    </button>
 
-                            </div>
-
-                            <!-- Marker Colour -->
-                            <div class="full-width form-row">
-
-                                <mat-label for="colour" class="vertical-centre">
-                                    Marker Colour
-                                </mat-label>
-
-                                <ngx-colors class="vertical-centre" ngx-colors-trigger formControlName="colour"></ngx-colors>
-
-                                <button
-                                    mat-mini-fab
-                                    matTooltip="Use Line Colour"
-                                    matTooltipPosition="above"
-                                    class="horizontal-right"
-                                    (click)="setColour('markers', form.value.line.colour)"
-                                >
-                                    <mat-icon>format_paint</mat-icon>
-                                </button>
-
+                                </div>
                             </div>
 
                         </mat-card-content>
