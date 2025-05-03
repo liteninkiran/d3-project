@@ -14,6 +14,8 @@ export type ChartDimensions = {
 
 export type MarkerOptions = {
     enabled: boolean;
+    stroke: number;
+    strokeColour: string;
     size: number;
     colour: string;
 }

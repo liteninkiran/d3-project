@@ -71,6 +71,8 @@ export class ChartSettingsComponent implements OnInit {
             enabled: this.fb.control(this.options.markers.enabled),
             size: this.fb.control(this.options.markers.size),
             colour: this.fb.control(this.options.markers.colour),
+            stroke: this.fb.control(this.options.markers.stroke),
+            strokeColour: this.fb.control(this.options.markers.strokeColour),
         }
     }
 

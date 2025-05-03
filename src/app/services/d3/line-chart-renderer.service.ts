@@ -79,6 +79,8 @@ export class LineChartRendererService {
                 .join(enterFn, updateFn, exitFn)
                 .attr('fill', context.chartOptions.markers.colour)
                 .attr('class', 'marker')
+                .attr('stroke', context.chartOptions.markers.strokeColour)
+                .attr('stroke-width', context.chartOptions.markers.stroke)
                 .attr('r', context.chartOptions.markers.size);
         } else {
             markerLayer.selectAll('circle').remove();
