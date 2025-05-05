@@ -24,7 +24,9 @@ export const defaultMarkerOptions: MarkerOptions = {
     size: 2,
     stroke: 0.5,
     strokeColour: 'steelblue',
+    strokeOpacity: 1,
     colour: 'steelblue',
+    opacity: 1,
 }
 
 export const defaultBarOptions: BarOptions = {

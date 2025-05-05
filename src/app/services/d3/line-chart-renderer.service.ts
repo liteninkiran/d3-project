@@ -77,6 +77,8 @@ export class LineChartRendererService {
             markerLayer.selectAll<SVGCircleElement, ChartData>('circle')
                 .data(data)
                 .join(enterFn, updateFn, exitFn)
+                .attr('fill-opacity', context.chartOptions.markers.opacity)
+                .attr('stroke-opacity', context.chartOptions.markers.strokeOpacity)
                 .attr('fill', context.chartOptions.markers.colour)
                 .attr('class', 'marker')
                 .attr('stroke', context.chartOptions.markers.strokeColour)

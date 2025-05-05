@@ -16,8 +16,10 @@ export type MarkerOptions = {
     enabled: boolean;
     stroke: number;
     strokeColour: string;
+    strokeOpacity: number;
     size: number;
     colour: string;
+    opacity: number;
 }
 
 export type LineOptions = {
