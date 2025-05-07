@@ -46,12 +46,15 @@ export class TimeSeriesComponent implements OnInit, AfterViewInit, OnChanges {
         this.baseService.drawAxes();
         const context = this.baseService.getContext();
 
+        this.lineChartService.setContext(context);
+        this.barChartService.setContext(context);
+
         if (this.chartOptions.chartType === 'line') {
-            this.barChartService.removeBars(context);
-            this.lineChartService.draw(context);
+            this.barChartService.removeBars();
+            this.lineChartService.draw();
         } else {
-            this.lineChartService.removeLineAndMarkers(context);
-            this.barChartService.drawBar(context);
+            this.lineChartService.removeLineAndMarkers();
+            this.barChartService.drawBar();
         }
     }
 }
