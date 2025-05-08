@@ -1,13 +1,16 @@
 <div [formGroup]="group">
 
+    <!-- Card -->
     <mat-card appearance="outlined">
 
+        <!-- Header -->
         <mat-card-header>
             <mat-card-title>
                 Line Options
             </mat-card-title>
         </mat-card-header>
 
+        <!-- Content -->
         <mat-card-content>
 
             <!-- Stroke Width -->
@@ -19,7 +22,16 @@
                         Stroke Width
                     </mat-label>
 
-                    <input matInput type="number" placeholder="Stroke Width" formControlName="stroke" appearance="fill" step="0.1" min="0" max="10" />
+                    <input
+                        matInput
+                        type="number"
+                        placeholder="Stroke Width"
+                        formControlName="stroke"
+                        appearance="fill"
+                        step="0.1"
+                        min="0"
+                        max="10"
+                    />
 
                 </mat-form-field>
 
@@ -49,4 +61,5 @@
         </mat-card-content>
 
     </mat-card>
+
 </div>
