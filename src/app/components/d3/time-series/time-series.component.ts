@@ -7,6 +7,7 @@ import { BarChartRendererService } from 'src/app/services/d3/bar-chart-renderer.
 import { LineChartRendererService } from 'src/app/services/d3/line-chart-renderer.service';
 import { TimeChartBaseService } from 'src/app/services/d3/time-chart-base.service';
 import { ChartOptions } from 'src/app/types/d3/chart-controls';
+import { TooltipService } from 'src/app/services/d3/tooltip.service';
 
 @Component({
     selector: 'app-time-series',
@@ -25,6 +26,7 @@ export class TimeSeriesComponent implements OnInit, AfterViewInit, OnChanges {
         private baseService: TimeChartBaseService,
         private lineChartService: LineChartRendererService,
         private barChartService: BarChartRendererService,
+        private tooltipService: TooltipService,
     ) { }
 
     public ngOnInit(): void { }
@@ -48,6 +50,7 @@ export class TimeSeriesComponent implements OnInit, AfterViewInit, OnChanges {
 
         this.lineChartService.setContext(context);
         this.barChartService.setContext(context);
+        this.tooltipService.setContext(context);
 
         if (this.chartOptions.chartType === 'line') {
             this.barChartService.removeBars();
@@ -56,5 +59,7 @@ export class TimeSeriesComponent implements OnInit, AfterViewInit, OnChanges {
             this.lineChartService.removeLineAndMarkers();
             this.barChartService.drawBar();
         }
+
+        this.tooltipService.addTooltip();
     }
 }
