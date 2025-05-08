@@ -4,21 +4,28 @@ import * as d3 from 'd3';
 
 @Injectable({ providedIn: 'root' })
 export class BarChartRendererService {
+
+    private context: ChartContext;
+
     constructor() { }
 
-    public removeBars(context: ChartContext): void {
-        this.removeLayer(context, 'bar-layer');
+    public setContext(context: ChartContext): void {
+        this.context = context;
     }
 
-    private removeLayer(context: ChartContext, layer: string): void {
-        context.getLayer(layer).selectAll('*').remove();
+    public removeBars(): void {
+        this.removeLayer('bar-layer');
     }
 
-    public drawBar(context: ChartContext): void {
+    private removeLayer(layer: string): void {
+        this.context.getLayer(layer).selectAll('*').remove();
+    }
+
+    public drawBar(): void {
         console.log('drawBar');
-        const { x, y, data, getLayer } = context;
+        const { x, y, data, getLayer, chartOptions } = this.context;
         const barLayer = getLayer('bar-layer');
-        const barWidth = context.chartOptions.bar.width;
+        const barWidth = chartOptions.bar.width;
 
         barLayer.selectAll('rect')
             .data(data)
@@ -38,6 +45,6 @@ export class BarChartRendererService {
                     .attr('height', d => y(0) - y(d.value)),
                 exit => exit.remove(),
             )
-            .attr('fill', context.chartOptions.bar.colour);
+            .attr('fill', chartOptions.bar.colour);
     }
 }

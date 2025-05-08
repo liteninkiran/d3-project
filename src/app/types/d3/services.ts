@@ -10,6 +10,8 @@ export type ChartContext = {
     container: Group;
     x: XScale;
     y: YScale;
+    innerHeight: number;
+    innerWidth: number;
     data: ChartData[];
     chartOptions: ChartOptions;
     getLayer: (name: string) => Group;

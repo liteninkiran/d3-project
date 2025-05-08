@@ -6,33 +6,39 @@ import * as d3 from 'd3';
 @Injectable({ providedIn: 'root' })
 export class LineChartRendererService {
 
+    private context: ChartContext;
+
     constructor() { }
 
-    public removeLineAndMarkers(context: ChartContext): void {
-        this.removeLine(context);
-        this.removeMarkers(context);
+    public setContext(context: ChartContext): void {
+        this.context = context;
     }
 
-    public removeLine(context: ChartContext): void {
-        this.removeLayer(context, 'line-layer');
+    public removeLineAndMarkers(): void {
+        this.removeLine();
+        this.removeMarkers();
     }
 
-    public removeMarkers(context: ChartContext): void {
-        this.removeLayer(context, 'marker-layer');
+    public removeLine(): void {
+        this.removeLayer('line-layer');
     }
 
-    private removeLayer(context: ChartContext, layer: string): void {
-        context.getLayer(layer).selectAll('*').remove();
+    public removeMarkers(): void {
+        this.removeLayer('marker-layer');
     }
 
-    public draw(context: ChartContext): void {
-        this.drawLine(context);
-        this.drawMarkers(context);
+    private removeLayer(layer: string): void {
+        this.context.getLayer(layer).selectAll('*').remove();
     }
 
-    private drawLine(context: ChartContext): void {
-        console.log('drawLine', context.chartOptions.line.stroke);
-        const { x, y, data, getLayer } = context;
+    public draw(): void {
+        this.drawLine();
+        this.drawMarkers();
+    }
+
+    private drawLine(): void {
+        const { x, y, data, getLayer, chartOptions } = this.context;
+        console.log('drawLine', chartOptions.line.stroke);
         const lineLayer = getLayer('line-layer');
 
         const line = d3.line<ChartData>()
@@ -47,20 +53,20 @@ export class LineChartRendererService {
                 exit => exit.remove(),
             )
             .attr('fill', 'none')
-            .attr('stroke', context.chartOptions.line.colour)
-            .attr('stroke-width', context.chartOptions.line.stroke)
+            .attr('stroke', chartOptions.line.colour)
+            .attr('stroke-width', chartOptions.line.stroke)
             .transition()
             .duration(500)
             .ease(d3.easeLinear)
             .attr('d', line);
     }
 
-    private drawMarkers(context: ChartContext): void {
+    private drawMarkers(): void {
         console.log('drawMarkers');
-        const { x, y, data, getLayer } = context;
+        const { x, y, data, getLayer, chartOptions } = this.context;
         const markerLayer = getLayer('marker-layer');
 
-        if (context.chartOptions.markers.enabled) {
+        if (chartOptions.markers.enabled) {
             const enterFn = (enter: MarkerEnter) => enter.append('circle')
                 .attr('cx', d => x(d.date))
                 .attr('cy', d => y(d.value));
@@ -77,13 +83,13 @@ export class LineChartRendererService {
             markerLayer.selectAll<SVGCircleElement, ChartData>('circle')
                 .data(data)
                 .join(enterFn, updateFn, exitFn)
-                .attr('fill-opacity', context.chartOptions.markers.opacity)
-                .attr('stroke-opacity', context.chartOptions.markers.strokeOpacity)
-                .attr('fill', context.chartOptions.markers.colour)
+                .attr('fill-opacity', chartOptions.markers.opacity)
+                .attr('stroke-opacity', chartOptions.markers.strokeOpacity)
+                .attr('fill', chartOptions.markers.colour)
                 .attr('class', 'marker')
-                .attr('stroke', context.chartOptions.markers.strokeColour)
-                .attr('stroke-width', context.chartOptions.markers.stroke)
-                .attr('r', context.chartOptions.markers.size);
+                .attr('stroke', chartOptions.markers.strokeColour)
+                .attr('stroke-width', chartOptions.markers.stroke)
+                .attr('r', chartOptions.markers.size);
         } else {
             markerLayer.selectAll('circle').remove();
         }
