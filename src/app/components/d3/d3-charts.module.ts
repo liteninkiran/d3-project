@@ -1,11 +1,11 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { TimeSeriesComponent } from '../components/d3/time-series/time-series.component';
-import { MaterialModule } from './material.module';
 import { ReactiveFormsModule } from '@angular/forms';
-import { ChartSettingsComponent } from '../components/d3/chart-settings/chart-settings.component';
 import { NgxColorsModule } from 'ngx-colors';
-import { LineOptionsComponent } from '../components/d3/chart-settings/line-options/line-options.component';
+import { MaterialModule } from 'src/app/modules/material.module';
+import { ChartSettingsComponent } from './chart-settings/chart-settings.component';
+import { LineOptionsComponent } from './chart-settings/line-options/line-options.component';
+import { TimeSeriesComponent } from './time-series/time-series.component';
 
 @NgModule({
     declarations: [
