@@ -5,11 +5,13 @@ import { MaterialModule } from './material.module';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ChartSettingsComponent } from '../components/d3/chart-settings/chart-settings.component';
 import { NgxColorsModule } from 'ngx-colors';
+import { LineOptionsComponent } from '../components/d3/chart-settings/line-options/line-options.component';
 
 @NgModule({
     declarations: [
         TimeSeriesComponent,
         ChartSettingsComponent,
+        LineOptionsComponent,
     ],
     imports: [
         CommonModule,
@@ -20,6 +22,7 @@ import { NgxColorsModule } from 'ngx-colors';
     exports: [
         TimeSeriesComponent,
         ChartSettingsComponent,
+        LineOptionsComponent,
     ],
     providers: [
     ],

@@ -1,0 +1,52 @@
+<div [formGroup]="group">
+
+    <mat-card appearance="outlined">
+
+        <mat-card-header>
+            <mat-card-title>
+                Line Options
+            </mat-card-title>
+        </mat-card-header>
+
+        <mat-card-content>
+
+            <!-- Stroke Width -->
+            <div class="full-width form-row">
+
+                <mat-form-field>
+
+                    <mat-label for="stroke">
+                        Stroke Width
+                    </mat-label>
+
+                    <input matInput type="number" placeholder="Stroke Width" formControlName="stroke" appearance="fill" step="0.1" min="0" max="10" />
+
+                </mat-form-field>
+
+            </div>
+
+            <!-- Line Colour -->
+            <div class="full-width form-row">
+
+                <ngx-colors class="vertical-centre" ngx-colors-trigger formControlName="colour"></ngx-colors>
+
+                <mat-label for="colour" class="vertical-centre">
+                    Line Colour
+                </mat-label>
+
+                <button
+                    mat-mini-fab
+                    matTooltip="Use Marker Colour"
+                    matTooltipPosition="above"
+                    class="horizontal-right"
+                    (click)="setColour('line', markerColour)"
+                >
+                    <mat-icon>format_paint</mat-icon>
+                </button>
+
+            </div>
+
+        </mat-card-content>
+
+    </mat-card>
+</div>

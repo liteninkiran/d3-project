@@ -13,6 +13,10 @@ export class ChartSettingsComponent implements OnInit {
     public options: ChartOptions;
     public form: FormGroup;
 
+    get lineGroup() {
+        return this.form.get('line') as FormGroup;
+    }
+
     constructor(
         private fb: NonNullableFormBuilder,
         private dialogRef: MatDialogRef<ChartSettingsComponent>,
