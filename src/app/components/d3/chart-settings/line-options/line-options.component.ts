@@ -4,7 +4,7 @@ import { FormGroup } from '@angular/forms';
 @Component({
     selector: 'app-line-options',
     templateUrl: './line-options.component.html',
-    styleUrls: ['./line-options.component.scss'],
+    styleUrls: ['./line-options.component.scss', '../chart-settings.component.scss'],
 })
 export class LineOptionsComponent {
     @Input() group: FormGroup;
