@@ -70,7 +70,11 @@
                 <!-- Marker Colour -->
                 <div class="full-width form-row">
 
-                    <ngx-colors class="vertical-centre" ngx-colors-trigger formControlName="colour"></ngx-colors>
+                    <ngx-colors
+                        class="vertical-centre"
+                        ngx-colors-trigger
+                        formControlName="colour"
+                    ></ngx-colors>
 
                     <mat-label for="colour" class="vertical-centre" style="width: 120px;">
                         Marker Colour
@@ -83,7 +87,12 @@
                         showTickMarks="true"
                         style="width: 200px;"
                     >
-                        <input matSliderThumb matTooltip="Opacity" matTooltipPosition="above" formControlName="opacity">
+                        <input
+                            matSliderThumb
+                            matTooltip="Opacity"
+                            matTooltipPosition="above"
+                            formControlName="opacity"
+                        />
                     </mat-slider>
 
                     <mat-label class="vertical-centre">
@@ -105,9 +114,17 @@
                 <!-- Stroke Colour -->
                 <div class="full-width form-row">
 
-                    <ngx-colors class="vertical-centre" ngx-colors-trigger formControlName="strokeColour"></ngx-colors>
+                    <ngx-colors
+                        class="vertical-centre"
+                        ngx-colors-trigger
+                        formControlName="strokeColour"
+                    ></ngx-colors>
 
-                    <mat-label for="strokeColour" class="vertical-centre" style="width: 120px;">
+                    <mat-label
+                        for="strokeColour"
+                        class="vertical-centre"
+                        style="width: 120px;"
+                    >
                         Stroke Colour
                     </mat-label>
 

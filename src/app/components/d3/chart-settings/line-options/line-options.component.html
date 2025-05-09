@@ -40,7 +40,11 @@
             <!-- Line Colour -->
             <div class="full-width form-row">
 
-                <ngx-colors class="vertical-centre" ngx-colors-trigger formControlName="colour"></ngx-colors>
+                <ngx-colors
+                    class="vertical-centre"
+                    ngx-colors-trigger
+                    formControlName="colour"
+                ></ngx-colors>
 
                 <mat-label for="colour" class="vertical-centre">
                     Line Colour
@@ -53,7 +57,9 @@
                     class="horizontal-right"
                     (click)="setColour('line', markerColour)"
                 >
-                    <mat-icon>format_paint</mat-icon>
+                    <mat-icon>
+                        format_paint
+                    </mat-icon>
                 </button>
 
             </div>
