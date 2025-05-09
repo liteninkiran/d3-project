@@ -40,18 +40,12 @@
 
             <!-- Line Tab -->
             <mat-tab label="Line" *ngIf="form.value.chartType === 'line'">
-
-                <div class="tab-container">
-
-                    <app-line-options
-                        [group]="lineGroup"
-                        [markerColour]="form.value.markers.colour"
-                        (setColourOutput)="setColourFromChild($event)"
-                    />
-
-                </div>
-
-            </mat-tab>
+                <app-line-options
+                    [group]="lineGroup"
+                    [markerColour]="form.value.markers.colour"
+                    (setColourOutput)="setColourFromChild($event)"
+                />
+             </mat-tab>
 
             <!-- Markers Tab -->
             <mat-tab label="Markers" *ngIf="form.value.chartType === 'line'">
