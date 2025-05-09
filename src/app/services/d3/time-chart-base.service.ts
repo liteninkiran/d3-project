@@ -53,18 +53,27 @@ export class TimeChartBaseService {
 
     public drawAxes(): void {
         console.log('drawAxes');
+        this.drawXAxis();
+        this.drawYAxis();
+    }
+
+    public drawXAxis(): void {
+        console.log('drawXAxis');
         const xAxis = d3.axisBottom(this.x).ticks(d3.timeMonth.every(1)).tickFormat(d3.timeFormat('%b %Y'));
-        const yAxis = d3.axisLeft(this.y).ticks(6);
 
         this.getLayer('x-axis')
             .attr('transform', `translate(0, ${this.innerHeight})`)
             .call(xAxis)
             .selectAll('text')
             .attr('transform', 'rotate(-45)')
-            .style('text-anchor', 'end');
+            .style('text-anchor', 'end')
+            .attr('font-size', this.chartOptions.axes.xAxis.fontSize);
+    }
 
-        this.getLayer('y-axis')
-            .call(yAxis);
+    public drawYAxis(): void {
+        console.log('drawYAxis');
+        const yAxis = d3.axisLeft(this.y).ticks(6);
+        this.getLayer('y-axis').call(yAxis);
     }
 
     public getContext(): ChartContext {

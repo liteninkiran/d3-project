@@ -54,7 +54,7 @@ export type ChartOptions = {
     line: LineOptions;
     markers: MarkerOptions;
     bar: BarOptions;
-    axes?: AxesOptions;
+    axes: AxesOptions;
 }
 
 export type SetColour = {

@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
+import { FormGroup } from '@angular/forms';
 
 @Component({
     selector: 'app-y-axis-options',
@@ -6,5 +7,5 @@ import { Component } from '@angular/core';
     styleUrls: ['./y-axis-options.component.scss'],
 })
 export class YAxisOptionsComponent {
-
+    @Input() group: FormGroup;
 }

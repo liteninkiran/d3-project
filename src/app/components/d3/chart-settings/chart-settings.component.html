@@ -67,11 +67,15 @@
                 <mat-tab-group>
 
                     <mat-tab label="X-Axis">
-                        <app-x-axis-options />
+                        <app-x-axis-options
+                            [group]="xAxisGroup"
+                        />
                     </mat-tab>
 
                     <mat-tab label="Y-Axis">
-                        <app-y-axis-options />
+                        <app-y-axis-options
+                            [group]="yAxisGroup"
+                        />
                     </mat-tab>
 
                 </mat-tab-group>

@@ -1,1 +1,44 @@
-<p>X Axis Options</p>
+<div [formGroup]="group" class="tab-container">
+
+    <!-- Card -->
+    <mat-card appearance="outlined">
+
+        <!-- Header -->
+        <mat-card-header>
+            <mat-card-title>
+                X Axis Options
+            </mat-card-title>
+        </mat-card-header>
+
+        <!-- Content -->
+        <mat-card-content>
+
+            <!-- Font Size -->
+            <div class="full-width form-row">
+
+                <mat-form-field>
+
+                    <mat-label for="fontSize">
+                        Font Size
+                    </mat-label>
+
+                    <input
+                        matInput
+                        type="number"
+                        placeholder="Font Size"
+                        formControlName="fontSize"
+                        appearance="fill"
+                        step="1"
+                        min="3"
+                        max="30"
+                    />
+
+                </mat-form-field>
+
+            </div>
+
+        </mat-card-content>
+
+    </mat-card>
+
+</div>
