@@ -53,18 +53,8 @@ export class ChartSettingsComponent implements OnInit {
         this.dialogRef.close();
     }
 
-    public onRadioClick(event: Event): void {
-        const el = event.target as HTMLOptionElement;
-        el.blur();
-    }
-
-    public setColour(key: string, colour: string, colourKey: string = 'colour'): void {
-        this.form.patchValue({ [key]: { [colourKey]: colour } });
-        console.log(this.form.value);
-    }
-
     public setColourFromChild(data: SetColour): void {
-        this.setColour(data.key, data.colour, data.colourKey);
+        this.form.patchValue({ [data.key]: { [data.colourKey]: data.colour } });
     }
 
     private setupForm(): void {

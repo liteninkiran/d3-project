@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
+import { FormGroup } from '@angular/forms';
 
 @Component({
     selector: 'app-chart-type-options',
@@ -9,6 +10,8 @@ import { Component } from '@angular/core';
     ],
 })
 export class ChartTypeOptionsComponent {
+    @Input() group: FormGroup;
+
     public onRadioClick(event: Event): void {
         const el = event.target as HTMLOptionElement;
         el.blur();

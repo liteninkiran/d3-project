@@ -1,6 +1,6 @@
-<div class="tab-container">
+<div class="tab-container" [formGroup]="group">
 
-    <mat-radio-group formControlName="chartType">
+    <mat-radio-group formControlName="type">
 
         <mat-radio-button value="line" (click)="onRadioClick($event)">
             Line
