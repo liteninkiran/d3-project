@@ -59,8 +59,11 @@ export class TimeChartBaseService {
 
     public drawXAxis(): void {
         console.log('drawXAxis');
-        const xAxis = d3.axisBottom(this.x).ticks(d3.timeMonth.every(1)).tickFormat(d3.timeFormat('%b %Y'));
-        const { rotation, fontSize, textAnchor } = this.chartOptions.axes.xAxis;
+        const { rotation, fontSize, textAnchor, dateFormat } = this.chartOptions.axes.xAxis;
+
+        const xAxis = d3.axisBottom(this.x)
+            .ticks(d3.timeMonth.every(1))
+            .tickFormat(d3.timeFormat(dateFormat));
 
         this.getLayer('x-axis')
             .attr('transform', `translate(0, ${this.innerHeight})`)

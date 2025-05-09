@@ -38,6 +38,7 @@ export type XAxisOptions = {
     fontSize: number;
     rotation: number;
     textAnchor: 'start' | 'middle' | 'end';
+    dateFormat: string;
 }
 
 export type YAxisOptions = {

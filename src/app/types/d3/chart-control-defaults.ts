@@ -41,6 +41,7 @@ export const defaultAxesOptions: AxesOptions = {
         fontSize: 10,
         rotation: 0,
         textAnchor: 'middle',
+        dateFormat: '%b %Y',
     },
     yAxis: {
         fontSize: 10,
