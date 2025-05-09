@@ -13,6 +13,10 @@ export class ChartSettingsComponent implements OnInit {
     public options: ChartOptions;
     public form: FormGroup;
 
+    get chartTypeGroup() {
+        return this.form.get('chartType') as FormGroup;
+    }
+
     get lineGroup() {
         return this.form.get('line') as FormGroup;
     }
@@ -64,17 +68,30 @@ export class ChartSettingsComponent implements OnInit {
     }
 
     private setupForm(): void {
-        this.form = this.fb.group(this.getOptions());
+        this.form = this.fb.group({
+            chartType: this.fb.group(this.chartTypeDef()),
+            dimensions: this.fb.group(this.dimensionGroupDef()),
+            margins: this.fb.group(this.marginGroupDef()),
+            line: this.fb.group(this.lineGroupDef()),
+            markers: this.fb.group(this.markerGroupDef()),
+            bar: this.fb.group(this.barGroupDef()),
+        });
     }
 
-    private getDimensions() {
+    private chartTypeDef() {
+        return {
+            type: this.fb.control(this.options.chartType.type),
+        }
+    }
+
+    private dimensionGroupDef() {
         return {
             width: this.fb.control(this.options.dimensions.width),
             height: this.fb.control(this.options.dimensions.height),
         }
     }
 
-    private getMargins() {
+    private marginGroupDef() {
         return {
             top: this.fb.control(this.options.margins.top),
             bottom: this.fb.control(this.options.margins.bottom),
@@ -83,14 +100,14 @@ export class ChartSettingsComponent implements OnInit {
         }
     }
 
-    private getLine() {
+    private lineGroupDef() {
         return {
             stroke: this.fb.control(this.options.line.stroke),
             colour: this.fb.control(this.options.line.colour),
         }
     }
 
-    private getMarkers() {
+    private markerGroupDef() {
         return {
             enabled: this.fb.control(this.options.markers.enabled),
             size: this.fb.control(this.options.markers.size),
@@ -102,21 +119,10 @@ export class ChartSettingsComponent implements OnInit {
         }
     }
 
-    private getBar() {
+    private barGroupDef() {
         return {
             width: this.fb.control(this.options.bar.width),
             colour: this.fb.control(this.options.bar.colour),
-        }
-    }
-
-    private getOptions() {
-        return {
-            chartType: this.fb.control(this.options.chartType),
-            dimensions: this.fb.group(this.getDimensions()),
-            margins: this.fb.group(this.getMargins()),
-            line: this.fb.group(this.getLine()),
-            markers: this.fb.group(this.getMarkers()),
-            bar: this.fb.group(this.getBar()),
         }
     }
 }

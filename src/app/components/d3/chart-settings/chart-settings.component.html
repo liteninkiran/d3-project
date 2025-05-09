@@ -20,9 +20,9 @@
             <!-- Chart Type Tab -->
             <mat-tab label="Chart Type">
 
-                <div class="tab-container">
+                <div class="tab-container" formGroupName="chartType">
 
-                    <mat-radio-group formControlName="chartType">
+                    <mat-radio-group formControlName="type">
 
                         <mat-radio-button value="line" (click)="onRadioClick($event)">
                             Line

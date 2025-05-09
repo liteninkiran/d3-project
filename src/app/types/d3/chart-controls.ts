@@ -1,4 +1,6 @@
-export type ChartType = 'line' | 'bar';
+export type ChartType = {
+    type: 'line' | 'bar';
+}
 
 export type Margin = {
     top: number;
