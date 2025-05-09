@@ -5,7 +5,10 @@ import { SetColour } from 'src/app/types/d3/chart-controls';
 @Component({
     selector: 'app-marker-options',
     templateUrl: './marker-options.component.html',
-    styleUrls: ['./marker-options.component.scss', '../chart-settings.component.scss'],
+    styleUrls: [
+        './marker-options.component.scss',
+        '../chart-settings.component.scss',
+    ],
 })
 export class MarkerOptionsComponent {
     @Input() group: FormGroup;
