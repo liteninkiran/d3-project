@@ -8,6 +8,7 @@ import { LineOptionsComponent } from './chart-settings/line-options/line-options
 import { TimeSeriesComponent } from './time-series/time-series.component';
 import { MarkerOptionsComponent } from './chart-settings/marker-options/marker-options.component';
 import { BarOptionsComponent } from './chart-settings/bar-options/bar-options.component';
+import { DimensionOptionsComponent } from './chart-settings/dimension-options/dimension-options.component';
 
 @NgModule({
     declarations: [
@@ -16,6 +17,7 @@ import { BarOptionsComponent } from './chart-settings/bar-options/bar-options.co
         LineOptionsComponent,
         MarkerOptionsComponent,
         BarOptionsComponent,
+        DimensionOptionsComponent,
     ],
     imports: [
         CommonModule,
