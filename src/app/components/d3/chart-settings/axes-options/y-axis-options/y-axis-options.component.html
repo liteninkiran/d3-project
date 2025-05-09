@@ -54,6 +54,26 @@
 
             </div>
 
+
+            <!-- Tick Format -->
+            <div class="full-width form-row">
+                <mat-form-field>
+                    <mat-label for="tickFormat" class="vertical-centre">
+                        Tick Format
+                    </mat-label>
+
+                    <mat-select formControlName="tickFormat">
+                        <mat-option value="d">Decimal Integer</mat-option>
+                        <mat-option value=",">Group Thousands with Comma</mat-option>
+                        <mat-option value=".2f">Two Decimal Places</mat-option>
+                        <mat-option value=".3e">Exponential Notation</mat-option>
+                        <mat-option value=".0%">Percentage</mat-option>
+                        <mat-option value=".3s">SI Prefix</mat-option>
+                        <mat-option value=".3g">General Format</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+
         </mat-card-content>
 
     </mat-card>
