@@ -3,13 +3,6 @@
     <!-- Card -->
     <mat-card appearance="outlined">
 
-        <!-- Header -->
-        <mat-card-header>
-            <mat-card-title>
-                X Axis Options
-            </mat-card-title>
-        </mat-card-header>
-
         <!-- Content -->
         <mat-card-content>
 
@@ -62,6 +55,22 @@
                 </mat-label>
 
             </div>
+
+            <!-- Text Anchor -->
+            <div class="full-width form-row">
+                <mat-form-field>
+                    <mat-label for="textAnchor" class="vertical-centre">
+                        Text Anchor
+                    </mat-label>
+
+                    <mat-select formControlName="textAnchor">
+                        <mat-option value="start">Start</mat-option>
+                        <mat-option value="middle">Middle</mat-option>
+                        <mat-option value="end">End</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+
 
         </mat-card-content>
 

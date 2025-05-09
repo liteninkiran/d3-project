@@ -136,6 +136,7 @@ export class ChartSettingsComponent implements OnInit {
         return {
             fontSize: this.fb.control(this.options.axes.xAxis.fontSize),
             rotation: this.fb.control(this.options.axes.xAxis.rotation),
+            textAnchor: this.fb.control(this.options.axes.xAxis.textAnchor),
         }
     }
 

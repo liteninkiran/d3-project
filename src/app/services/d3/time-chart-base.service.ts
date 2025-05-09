@@ -60,15 +60,16 @@ export class TimeChartBaseService {
     public drawXAxis(): void {
         console.log('drawXAxis');
         const xAxis = d3.axisBottom(this.x).ticks(d3.timeMonth.every(1)).tickFormat(d3.timeFormat('%b %Y'));
+        const { rotation, fontSize, textAnchor } = this.chartOptions.axes.xAxis;
 
         this.getLayer('x-axis')
             .attr('transform', `translate(0, ${this.innerHeight})`)
             .call(xAxis)
             .selectAll('text')
-            .attr('transform', `rotate(${this.chartOptions.axes.xAxis.rotation})`)
-            .style('text-anchor', 'end')
+            .attr('transform', `rotate(${rotation})`)
+            .style('text-anchor', textAnchor)
             .attr('x', 0)
-            .attr('font-size', this.chartOptions.axes.xAxis.fontSize);
+            .attr('font-size', fontSize);
     }
 
     public drawYAxis(): void {
