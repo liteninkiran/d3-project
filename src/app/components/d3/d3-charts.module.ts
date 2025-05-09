@@ -9,6 +9,7 @@ import { TimeSeriesComponent } from './time-series/time-series.component';
 import { MarkerOptionsComponent } from './chart-settings/marker-options/marker-options.component';
 import { BarOptionsComponent } from './chart-settings/bar-options/bar-options.component';
 import { DimensionOptionsComponent } from './chart-settings/dimension-options/dimension-options.component';
+import { ChartTypeOptionsComponent } from './chart-settings/chart-type-options/chart-type-options.component';
 
 @NgModule({
     declarations: [
@@ -18,6 +19,7 @@ import { DimensionOptionsComponent } from './chart-settings/dimension-options/di
         MarkerOptionsComponent,
         BarOptionsComponent,
         DimensionOptionsComponent,
+        ChartTypeOptionsComponent,
     ],
     imports: [
         CommonModule,
