@@ -11,4 +11,8 @@ import { FormGroup } from '@angular/forms';
 })
 export class YAxisOptionsComponent {
     @Input() group: FormGroup;
+
+    get gridLinesGroup() {
+        return this.group.get('gridLines') as FormGroup;
+    }
 }

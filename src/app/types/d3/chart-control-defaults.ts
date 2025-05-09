@@ -47,6 +47,9 @@ export const defaultAxesOptions: AxesOptions = {
         fontSize: 10,
         ticks: 6,
         tickFormat: ',',
+        gridLines: {
+            enabled: true,
+        }
     },
 }
 

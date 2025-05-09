@@ -54,7 +54,6 @@
 
             </div>
 
-
             <!-- Tick Format -->
             <div class="full-width form-row">
                 <mat-form-field>
@@ -72,6 +71,13 @@
                         <mat-option value=".3g">General Format</mat-option>
                     </mat-select>
                 </mat-form-field>
+            </div>
+
+            <!-- Enable Gridlines -->
+            <div class="full-width form-row" [formGroup]="gridLinesGroup">
+                <mat-checkbox formControlName="enabled">
+                    Enable Gridlines
+                </mat-checkbox>
             </div>
 
         </mat-card-content>

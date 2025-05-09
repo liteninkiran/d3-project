@@ -45,6 +45,9 @@ export type YAxisOptions = {
     fontSize: number;
     ticks: number;
     tickFormat: string;
+    gridLines: {
+        enabled: boolean;
+    }
 }
 
 export type AxesOptions = {
