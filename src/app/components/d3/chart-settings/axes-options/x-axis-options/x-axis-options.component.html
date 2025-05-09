@@ -1,0 +1,92 @@
+<div [formGroup]="group" class="tab-container">
+
+    <!-- Card -->
+    <mat-card appearance="outlined">
+
+        <!-- Content -->
+        <mat-card-content>
+
+            <!-- Font Size -->
+            <div class="full-width form-row">
+
+                <mat-form-field>
+
+                    <mat-label for="fontSize">
+                        Font Size
+                    </mat-label>
+
+                    <input
+                        matInput
+                        type="number"
+                        placeholder="Font Size"
+                        formControlName="fontSize"
+                        appearance="fill"
+                        step="1"
+                        min="3"
+                        max="30"
+                    />
+
+                </mat-form-field>
+
+            </div>
+
+            <!-- Rotation -->
+            <div class="full-width form-row">
+
+                <mat-label for="rotation" class="vertical-centre" style="width: 120px;">
+                    Rotation
+                </mat-label>
+
+                <mat-slider
+                    min="-90"
+                    max="0"
+                    step="5"
+                    showTickMarks="true"
+                    style="width: 200px;"
+                >
+                    <input
+                        matSliderThumb
+                        formControlName="rotation"
+                    />
+                </mat-slider>
+
+                <mat-label class="vertical-centre">
+                    {{ group.get('rotation')?.value | number: '1.0-0' }}°
+                </mat-label>
+
+            </div>
+
+            <!-- Text Anchor -->
+            <div class="full-width form-row">
+                <mat-form-field>
+                    <mat-label for="textAnchor" class="vertical-centre">
+                        Text Anchor
+                    </mat-label>
+
+                    <mat-select formControlName="textAnchor">
+                        <mat-option value="start">Start</mat-option>
+                        <mat-option value="middle">Middle</mat-option>
+                        <mat-option value="end">End</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+
+            <!-- Date Format -->
+            <div class="full-width form-row">
+                <mat-form-field>
+                    <mat-label for="dateFormat" class="vertical-centre">
+                        Date Format
+                    </mat-label>
+
+                    <mat-select formControlName="dateFormat">
+                        <mat-option value="%b %Y">Jan 2025</mat-option>
+                        <mat-option value="%d %b %Y">01 Jan 2025</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+
+        </mat-card-content>
+
+    </mat-card>
+
+</div>

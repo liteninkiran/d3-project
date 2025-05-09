@@ -10,6 +10,8 @@ import { MarkerOptionsComponent } from './chart-settings/marker-options/marker-o
 import { BarOptionsComponent } from './chart-settings/bar-options/bar-options.component';
 import { DimensionOptionsComponent } from './chart-settings/dimension-options/dimension-options.component';
 import { ChartTypeOptionsComponent } from './chart-settings/chart-type-options/chart-type-options.component';
+import { XAxisOptionsComponent } from './chart-settings/axes-options/x-axis-options/x-axis-options.component';
+import { YAxisOptionsComponent } from './chart-settings/axes-options/y-axis-options/y-axis-options.component';
 
 @NgModule({
     declarations: [
@@ -20,6 +22,8 @@ import { ChartTypeOptionsComponent } from './chart-settings/chart-type-options/c
         BarOptionsComponent,
         DimensionOptionsComponent,
         ChartTypeOptionsComponent,
+        XAxisOptionsComponent,
+        YAxisOptionsComponent,
     ],
     imports: [
         CommonModule,
@@ -30,7 +34,6 @@ import { ChartTypeOptionsComponent } from './chart-settings/chart-type-options/c
     exports: [
         TimeSeriesComponent,
         ChartSettingsComponent,
-        LineOptionsComponent,
     ],
     providers: [
     ],

@@ -34,6 +34,22 @@ export type BarOptions = {
     colour: string;
 }
 
+export type XAxisOptions = {
+    fontSize: number;
+    rotation: number;
+    textAnchor: 'start' | 'middle' | 'end';
+    dateFormat: string;
+}
+
+export type YAxisOptions = {
+    fontSize: number;
+}
+
+export type AxesOptions = {
+    xAxis: XAxisOptions;
+    yAxis: YAxisOptions;
+}
+
 export type ChartOptions = {
     chartType: ChartType;
     dimensions: ChartDimensions;
@@ -41,6 +57,7 @@ export type ChartOptions = {
     line: LineOptions;
     markers: MarkerOptions;
     bar: BarOptions;
+    axes: AxesOptions;
 }
 
 export type SetColour = {

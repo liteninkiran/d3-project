@@ -1,4 +1,4 @@
-import { Margin, LineOptions, BarOptions, ChartOptions, ChartDimensions, ChartType, MarkerOptions } from './chart-controls';
+import { Margin, LineOptions, BarOptions, ChartOptions, ChartDimensions, ChartType, MarkerOptions, AxesOptions } from './chart-controls';
 
 export const defaultChartType: ChartType = {
     type: 'line',
@@ -36,6 +36,18 @@ export const defaultBarOptions: BarOptions = {
     colour: 'tomato',
 }
 
+export const defaultAxesOptions: AxesOptions = {
+    xAxis: {
+        fontSize: 10,
+        rotation: 0,
+        textAnchor: 'middle',
+        dateFormat: '%b %Y',
+    },
+    yAxis: {
+        fontSize: 10,
+    },
+}
+
 export const defaultChartOptions: ChartOptions = {
     chartType: defaultChartType,
     margins: defaultChartMargins,
@@ -43,4 +55,5 @@ export const defaultChartOptions: ChartOptions = {
     line: defaultLineOptions,
     markers: defaultMarkerOptions,
     bar: defaultBarOptions,
+    axes: defaultAxesOptions,
 }

@@ -37,6 +37,14 @@ export class ChartSettingsComponent implements OnInit {
         return this.form.get('margins') as FormGroup;
     }
 
+    get xAxisGroup() {
+        return this.form.get('axes.xAxis') as FormGroup;
+    }
+
+    get yAxisGroup() {
+        return this.form.get('axes.yAxis') as FormGroup;
+    }
+
     constructor(
         private fb: NonNullableFormBuilder,
         private dialogRef: MatDialogRef<ChartSettingsComponent>,
@@ -65,6 +73,7 @@ export class ChartSettingsComponent implements OnInit {
             line: this.fb.group(this.lineGroupDef()),
             markers: this.fb.group(this.markerGroupDef()),
             bar: this.fb.group(this.barGroupDef()),
+            axes: this.fb.group(this.axesGroupDef()),
         });
     }
 
@@ -113,6 +122,28 @@ export class ChartSettingsComponent implements OnInit {
         return {
             width: this.fb.control(this.options.bar.width),
             colour: this.fb.control(this.options.bar.colour),
+        }
+    }
+
+    private axesGroupDef() {
+        return {
+            xAxis: this.fb.group(this.xAxisGroupDef()),
+            yAxis: this.fb.group(this.yAxisGroupDef()),
+        }
+    }
+
+    private xAxisGroupDef() {
+        return {
+            fontSize: this.fb.control(this.options.axes.xAxis.fontSize),
+            rotation: this.fb.control(this.options.axes.xAxis.rotation),
+            textAnchor: this.fb.control(this.options.axes.xAxis.textAnchor),
+            dateFormat: this.fb.control(this.options.axes.xAxis.dateFormat),
+        }
+    }
+
+    private yAxisGroupDef() {
+        return {
+            fontSize: this.fb.control(this.options.axes.yAxis.fontSize),
         }
     }
 }
