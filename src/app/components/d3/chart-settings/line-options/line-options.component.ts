@@ -1,5 +1,10 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormGroup } from '@angular/forms';
+
+export type SetColour = {
+    key: string;
+    colour: string;
+}
 
 @Component({
     selector: 'app-line-options',
@@ -9,5 +14,10 @@ import { FormGroup } from '@angular/forms';
 export class LineOptionsComponent {
     @Input() group: FormGroup;
     @Input() markerColour: string;
-    @Input() setColour: (key: string, colour: string) => void;
+
+    @Output() setColourOutput = new EventEmitter<SetColour>();
+
+    public setColour(key: string, colour: string) {
+        this.setColourOutput.emit({ key, colour });
+    }
 }

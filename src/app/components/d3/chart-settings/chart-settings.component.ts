@@ -2,6 +2,7 @@ import { Component, OnInit, Inject } from '@angular/core';
 import { FormGroup, NonNullableFormBuilder } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { ChartOptions } from 'src/app/types/d3/chart-controls';
+import { SetColour } from './line-options/line-options.component';
 
 @Component({
     selector: 'app-chart-settings',
@@ -41,6 +42,10 @@ export class ChartSettingsComponent implements OnInit {
     public setColour(key: string, colour: string): void {
         this.form.patchValue({ [key]: { colour } });
         console.log(this.form.value);
+    }
+
+    public setColourFromChild(data: SetColour): void {
+        this.setColour(data.key, data.colour);
     }
 
     private setupForm(): void {

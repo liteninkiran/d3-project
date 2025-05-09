@@ -46,7 +46,7 @@
                     <app-line-options
                         [group]="lineGroup"
                         [markerColour]="form.value.markers.colour"
-                        [setColour]="setColour"
+                        (setColourOutput)="setColourFromChild($event)"
                     />
 
                 </div>
