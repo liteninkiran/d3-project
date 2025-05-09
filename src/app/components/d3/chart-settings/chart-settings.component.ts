@@ -25,6 +25,14 @@ export class ChartSettingsComponent implements OnInit {
         return this.form.get('bar') as FormGroup;
     }
 
+    get dimensionGroup() {
+        return this.form.get('dimensions') as FormGroup;
+    }
+
+    get marginGroup() {
+        return this.form.get('margins') as FormGroup;
+    }
+
     constructor(
         private fb: NonNullableFormBuilder,
         private dialogRef: MatDialogRef<ChartSettingsComponent>,

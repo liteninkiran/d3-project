@@ -1,1 +1,140 @@
-<p>dimension-options works!</p>
+<div class="tab-container">
+
+    <!-- Chart Size -->
+    <div [formGroup]="dimensionGroup">
+        <div class="full-width form-row">
+
+            <!-- Width -->
+            <mat-form-field>
+
+                <mat-label>
+                    Chart Width (Max {{ maxWidth }})
+                </mat-label>
+
+                <input
+                    matInput
+                    type="number"
+                    placeholder="Chart Width"
+                    formControlName="width"
+                    appearance="fill"
+                    step="10"
+                    min="0"
+                    [max]="maxWidth"
+                />
+
+            </mat-form-field>
+
+            <!-- Height -->
+            <mat-form-field>
+
+                <mat-label>
+                    Chart Height (Max {{ maxHeight }})
+                </mat-label>
+
+                <input
+                    matInput
+                    type="number"
+                    placeholder="Chart Height"
+                    formControlName="height"
+                    appearance="fill"
+                    step="10"
+                    min="0"
+                    [max]="maxHeight"
+                />
+
+            </mat-form-field>
+
+        </div>
+    </div>
+
+    <mat-divider />
+
+    <!-- Margins -->
+    <div [formGroup]="marginGroup">
+
+        <div class="full-width form-row">
+
+            <!-- Top Margin -->
+            <mat-form-field>
+
+                <mat-label>
+                    Top Margin
+                </mat-label>
+
+                <input
+                    matInput
+                    type="number"
+                    placeholder="Top Margin"
+                    formControlName="top"
+                    appearance="fill"
+                    step="10"
+                    min="0"
+                />
+
+            </mat-form-field>
+
+            <!-- Bottom Margin -->
+            <mat-form-field>
+
+                <mat-label>
+                    Bottom Margin
+                </mat-label>
+
+                <input
+                    matInput
+                    type="number"
+                    placeholder="Bottom Margin"
+                    formControlName="bottom"
+                    appearance="fill"
+                    step="10"
+                    min="0"
+                />
+
+            </mat-form-field>
+
+        </div>
+
+        <div class="full-width form-row">
+
+            <!-- Left Margin -->
+            <mat-form-field>
+
+                <mat-label>
+                    Left Margin
+                </mat-label>
+
+                <input
+                    matInput
+                    type="number"
+                    placeholder="Left Margin"
+                    formControlName="left"
+                    appearance="fill"
+                    step="10"
+                    min="0"
+                />
+
+            </mat-form-field>
+
+            <!-- Right Margin -->
+            <mat-form-field>
+
+                <mat-label>
+                    Right Margin
+                </mat-label>
+
+                <input
+                    matInput
+                    type="number"
+                    placeholder="Right Margin"
+                    formControlName="right"
+                    appearance="fill"
+                    step="10"
+                    min="0"
+                />
+
+            </mat-form-field>
+
+        </div>
+    </div>
+
+</div>
