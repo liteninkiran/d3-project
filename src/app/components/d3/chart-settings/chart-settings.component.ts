@@ -144,6 +144,8 @@ export class ChartSettingsComponent implements OnInit {
     private yAxisGroupDef() {
         return {
             fontSize: this.fb.control(this.options.axes.yAxis.fontSize),
+            ticks: this.fb.control(this.options.axes.yAxis.ticks),
+            tickFormat: this.fb.control(this.options.axes.yAxis.tickFormat),
         }
     }
 }

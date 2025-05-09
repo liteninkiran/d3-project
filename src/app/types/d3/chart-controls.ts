@@ -43,6 +43,8 @@ export type XAxisOptions = {
 
 export type YAxisOptions = {
     fontSize: number;
+    ticks: number;
+    tickFormat: string;
 }
 
 export type AxesOptions = {

@@ -77,8 +77,12 @@ export class TimeChartBaseService {
 
     public drawYAxis(): void {
         console.log('drawYAxis');
-        const { fontSize } = this.chartOptions.axes.yAxis;
-        const yAxis = d3.axisLeft(this.y).ticks(6);
+        const { fontSize, ticks, tickFormat } = this.chartOptions.axes.yAxis;
+
+        const yAxis = d3.axisLeft(this.y)
+            .ticks(ticks)
+            .tickFormat(d3.format(tickFormat));
+
         this.getLayer('y-axis')
             .call(yAxis)
             .attr('font-size', fontSize);
