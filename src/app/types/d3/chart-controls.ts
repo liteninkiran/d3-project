@@ -40,3 +40,8 @@ export type ChartOptions = {
     markers: MarkerOptions;
     bar: BarOptions;
 }
+
+export type SetColour = {
+    key: string;
+    colour: string;
+}

@@ -1,8 +1,7 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { FormGroup, NonNullableFormBuilder } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { ChartOptions } from 'src/app/types/d3/chart-controls';
-import { SetColour } from './line-options/line-options.component';
+import { ChartOptions, SetColour } from 'src/app/types/d3/chart-controls';
 
 @Component({
     selector: 'app-chart-settings',
@@ -16,6 +15,10 @@ export class ChartSettingsComponent implements OnInit {
 
     get lineGroup() {
         return this.form.get('line') as FormGroup;
+    }
+
+    get markerGroup() {
+        return this.form.get('markers') as FormGroup;
     }
 
     constructor(

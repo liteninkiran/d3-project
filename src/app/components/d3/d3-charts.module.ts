@@ -6,12 +6,14 @@ import { MaterialModule } from 'src/app/modules/material.module';
 import { ChartSettingsComponent } from './chart-settings/chart-settings.component';
 import { LineOptionsComponent } from './chart-settings/line-options/line-options.component';
 import { TimeSeriesComponent } from './time-series/time-series.component';
+import { MarkerOptionsComponent } from './chart-settings/marker-options/marker-options.component';
 
 @NgModule({
     declarations: [
         TimeSeriesComponent,
         ChartSettingsComponent,
         LineOptionsComponent,
+        MarkerOptionsComponent,
     ],
     imports: [
         CommonModule,
