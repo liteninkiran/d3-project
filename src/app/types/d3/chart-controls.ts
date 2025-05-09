@@ -36,6 +36,7 @@ export type BarOptions = {
 
 export type XAxisOptions = {
     fontSize: number;
+    rotation: number;
 }
 
 export type YAxisOptions = {

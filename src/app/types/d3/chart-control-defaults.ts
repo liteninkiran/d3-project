@@ -39,6 +39,7 @@ export const defaultBarOptions: BarOptions = {
 export const defaultAxesOptions: AxesOptions = {
     xAxis: {
         fontSize: 10,
+        rotation: -45,
     },
     yAxis: {
         fontSize: 10,

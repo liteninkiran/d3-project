@@ -135,6 +135,7 @@ export class ChartSettingsComponent implements OnInit {
     private xAxisGroupDef() {
         return {
             fontSize: this.fb.control(this.options.axes.xAxis.fontSize),
+            rotation: this.fb.control(this.options.axes.xAxis.rotation),
         }
     }
 

@@ -37,6 +37,32 @@
 
             </div>
 
+            <!-- Rotation -->
+            <div class="full-width form-row">
+
+                <mat-label for="rotation" class="vertical-centre" style="width: 120px;">
+                    Rotation
+                </mat-label>
+
+                <mat-slider
+                    min="-90"
+                    max="0"
+                    step="5"
+                    showTickMarks="true"
+                    style="width: 200px;"
+                >
+                    <input
+                        matSliderThumb
+                        formControlName="rotation"
+                    />
+                </mat-slider>
+
+                <mat-label class="vertical-centre">
+                    {{ group.get('rotation')?.value | number: '1.0-0' }}°
+                </mat-label>
+
+            </div>
+
         </mat-card-content>
 
     </mat-card>

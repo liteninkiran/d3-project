@@ -65,8 +65,9 @@ export class TimeChartBaseService {
             .attr('transform', `translate(0, ${this.innerHeight})`)
             .call(xAxis)
             .selectAll('text')
-            .attr('transform', 'rotate(-45)')
+            .attr('transform', `rotate(${this.chartOptions.axes.xAxis.rotation})`)
             .style('text-anchor', 'end')
+            .attr('x', 0)
             .attr('font-size', this.chartOptions.axes.xAxis.fontSize);
     }
 
