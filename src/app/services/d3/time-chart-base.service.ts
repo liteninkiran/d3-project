@@ -31,7 +31,7 @@ export class TimeChartBaseService {
         data: ChartData[],
         chartOptions: ChartOptions,
     ) {
-        console.log('init', chartOptions);
+        console.log('Chart Options', chartOptions);
         this.data = data;
         this.chartOptions = chartOptions;
 
@@ -52,13 +52,11 @@ export class TimeChartBaseService {
     }
 
     public drawAxes(): void {
-        console.log('drawAxes');
         this.drawXAxis();
         this.drawYAxis();
     }
 
     public drawXAxis(): void {
-        console.log('drawXAxis');
         const { rotation, fontSize, textAnchor, dateFormat } = this.chartOptions.axes.xAxis;
 
         const xAxis = d3.axisBottom(this.x)
@@ -76,9 +74,39 @@ export class TimeChartBaseService {
     }
 
     public drawYAxis(): void {
-        console.log('drawYAxis');
-        const yAxis = d3.axisLeft(this.y).ticks(6);
-        this.getLayer('y-axis').call(yAxis);
+        const { fontSize, ticks, tickFormat } = this.chartOptions.axes.yAxis;
+
+        const yAxis = d3.axisLeft(this.y)
+            .ticks(ticks)
+            .tickFormat(d3.format(tickFormat));
+
+        this.getLayer('y-axis')
+            .call(yAxis)
+            .attr('font-size', fontSize);
+
+        this.drawYGrid();
+    }
+
+    public drawYGrid(): void {
+        const { ticks, gridLines: { enabled } } = this.chartOptions.axes.yAxis;
+
+        const yGrid = d3.axisLeft(this.y)
+            .ticks(ticks)
+            .tickSize(-this.innerWidth);
+
+        const gridLayer = this.getLayer('y-grid');
+
+        gridLayer.selectAll('*').remove();
+
+        if (enabled) {
+            gridLayer
+                .call(yGrid)
+                .call(g => {
+                    g.selectAll('line').attr('stroke', '#ccc').attr('stroke-opacity', 0.7);
+                    g.select('.domain').remove();
+                    g.selectAll('text').remove();
+                });
+        }
     }
 
     public getContext(): ChartContext {
@@ -104,7 +132,6 @@ export class TimeChartBaseService {
     }
 
     private getLayer(name: string): Group {
-        console.log('getLayer', name);
         if (!this.groups.has(name)) {
             const g = this.container.append('g').attr('class', name);
             this.groups.set(name, g);
@@ -113,7 +140,6 @@ export class TimeChartBaseService {
     }
 
     private createContainer(): void {
-        console.log('createContainer');
         this.container = this.svg.select('g.chart-container');
 
         if (this.container.empty()) {
@@ -131,7 +157,6 @@ export class TimeChartBaseService {
     }
 
     private createScales(): void {
-        console.log('createScales');
         this.x = d3.scaleTime()
             .domain(d3.extent(this.data, d => d.date))
             .range([0, this.innerWidth]);

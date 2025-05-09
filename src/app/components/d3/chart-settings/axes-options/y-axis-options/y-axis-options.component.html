@@ -1,1 +1,87 @@
-<p>Y Axis Options</p>
+<div [formGroup]="group" class="tab-container">
+
+    <!-- Card -->
+    <mat-card appearance="outlined">
+
+        <!-- Content -->
+        <mat-card-content>
+
+            <!-- Font Size -->
+            <div class="full-width form-row">
+
+                <mat-form-field>
+
+                    <mat-label for="fontSize">
+                        Font Size
+                    </mat-label>
+
+                    <input
+                        matInput
+                        type="number"
+                        placeholder="Font Size"
+                        formControlName="fontSize"
+                        appearance="fill"
+                        step="1"
+                        min="3"
+                        max="30"
+                    />
+
+                </mat-form-field>
+
+            </div>
+
+            <!-- Ticks -->
+            <div class="full-width form-row">
+
+                <mat-form-field>
+
+                    <mat-label for="ticks">
+                        Ticks
+                    </mat-label>
+
+                    <input
+                        matInput
+                        type="number"
+                        placeholder="Ticks"
+                        formControlName="ticks"
+                        appearance="fill"
+                        step="1"
+                        min="1"
+                        max="30"
+                    />
+
+                </mat-form-field>
+
+            </div>
+
+            <!-- Tick Format -->
+            <div class="full-width form-row">
+                <mat-form-field>
+                    <mat-label for="tickFormat" class="vertical-centre">
+                        Tick Format
+                    </mat-label>
+
+                    <mat-select formControlName="tickFormat">
+                        <mat-option value="d">Decimal Integer</mat-option>
+                        <mat-option value=",">Group Thousands with Comma</mat-option>
+                        <mat-option value=".2f">Two Decimal Places</mat-option>
+                        <mat-option value=".3e">Exponential Notation</mat-option>
+                        <mat-option value=".0%">Percentage</mat-option>
+                        <mat-option value=".3s">SI Prefix</mat-option>
+                        <mat-option value=".3g">General Format</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+
+            <!-- Enable Gridlines -->
+            <div class="full-width form-row" [formGroup]="gridLinesGroup">
+                <mat-checkbox formControlName="enabled">
+                    Enable Gridlines
+                </mat-checkbox>
+            </div>
+
+        </mat-card-content>
+
+    </mat-card>
+
+</div>

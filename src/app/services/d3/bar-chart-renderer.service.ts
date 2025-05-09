@@ -22,7 +22,6 @@ export class BarChartRendererService {
     }
 
     public drawBar(): void {
-        console.log('drawBar');
         const { x, y, data, getLayer, chartOptions } = this.context;
         const barLayer = getLayer('bar-layer');
         const barWidth = chartOptions.bar.width;

@@ -19,8 +19,6 @@ export class TooltipService {
     }
 
     public addTooltip() {
-        console.log('addTooltip');
-
         const { x, y, data, getLayer, chartOptions, innerHeight, innerWidth } = this.context;
         const tooltipLayer = getLayer('tooltip-layer');
 

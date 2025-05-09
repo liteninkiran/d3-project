@@ -84,19 +84,15 @@ export class LineChartComponent implements OnInit, OnDestroy, OnChanges {
     }
 
     public ngOnInit(): void {
-        console.log('ngOnInit');
         this.setupChart();
         this.getData();
     }
 
     public ngOnDestroy(): void {
-        console.log('ngOnDestroy');
-        // console.log('Remove', this.subscriptions.length);
         this.subscriptions.map((sub) => sub.unsubscribe());
     }
 
     public ngOnChanges(changes: SimpleChanges): void {
-        console.log('ngOnChanges');
         const reqChanges = changes['requestOptions'];
         const firstReqChange = reqChanges && reqChanges.firstChange;
         if (reqChanges && !firstReqChange) {
@@ -105,20 +101,17 @@ export class LineChartComponent implements OnInit, OnDestroy, OnChanges {
     }
 
     public getData() {
-        console.log('getData');
         this.data$ = this.service.getMonthlyData(this.requestOptions);
         this.subscribeToData();
     }
 
     private setupChart() {
-        console.log('setupChart');
         this.svg = this.host.select('svg');
         this.setDimensions();
         this.setContainers();
     }
 
     private subscribeToData() {
-        console.log('subscribeToData');
         const sub = this.data$.subscribe(data => {
             this.data = data;
             this.transformData();
@@ -128,7 +121,6 @@ export class LineChartComponent implements OnInit, OnDestroy, OnChanges {
     }
 
     private transformData() {
-        console.log('transformData');
         const initObj = (item: Record) => ({
             YEAR_MONTH: item.YEAR_MONTH,
             TOTAL_QUANTITY: 0,
@@ -158,7 +150,6 @@ export class LineChartComponent implements OnInit, OnDestroy, OnChanges {
     }
 
     private setDimensions(): void {
-        console.log('setDimensions');
         this.dimensions = this.svg.node().getBoundingClientRect();
         this.innerWidth = this.dimensions.width - this.margins.left - this.margins.right;
         this.innerHeight = this.dimensions.height - this.margins.top - this.margins.bottom;
@@ -166,7 +157,6 @@ export class LineChartComponent implements OnInit, OnDestroy, OnChanges {
     }
 
     private setContainers(): void {
-        console.log('setContainers');
         this.xAxisContainer = this.svg
             .append('g')
             .attr('class', 'x-axis-container')
@@ -202,7 +192,6 @@ export class LineChartComponent implements OnInit, OnDestroy, OnChanges {
     }
 
     private updateChart(): void {
-        console.log('updateChart');
         this.setParams();
         this.setLabels();
         this.setAxis();
@@ -212,7 +201,6 @@ export class LineChartComponent implements OnInit, OnDestroy, OnChanges {
     }
 
     private setParams(): void {
-        console.log('setParams');
         // Helper Functions
         const dataItemMap = (dataItem: Data) => dataItem.x
         const lineDataItemMap = (lineDataItem: LineDataItem) => lineDataItem.data.map(dataItemMap);
@@ -252,7 +240,6 @@ export class LineChartComponent implements OnInit, OnDestroy, OnChanges {
     }
 
     private setLabels(): void {
-        console.log('setLabels');
         const title = 'Prescribing Data';
         this.titleContainer
             .text(title)
@@ -261,7 +248,6 @@ export class LineChartComponent implements OnInit, OnDestroy, OnChanges {
     }
 
     private setAxis(): void {
-        console.log('setAxis');
         this.xAxis = d3
             .axisBottom(this.x)
             .ticks(d3.timeMonth.every(3))
@@ -294,7 +280,6 @@ export class LineChartComponent implements OnInit, OnDestroy, OnChanges {
     private setLegend(): void { }
 
     private draw(): void {
-        console.log('draw');
         // Bind data
         const lines = this.dataContainer
             .selectAll('path.data')
@@ -317,7 +302,6 @@ export class LineChartComponent implements OnInit, OnDestroy, OnChanges {
     }
 
     private addTooltip() {
-        console.log('addTooltip');
         // Add a DIV element
         const tooltip = d3.select('body')
             .append('div')

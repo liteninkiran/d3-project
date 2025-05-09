@@ -45,6 +45,11 @@ export const defaultAxesOptions: AxesOptions = {
     },
     yAxis: {
         fontSize: 10,
+        ticks: 6,
+        tickFormat: ',',
+        gridLines: {
+            enabled: true,
+        }
     },
 }
 
