@@ -21,6 +21,10 @@ export class ChartSettingsComponent implements OnInit {
         return this.form.get('markers') as FormGroup;
     }
 
+    get barGroup() {
+        return this.form.get('bar') as FormGroup;
+    }
+
     constructor(
         private fb: NonNullableFormBuilder,
         private dialogRef: MatDialogRef<ChartSettingsComponent>,

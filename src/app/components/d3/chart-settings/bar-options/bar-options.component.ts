@@ -3,16 +3,16 @@ import { FormGroup } from '@angular/forms';
 import { SetColour } from 'src/app/types/d3/chart-controls';
 
 @Component({
-    selector: 'app-line-options',
-    templateUrl: './line-options.component.html',
+    selector: 'app-bar-options',
+    templateUrl: './bar-options.component.html',
     styleUrls: [
-        './line-options.component.scss',
+        './bar-options.component.scss',
         '../chart-settings.component.scss',
     ],
 })
-export class LineOptionsComponent {
+export class BarOptionsComponent {
     @Input() group: FormGroup;
-    @Input() markerColour: string;
+    @Input() lineColour: string;
 
     @Output() setColourOutput = new EventEmitter<SetColour>();
 
