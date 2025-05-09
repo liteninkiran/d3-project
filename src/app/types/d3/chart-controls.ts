@@ -1,4 +1,6 @@
-export type ChartType = 'line' | 'bar';
+export type ChartType = {
+    type: 'line' | 'bar';
+}
 
 export type Margin = {
     top: number;
@@ -39,4 +41,10 @@ export type ChartOptions = {
     line: LineOptions;
     markers: MarkerOptions;
     bar: BarOptions;
+}
+
+export type SetColour = {
+    key: string;
+    colour: string;
+    colourKey: string;
 }

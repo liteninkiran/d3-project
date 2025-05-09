@@ -19,370 +19,46 @@
 
             <!-- Chart Type Tab -->
             <mat-tab label="Chart Type">
-
-                <div class="tab-container">
-
-                    <mat-radio-group formControlName="chartType">
-
-                        <mat-radio-button value="line" (click)="onRadioClick($event)">
-                            Line
-                        </mat-radio-button>
-
-                        <mat-radio-button value="bar" (click)="onRadioClick($event)">
-                            Bar
-                        </mat-radio-button>
-
-                    </mat-radio-group>
-
-                </div>
-
+                <app-chart-type-options
+                    [group]="chartTypeGroup"
+                />
             </mat-tab>
 
             <!-- Line Tab -->
-            <mat-tab label="Line" *ngIf="form.value.chartType === 'line'">
-
-                <div class="tab-container">
-                        <div formGroupName="line">
-
-                        <mat-card appearance="outlined">
-
-                            <mat-card-header>
-
-                                <mat-card-title>Line Options</mat-card-title>
-
-                            </mat-card-header>
-
-                            <mat-card-content>
-
-                                <!-- Stroke Width -->
-                                <div class="full-width form-row">
-
-                                    <mat-form-field>
-
-                                        <mat-label for="stroke">
-                                            Stroke Width
-                                        </mat-label>
-
-                                        <input matInput type="number" placeholder="Stroke Width" formControlName="stroke" appearance="fill" step="0.1" min="0" max="10" />
-
-                                    </mat-form-field>
-
-                                </div>
-
-                                <!-- Line Colour -->
-                                <div class="full-width form-row">
-
-                                    <ngx-colors class="vertical-centre" ngx-colors-trigger formControlName="colour"></ngx-colors>
-
-                                    <mat-label for="colour" class="vertical-centre">
-                                        Line Colour
-                                    </mat-label>
-
-                                    <button
-                                        mat-mini-fab
-                                        matTooltip="Use Marker Colour"
-                                        matTooltipPosition="above"
-                                        class="horizontal-right"
-                                        (click)="setColour('line', form.value.markers.colour)"
-                                    >
-                                        <mat-icon>format_paint</mat-icon>
-                                    </button>
- 
-                                </div>
-
-                            </mat-card-content>
-
-                        </mat-card>
-                    </div>
-                </div>
-
-            </mat-tab>
+            <mat-tab label="Line" *ngIf="form.value.chartType.type === 'line'">
+                <app-line-options
+                    [group]="lineGroup"
+                    [markerColour]="form.value.markers.colour"
+                    (setColourOutput)="setColourFromChild($event)"
+                />
+             </mat-tab>
 
             <!-- Markers Tab -->
-            <mat-tab label="Markers" *ngIf="form.value.chartType === 'line'">
-
-                <div class="tab-container" formGroupName="markers">
-
-                    <mat-card appearance="outlined">
-
-                        <mat-card-header>
-
-                            <mat-card-title>Marker Options</mat-card-title>
-
-                        </mat-card-header>
-
-                        <mat-card-content>
-
-                            <!-- Enable Markers -->
-                            <div class="full-width form-row">
-                                <mat-checkbox formControlName="enabled">Enable Markers</mat-checkbox>
-                            </div>
-
-                            <div *ngIf="form.value.markers.enabled">
-                                <!-- Marker Size -->
-                                <div class="full-width form-row">
-
-                                    <mat-form-field class="full-width">
-
-                                        <mat-label for="size">
-                                            Marker Size
-                                        </mat-label>
-
-                                        <input matInput type="number" placeholder="Marker size" formControlName="size" appearance="fill" step="0.1" min="0" max="10" />
-
-                                    </mat-form-field>
-
-                                </div>
-
-                                <!-- Stroke Width -->
-                                <div class="full-width form-row">
-
-                                    <mat-form-field>
-
-                                        <mat-label for="stroke">
-                                            Stroke Width
-                                        </mat-label>
-
-                                        <input matInput type="number" placeholder="Stroke Width" formControlName="stroke" appearance="fill" step="0.1" min="0" max="10" />
-
-                                    </mat-form-field>
-
-                                </div>
-
-                                <!-- Marker Colour -->
-                                <div class="full-width form-row">
-
-                                    <ngx-colors class="vertical-centre" ngx-colors-trigger formControlName="colour"></ngx-colors>
-
-                                    <mat-label for="colour" class="vertical-centre" style="width: 120px;">
-                                        Marker Colour
-                                    </mat-label>
-
-                                    <mat-slider
-                                        min="0"
-                                        max="1"
-                                        step="0.05"
-                                        showTickMarks="true"
-                                        style="width: 200px;"
-                                    >
-                                        <input matSliderThumb matTooltip="Opacity" matTooltipPosition="above" formControlName="opacity">
-                                    </mat-slider>
-
-                                    <mat-label class="vertical-centre">
-                                        {{ form.value.markers.opacity * 100 | number: '1.0-0' }}%
-                                    </mat-label>
-
-                                    <button
-                                        mat-mini-fab
-                                        matTooltip="Use Line Colour"
-                                        matTooltipPosition="above"
-                                        class="horizontal-right"
-                                        (click)="setColour('markers', form.value.line.colour)"
-                                    >
-                                        <mat-icon>format_paint</mat-icon>
-                                    </button>
-
-                                </div>
-
-                                <!-- Stroke Colour -->
-                                <div class="full-width form-row">
-
-                                    <ngx-colors class="vertical-centre" ngx-colors-trigger formControlName="strokeColour"></ngx-colors>
-
-                                    <mat-label for="strokeColour" class="vertical-centre" style="width: 120px;">
-                                        Stroke Colour
-                                    </mat-label>
-
-                                    <mat-slider
-                                        min="0"
-                                        max="1"
-                                        step="0.05"
-                                        showTickMarks="true"
-                                        style="width: 200px;"
-                                    >
-                                        <input matSliderThumb matTooltip="Opacity" matTooltipPosition="above" formControlName="strokeOpacity">
-                                    </mat-slider>
-
-                                    <mat-label class="vertical-centre">
-                                        {{ form.value.markers.strokeOpacity * 100 | number: '1.0-0' }}%
-                                    </mat-label>
-
-                                    <button
-                                        mat-mini-fab
-                                        matTooltip="Use Marker Colour"
-                                        matTooltipPosition="above"
-                                        class="horizontal-right"
-                                        (click)="setColour('markers', form.value.markers.colour)"
-                                    >
-                                        <mat-icon>format_paint</mat-icon>
-                                    </button>
-
-                                </div>
-
-                            </div>
-
-                        </mat-card-content>
-
-                    </mat-card>
-
-                </div>
-
+            <mat-tab label="Markers" *ngIf="form.value.chartType.type === 'line'">
+                <app-marker-options
+                    [group]="markerGroup"
+                    [lineColour]="form.value.line.colour"
+                    (setColourOutput)="setColourFromChild($event)"
+                />
             </mat-tab>
 
             <!-- Bars Tab -->
-            <mat-tab label="Bar" *ngIf="form.value.chartType === 'bar'">
-
-                <div class="tab-container">
-                    <div formGroupName="bar">
-                        <mat-card appearance="outlined">
-
-                            <mat-card-header>
-
-                                <mat-card-title>Bar Options</mat-card-title>
-
-                            </mat-card-header>
-
-                            <mat-card-content>
-
-                                <!-- Bar Width -->
-                                <div class="full-width form-row">
-
-                                    <mat-form-field>
-        
-                                        <mat-label for="width">
-                                            Bar Width
-                                        </mat-label>
-        
-                                        <input matInput type="number" placeholder="Bar Width" formControlName="width" appearance="fill" step="0.1" min="0" max="10" />
-        
-                                    </mat-form-field>
-        
-                                </div>
-
-                                <!-- Bar Colour -->
-                                <div class="full-width form-row">
-
-                                    <mat-label for="colour" class="vertical-centre">
-                                        Bar Colour
-                                    </mat-label>
-
-                                    <ngx-colors class="vertical-centre" ngx-colors-trigger formControlName="colour"></ngx-colors>
-
-                                    <button
-                                        mat-mini-fab
-                                        matTooltip="Use Line Colour"
-                                        matTooltipPosition="above"
-                                        class="horizontal-right"
-                                        (click)="setColour('bar', form.value.line.colour)"
-                                    >
-                                        <mat-icon>format_paint</mat-icon>
-                                    </button>
- 
-                                </div>
-
-
-                            </mat-card-content>
-
-                        </mat-card>
-                    </div>
-                </div>
-
+            <mat-tab label="Bar" *ngIf="form.value.chartType.type === 'bar'">
+                <app-bar-options
+                    [group]="barGroup"
+                    [lineColour]="form.value.line.colour"
+                    (setColourOutput)="setColourFromChild($event)"
+                />
             </mat-tab>
 
             <!-- Dimensions Tab -->
             <mat-tab label="Dimensions">
-
-                <div class="tab-container">
-
-                    <!-- Chart Size -->
-                    <div formGroupName="dimensions">
-                        <div class="full-width form-row">
-
-                            <!-- Width -->
-                            <mat-form-field>
-
-                                <mat-label>
-                                    Chart Width (Max {{ options.dimensions.width }})
-                                </mat-label>
-
-                                <input matInput type="number" placeholder="Chart Width" formControlName="width" appearance="fill" step="10" min="0" [max]="options.dimensions.width" />
-
-                            </mat-form-field>
-
-                            <!-- Height -->
-                            <mat-form-field>
-
-                                <mat-label>
-                                    Chart Height (Max {{ options.dimensions.height }})
-                                </mat-label>
-
-                                <input matInput type="number" placeholder="Chart Height" formControlName="height" appearance="fill" step="10" min="0" [max]="options.dimensions.height" />
-
-                            </mat-form-field>
-
-                        </div>
-                    </div>
-
-                    <mat-divider />
-
-                    <!-- Margins -->
-                    <div formGroupName="margins">
-
-                        <div class="full-width form-row">
-
-                            <!-- Top Margin -->
-                            <mat-form-field>
-
-                                <mat-label>
-                                    Top Margin
-                                </mat-label>
-
-                                <input matInput type="number" placeholder="Top Margin" formControlName="top" appearance="fill" step="10" min="0" />
-
-                            </mat-form-field>
-
-                            <!-- Bottom Margin -->
-                            <mat-form-field>
-
-                                <mat-label>
-                                    Bottom Margin
-                                </mat-label>
-
-                                <input matInput type="number" placeholder="Bottom Margin" formControlName="bottom" appearance="fill" step="10" min="0" />
-
-                            </mat-form-field>
-
-                        </div>
-
-                        <div class="full-width form-row">
-
-                            <!-- Left Margin -->
-                            <mat-form-field>
-
-                                <mat-label>
-                                    Left Margin
-                                </mat-label>
-
-                                <input matInput type="number" placeholder="Left Margin" formControlName="left" appearance="fill" step="10" min="0" />
-
-                            </mat-form-field>
-
-                            <!-- Right Margin -->
-                            <mat-form-field>
-
-                                <mat-label>
-                                    Right Margin
-                                </mat-label>
-
-                                <input matInput type="number" placeholder="Right Margin" formControlName="right" appearance="fill" step="10" min="0" />
-
-                            </mat-form-field>
-
-                        </div>
-                    </div>
-
-                </div>
-
+                <app-dimension-options
+                    [dimensionGroup]="dimensionGroup"
+                    [marginGroup]="marginGroup"
+                    [maxWidth]="options.dimensions.width"
+                    [maxHeight]="options.dimensions.height"
+                />
             </mat-tab>
 
         </mat-tab-group>

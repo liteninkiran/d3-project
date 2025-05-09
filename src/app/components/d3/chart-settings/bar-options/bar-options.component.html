@@ -1,0 +1,66 @@
+<div [formGroup]="group" class="tab-container">
+    <mat-card appearance="outlined">
+
+        <mat-card-header>
+            <mat-card-title>
+                Bar Options
+            </mat-card-title>
+        </mat-card-header>
+
+        <mat-card-content>
+
+            <!-- Bar Width -->
+            <div class="full-width form-row">
+
+                <mat-form-field>
+
+                    <mat-label for="width">
+                        Bar Width
+                    </mat-label>
+
+                    <input
+                        matInput
+                        type="number"
+                        placeholder="Bar Width"
+                        formControlName="width"
+                        appearance="fill"
+                        step="0.1"
+                        min="0"
+                        max="10"
+                    />
+
+                </mat-form-field>
+
+            </div>
+
+            <!-- Bar Colour -->
+            <div class="full-width form-row">
+
+                <mat-label for="colour" class="vertical-centre">
+                    Bar Colour
+                </mat-label>
+
+                <ngx-colors
+                    class="vertical-centre"
+                    ngx-colors-trigger
+                    formControlName="colour"
+                ></ngx-colors>
+
+                <button
+                    mat-mini-fab
+                    matTooltip="Use Line Colour"
+                    matTooltipPosition="above"
+                    class="horizontal-right"
+                    (click)="setColour('bar', lineColour)"
+                >
+                    <mat-icon>
+                        format_paint
+                    </mat-icon>
+                </button>
+
+            </div>
+
+        </mat-card-content>
+
+    </mat-card>
+</div>

@@ -1,6 +1,8 @@
 import { Margin, LineOptions, BarOptions, ChartOptions, ChartDimensions, ChartType, MarkerOptions } from './chart-controls';
 
-export const defaultChartType: ChartType = 'line';
+export const defaultChartType: ChartType = {
+    type: 'line',
+};
 
 export const defaultChartMargins: Margin = {
     top: 20,

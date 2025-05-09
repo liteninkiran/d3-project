@@ -52,7 +52,7 @@ export class TimeSeriesComponent implements OnInit, AfterViewInit, OnChanges {
         this.barChartService.setContext(context);
         this.tooltipService.setContext(context);
 
-        if (this.chartOptions.chartType === 'line') {
+        if (this.chartOptions.chartType.type === 'line') {
             this.barChartService.removeBars();
             this.lineChartService.draw();
         } else {
