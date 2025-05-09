@@ -13,8 +13,8 @@ export class MarkerOptionsComponent {
 
     @Output() setColourOutput = new EventEmitter<SetColour>();
 
-    public setColour(key: string, colour: string) {
+    public setColour(key: string, colour: string, colourKey: string = 'colour') {
         console.log(key, colour);
-        this.setColourOutput.emit({ key, colour });
+        this.setColourOutput.emit({ key, colour, colourKey });
     }
 }

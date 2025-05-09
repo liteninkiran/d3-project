@@ -14,6 +14,6 @@ export class LineOptionsComponent {
     @Output() setColourOutput = new EventEmitter<SetColour>();
 
     public setColour(key: string, colour: string) {
-        this.setColourOutput.emit({ key, colour });
+        this.setColourOutput.emit({ key, colour, colourKey: 'colour' });
     }
 }

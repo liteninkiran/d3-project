@@ -44,4 +44,5 @@ export type ChartOptions = {
 export type SetColour = {
     key: string;
     colour: string;
+    colourKey: string;
 }

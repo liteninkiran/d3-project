@@ -42,13 +42,13 @@ export class ChartSettingsComponent implements OnInit {
         el.blur();
     }
 
-    public setColour(key: string, colour: string): void {
-        this.form.patchValue({ [key]: { colour } });
+    public setColour(key: string, colour: string, colourKey: string = 'colour'): void {
+        this.form.patchValue({ [key]: { [colourKey]: colour } });
         console.log(this.form.value);
     }
 
     public setColourFromChild(data: SetColour): void {
-        this.setColour(data.key, data.colour);
+        this.setColour(data.key, data.colour, data.colourKey);
     }
 
     private setupForm(): void {
