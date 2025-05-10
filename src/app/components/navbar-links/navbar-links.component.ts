@@ -23,6 +23,11 @@ export class NavbarLinksComponent {
             icon: 'construction',
             text: 'Scratch',
         },
+        {
+            link: '/epd',
+            icon: 'personal_injury',
+            text: 'Prescribing Data',
+        },
     ]
 }
 

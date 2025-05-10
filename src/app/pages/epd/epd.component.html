@@ -1,0 +1,46 @@
+<div class="header-container">
+
+    <h1>
+        <a href="https://opendata.nhsbsa.net/dataset/english-prescribing-data-epd" target="_blank" rel="noopener noreferrer">
+            English Prescribing Data
+        </a>
+    </h1>
+
+    <div>
+        <button
+            mat-fab
+            matTooltip="Get GP data"
+            matTooltipPosition="above"
+            matTooltipHideDelay="100"
+            (click)="getGpData()"
+        >
+            <mat-icon>sick</mat-icon>
+        </button>
+
+        <button
+            mat-fab
+            matTooltip="Request Parameters"
+            matTooltipPosition="above"
+            matTooltipHideDelay="100"
+            (click)="openRequestParamsModal()"
+        >
+            <mat-icon>apps</mat-icon>
+        </button>
+
+
+        <button
+            mat-fab
+            matTooltip="Chart Settings"
+            matTooltipPosition="above"
+            matTooltipHideDelay="100"
+            (click)="openChartSettingsModal()"
+        >
+            <mat-icon>settings</mat-icon>
+        </button>
+    </div>
+</div>
+
+<app-time-series
+    [data]="lineData"
+    [chartOptions]="chartOptions"
+/>

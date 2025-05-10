@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { HomeComponent } from './pages/home/home.component';
 import { NhsApiComponent } from './pages/nhs-api/nhs-api.component';
 import { ScratchComponent } from './pages/scratch/scratch.component';
+import { EpdComponent } from './pages/epd/epd.component';
 
 const routes: Routes = [
     {
@@ -16,6 +17,10 @@ const routes: Routes = [
     {
         path: 'scratch',
         component: ScratchComponent,
+    },
+    {
+        path: 'epd',
+        component: EpdComponent,
     },
     {
         path: '**',

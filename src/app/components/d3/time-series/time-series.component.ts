@@ -2,7 +2,7 @@
 import { Component, OnInit, Input, ElementRef, AfterViewInit, ViewChild, ChangeDetectionStrategy, SimpleChanges, OnChanges } from '@angular/core';
 
 // Local Imports
-import { ChartData } from 'src/app/types/d3/data';
+import { ChartData2 } from 'src/app/types/d3/data';
 import { BarChartRendererService } from 'src/app/services/d3/bar-chart-renderer.service';
 import { LineChartRendererService } from 'src/app/services/d3/line-chart-renderer.service';
 import { TimeChartBaseService } from 'src/app/services/d3/time-chart-base.service';
@@ -17,7 +17,7 @@ import { TooltipService } from 'src/app/services/d3/tooltip.service';
 })
 export class TimeSeriesComponent implements OnInit, AfterViewInit, OnChanges {
 
-    @Input() data: ChartData[] = [];
+    @Input() data: ChartData2[] = [];
     @Input() chartOptions: ChartOptions;
 
     @ViewChild('divRef', { static: true }) private divRef: ElementRef<HTMLDivElement>;
