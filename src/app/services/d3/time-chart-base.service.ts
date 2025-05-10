@@ -35,17 +35,8 @@ export class TimeChartBaseService {
         this.data = data;
         this.chartOptions = chartOptions;
 
-        const {
-            margins: { top, left, right, bottom },
-            dimensions: { height, width },
-        } = this.chartOptions;
-
-        this.innerWidth = width - left - right;
-        this.innerHeight = height - top - bottom;
-
-        this.div = d3.select(divEl);
-        this.svg = this.div.select('svg');
-
+        this.setMargins();
+        this.createSvg(divEl);
         this.resizeSvg();
         this.createContainer();
         this.createScales();
@@ -167,5 +158,25 @@ export class TimeChartBaseService {
         this.y = d3.scaleLinear()
             .domain([yMin, yMax])
             .range([this.innerHeight, 0]);
+    }
+
+    private setMargins(): void {
+        const {
+            margins: { top, left, right, bottom },
+            dimensions: { height, width },
+        } = this.chartOptions;
+
+        this.innerWidth = width - left - right;
+        this.innerHeight = height - top - bottom;
+    }
+
+    private createSvg(divEl: HTMLDivElement): void {
+        this.div = d3.select(divEl);
+        this.svg = this.div.select('svg');
+        if (this.svg.empty()) {
+            this.svg = this.div.append('svg');
+        }
+        this.svg.selectAll('*').remove();
+        this.groups.clear();
     }
 }
