@@ -22,19 +22,25 @@ export class TooltipService {
         const { x, y, data, getLayer, chartOptions, innerHeight, innerWidth } = this.context;
         const tooltipLayer = getLayer('tooltip-layer');
 
-        // Add a DIV element
-        const tooltip = d3.select('body')
-            .append('div')
-            .attr('class', 'tooltip')
-            .style('position', 'absolute')
-            .style('padding', '10px')
-            .style('background-color', 'steelblue')
-            .style('color', 'white')
-            .style('border', '1px solid white')
-            .style('border-radius', '10px')
-            .style('display', 'none')
-            .style('opacity', 0.75)
-            .style('z-index', 5);
+        let tooltip = d3.select('body').select('.tooltip');
+
+        if (tooltip.empty()) {
+            tooltip = d3.select('body')
+                .append('div')
+                .attr('class', 'tooltip')
+                .style('position', 'absolute')
+                .style('padding', '10px')
+                .style('background-color', 'steelblue')
+                .style('color', 'white')
+                .style('border', '1px solid white')
+                .style('border-radius', '10px')
+                .style('display', 'none')
+                .style('opacity', 0.75)
+                .style('z-index', 5);
+        }
+
+        // Clear previous tooltipLayer elements to avoid duplicates
+        tooltipLayer.selectAll('*').remove();
 
         // Add a circle element
         const circle = tooltipLayer
@@ -102,5 +108,9 @@ export class TooltipService {
 
         listeningRect.on('mousemove', mousemoveFn);
         listeningRect.on('mouseleave', mouseleaveFn);
+    }
+
+    public removeTooltip(): void {
+        d3.select('body').select('.tooltip').remove();
     }
 }
