@@ -39,6 +39,7 @@ export class TimeSeriesComponent implements OnInit, AfterViewInit, OnChanges {
 
     public ngOnDestroy(): void {
         this.tooltipService.removeTooltip();
+        this.baseService.reset();
     }
 
     private createChart(): void {

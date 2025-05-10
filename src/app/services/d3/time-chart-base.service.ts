@@ -114,6 +114,13 @@ export class TimeChartBaseService {
         };
     }
 
+    public reset(): void {
+        this.groups.clear();
+        this.data = [];
+        this.svg = null;
+        this.container = null;
+    }
+
     private resizeSvg(): void {
         const { dimensions: { height, width } } = this.chartOptions;
         this.div
