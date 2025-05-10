@@ -17,18 +17,18 @@ export const defaultChartDimensions: ChartDimensions = {
 }
 
 export const defaultLineOptions: LineOptions = {
-    stroke: 0.5,
+    stroke: 1.5,
     colour: 'steelblue',
 }
 
 export const defaultMarkerOptions: MarkerOptions = {
     enabled: true,
-    size: 2,
+    size: 5,
     stroke: 0.5,
-    strokeColour: 'steelblue',
+    strokeColour: 'black',
     strokeOpacity: 1,
-    colour: 'steelblue',
-    opacity: 1,
+    colour: 'red',
+    opacity: 0.35,
 }
 
 export const defaultBarOptions: BarOptions = {
@@ -46,7 +46,7 @@ export const defaultAxesOptions: AxesOptions = {
     yAxis: {
         fontSize: 10,
         ticks: 6,
-        tickFormat: ',',
+        tickFormat: '.3s',
         gridLines: {
             enabled: true,
         }
