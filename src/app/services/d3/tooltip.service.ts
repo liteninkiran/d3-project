@@ -90,7 +90,7 @@ export class TooltipService {
             circle.transition().duration(50).attr('r', 5);
 
             const htmlLines = [
-                `<strong>DATE:</strong> ${this.datePipe.transform(dataItem.date, 'LLLL y')}`,
+                `<strong>DATE:</strong> ${this.datePipe.transform(dataItem.date, 'd LLLL y')}`,
                 `<strong>VALUE:</strong> ${this.decimalPipe.transform(dataItem.value)}`,
             ];
 

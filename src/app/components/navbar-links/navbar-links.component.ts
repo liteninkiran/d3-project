@@ -14,11 +14,6 @@ export class NavbarLinksComponent {
             text: 'Home',
         },
         {
-            link: '/nhs-api',
-            icon: 'personal_injury',
-            text: 'NHS API',
-        },
-        {
             link: '/scratch',
             icon: 'construction',
             text: 'Scratch',

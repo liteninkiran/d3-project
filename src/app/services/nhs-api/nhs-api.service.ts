@@ -63,7 +63,7 @@ export class NhsApiService {
     }
 
     public getMonthlyData(options: FilterOptions): Observable<DatastoreSearchSql[]> {
-        const useMocks = true;
+        const useMocks = false;
         const urls = this.getUrls(options);
         const merged = mergeMap((url: string) => this.getDatastoreSearchMonthly(url), options.concurrent);
         const scanned = scan((acc, data) => [...acc, data], []);
