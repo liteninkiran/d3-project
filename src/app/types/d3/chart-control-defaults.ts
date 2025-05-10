@@ -13,7 +13,7 @@ export const defaultChartMargins: Margin = {
 
 export const defaultChartDimensions: ChartDimensions = {
     height: 700,
-    width: 1100,
+    width: 1700,
 }
 
 export const defaultLineOptions: LineOptions = {

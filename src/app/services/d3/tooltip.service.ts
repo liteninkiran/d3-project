@@ -35,7 +35,6 @@ export class TooltipService {
                 .style('border', '1px solid white')
                 .style('border-radius', '10px')
                 .style('display', 'none')
-                .style('opacity', 0.75)
                 .style('z-index', 5)
                 .style('pointer-events', 'none');
         }
@@ -97,8 +96,8 @@ export class TooltipService {
 
             // Add in our tooltip
             tooltip.style('display', 'block')
-                .style('left', `${xPos + 175}px`)
-                .style('top', `${yPos + 50}px`)
+                .style('left', `${xPos + 130}px`)
+                .style('top', `${yPos + 70}px`)
                 .html(htmlLines.join('<br>'));
         }
 
