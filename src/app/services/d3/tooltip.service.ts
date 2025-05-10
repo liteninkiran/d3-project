@@ -36,7 +36,8 @@ export class TooltipService {
                 .style('border-radius', '10px')
                 .style('display', 'none')
                 .style('opacity', 0.75)
-                .style('z-index', 5);
+                .style('z-index', 5)
+                .style('pointer-events', 'none');
         }
 
         // Clear previous tooltipLayer elements to avoid duplicates
