@@ -6,14 +6,14 @@ export const defaultChartType: ChartType = {
 
 export const defaultChartMargins: Margin = {
     top: 20,
-    bottom: 80,
-    left: 80,
-    right: 20,
+    bottom: 50,
+    left: 100,
+    right: 40,
 }
 
 export const defaultChartDimensions: ChartDimensions = {
     height: 700,
-    width: 1500,
+    width: 1100,
 }
 
 export const defaultLineOptions: LineOptions = {
@@ -38,15 +38,15 @@ export const defaultBarOptions: BarOptions = {
 
 export const defaultAxesOptions: AxesOptions = {
     xAxis: {
-        fontSize: 10,
+        fontSize: 15,
         rotation: 0,
         textAnchor: 'middle',
         dateFormat: '%b %Y',
     },
     yAxis: {
-        fontSize: 10,
+        fontSize: 15,
         ticks: 6,
-        tickFormat: '.3s',
+        tickFormat: ',',
         gridLines: {
             enabled: true,
         }

@@ -74,11 +74,11 @@ export const defaultOptions: FilterOptions = {
     endDate: moment('2024-12-01'),
     practiceCode: 'J83601',
     bnfCode: '0407010H0AAAMAM',
-    // bnfCode: '0604011G0BCAFBN',
-    // bnfCode: '0601021M0AAARAR',
-    // bnfCode: '1106000AIBBAAAA',
-    // bnfCode: '0301020Q0AAAAAA',
-    concurrent: 3,
+    // bnfCode: '0604011G0BIABAU',
+    // bnfCode: '0602010V0AABXBX',
+    // bnfCode: '0209000A0AAABAB',
+    // bnfCode: '0209000C0AAAAAA',
+    concurrent: 5,
 }
 
 export type MonthData = {
