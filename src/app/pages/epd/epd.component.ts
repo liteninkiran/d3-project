@@ -1,28 +1,23 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { Observable, Subscription } from 'rxjs';
 import { RequestParamsComponent } from 'src/app/components/nhs-api/request-params/request-params.component';
 import { NhsApiService } from 'src/app/services/nhs-api/nhs-api.service';
 import { SpineService } from 'src/app/services/nhs-api/spine.service';
-import { LineDataItem } from 'src/app/types/d3/data';
-import { DatastoreSearchSql, defaultOptions, FilterOptions, Record } from 'src/app/types/nhs-api/epd';
-
-type MonthData = {
-    YEAR_MONTH: number;
-    TOTAL_QUANTITY: number;
-}
+import { ChartData2 } from 'src/app/types/d3/data';
+import { DatastoreSearchSql, defaultOptions, FilterOptions, MonthData, Record } from 'src/app/types/nhs-api/epd';
 
 @Component({
     selector: 'app-epd',
     templateUrl: './epd.component.html',
     styleUrls: ['./epd.component.scss'],
 })
-export class EpdComponent {
+export class EpdComponent implements OnInit, OnDestroy {
 
     public requestOptions = defaultOptions;
     public data$: Observable<DatastoreSearchSql[]> = new Observable();
     private data: DatastoreSearchSql[] = [];
-    private lineData: LineDataItem[] = [];
+    private lineData: ChartData2[] = [];
     private subscriptions: Subscription[] = [];
 
     constructor(
@@ -30,6 +25,14 @@ export class EpdComponent {
         private readonly nhsService: NhsApiService,
         private dialog: MatDialog,
     ) { }
+
+    public ngOnInit(): void {
+
+    }
+
+    public ngOnDestroy(): void {
+        this.subscriptions.map((sub) => sub.unsubscribe());
+    }
 
     public getGpData() {
         const confirmation = confirm('Would you like to fetch GP data? This will take about 2 mins.');
@@ -63,7 +66,7 @@ export class EpdComponent {
         const sub = this.data$.subscribe(data => {
             this.data = data;
             this.transformData();
-            console.log(this.data, this.lineData);
+            console.log(this.lineData);
         });
         this.subscriptions.push(sub);
     }
@@ -84,16 +87,14 @@ export class EpdComponent {
         const getMonth = (num: number) => getDatePart(num, 4, 6) - 1;
         const getYear = (num: number) => getDatePart(num, 0, 4);
         const getDate = (num: number) => new Date(getYear(num), getMonth(num));
-        const mapData = (month: MonthData) => ({
-            x: getDate(month.YEAR_MONTH),
-            y: month.TOTAL_QUANTITY,
+        const mapData = (month: MonthData): ChartData2 => ({
+            date: getDate(month.YEAR_MONTH),
+            value: month.TOTAL_QUANTITY,
         });
 
         const records = this.data.flatMap(month => month.result.result.records);
         const reduced = records.reduce(reducer, {});
         const months: MonthData[] = Object.values(reduced);
-        const data = months.map(mapData);
-        const name = 'Data';
-        this.lineData = [{ name, data }];
+        this.lineData = months.map(mapData);
     }
 }
