@@ -26,5 +26,21 @@
         >
             <mat-icon>apps</mat-icon>
         </button>
+
+
+        <button
+            mat-fab
+            matTooltip="Chart Settings"
+            matTooltipPosition="above"
+            matTooltipHideDelay="100"
+            (click)="openChartSettingsModal()"
+        >
+            <mat-icon>settings</mat-icon>
+        </button>
     </div>
 </div>
+
+<app-time-series
+    [data]="lineData"
+    [chartOptions]="chartOptions"
+/>

@@ -1,9 +1,12 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { Observable, Subscription } from 'rxjs';
+import { ChartSettingsComponent } from 'src/app/components/d3/chart-settings/chart-settings.component';
 import { RequestParamsComponent } from 'src/app/components/nhs-api/request-params/request-params.component';
 import { NhsApiService } from 'src/app/services/nhs-api/nhs-api.service';
 import { SpineService } from 'src/app/services/nhs-api/spine.service';
+import { defaultChartOptions } from 'src/app/types/d3/chart-control-defaults';
+import { ChartOptions } from 'src/app/types/d3/chart-controls';
 import { ChartData2 } from 'src/app/types/d3/data';
 import { DatastoreSearchSql, defaultOptions, FilterOptions, MonthData, Record } from 'src/app/types/nhs-api/epd';
 
@@ -15,9 +18,10 @@ import { DatastoreSearchSql, defaultOptions, FilterOptions, MonthData, Record } 
 export class EpdComponent implements OnInit, OnDestroy {
 
     public requestOptions = defaultOptions;
+    public chartOptions = defaultChartOptions;
     public data$: Observable<DatastoreSearchSql[]> = new Observable();
+    public lineData: ChartData2[] = [];
     private data: DatastoreSearchSql[] = [];
-    private lineData: ChartData2[] = [];
     private subscriptions: Subscription[] = [];
 
     constructor(
@@ -60,6 +64,27 @@ export class EpdComponent implements OnInit, OnDestroy {
     public getEpdData() {
         this.data$ = this.nhsService.getMonthlyData(this.requestOptions);
         this.subscribeToData();
+    }
+
+    public openChartSettingsModal() {
+        const dialogConfig = new MatDialogConfig<ChartOptions>();
+        dialogConfig.data = this.chartOptions;
+        const dialogRef = this.dialog.open(ChartSettingsComponent, dialogConfig);
+        const dialogOpen = dialogRef.afterOpened();
+
+        const formChangedFn = (data?: ChartOptions) => {
+            if (data) {
+                this.chartOptions = data;
+            }
+        }
+        const dialogOpenFn = () => this.subscribeTo(dialogRef.componentInstance.form.valueChanges, formChangedFn);
+
+        this.subscribeTo(dialogOpen, dialogOpenFn);
+    }
+
+    private subscribeTo(obs: Observable<any>, fn: () => void): void {
+        const sub = obs.subscribe(fn);
+        this.subscriptions.push(sub);
     }
 
     private subscribeToData() {
