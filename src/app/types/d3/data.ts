@@ -1,18 +1,9 @@
-export type LineDataItem = {
-    name: string;
-    data: Data[];
-}
-export type Data = {
-    x: Date;
-    y: number;
-}
-
-export type ChartData = {
+export type ChartMockData = {
     date: any;
     value: number;
 }
 
-export type ChartData2 = {
+export type ChartData = {
     date: Date;
     value: number;
 }

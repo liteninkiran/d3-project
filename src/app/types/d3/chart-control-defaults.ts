@@ -22,8 +22,8 @@ export const defaultLineOptions: LineOptions = {
 }
 
 export const defaultMarkerOptions: MarkerOptions = {
-    enabled: true,
-    size: 5,
+    enabled: false,
+    size: 3,
     stroke: 0.5,
     strokeColour: 'black',
     strokeOpacity: 1,
