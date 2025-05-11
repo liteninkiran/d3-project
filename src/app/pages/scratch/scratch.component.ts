@@ -14,10 +14,12 @@ type DateRange = {
 
 const getDates = (year: number) => ({ start: `${year}-01-01`, end: `${year}-12-31` })
 const mapFn = (data: ChartMockData): ChartData => ({ date: new Date(data.date), value: data.value });
-const filterFn = (data: ChartData, dates: DateRange): boolean => data.date >= new Date(dates.start) && data.date <= new Date(dates.end);
-const filteredData = (dates: DateRange) => dataset1.map(mapFn).filter((data) => filterFn(data, dates));
+const filterBetween = (data: ChartData, dates: DateRange): boolean => data.date >= new Date(dates.start) && data.date <= new Date(dates.end);
+const filterFrom = (data: ChartData, dates: DateRange): boolean => data.date >= new Date(dates.start);
+const filteredData = (dates: DateRange) => dataset1.map(mapFn).filter((data) => filterFrom(data, dates));
 const filter2024 = filteredData(getDates(2024));
 const filter2023 = filteredData(getDates(2023));
+const filter2016 = filteredData(getDates(2016));
 
 @Component({
     selector: 'app-scratch',
@@ -26,7 +28,7 @@ const filter2023 = filteredData(getDates(2023));
 })
 export class ScratchComponent implements OnInit, OnDestroy {
 
-    public chartData = filter2024;
+    public chartData = filter2016;
     public chartOptions = defaultChartOptions;
     private subscriptions: Subscription[] = [];
 
