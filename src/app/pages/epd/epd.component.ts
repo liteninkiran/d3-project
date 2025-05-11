@@ -51,6 +51,8 @@ export class EpdComponent implements OnInit, OnDestroy {
     public openRequestParamsModal() {
         const dialogConfig = new MatDialogConfig();
         dialogConfig.data = this.requestOptions;
+        const buttonElement = document.activeElement as HTMLElement;
+        buttonElement.blur();
         const dialogRef = this.dialog.open(RequestParamsComponent, dialogConfig);
 
         dialogRef.afterClosed().subscribe((options?: FilterOptions) => {
@@ -69,6 +71,8 @@ export class EpdComponent implements OnInit, OnDestroy {
     public openChartSettingsModal() {
         const dialogConfig = new MatDialogConfig<ChartOptions>();
         dialogConfig.data = this.chartOptions;
+        const buttonElement = document.activeElement as HTMLElement;
+        buttonElement.blur();
         const dialogRef = this.dialog.open(ChartSettingsComponent, dialogConfig);
         const dialogOpen = dialogRef.afterOpened();
 

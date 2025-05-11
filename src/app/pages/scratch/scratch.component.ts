@@ -45,6 +45,8 @@ export class ScratchComponent implements OnInit, OnDestroy {
     public openChartSettingsModal() {
         const dialogConfig = new MatDialogConfig<ChartOptions>();
         dialogConfig.data = this.chartOptions;
+        const buttonElement = document.activeElement as HTMLElement;
+        buttonElement.blur();
         const dialogRef = this.dialog.open(ChartSettingsComponent, dialogConfig);
         const dialogOpen = dialogRef.afterOpened();
 
