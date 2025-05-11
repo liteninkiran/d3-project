@@ -91,7 +91,6 @@ export class EpdComponent implements OnInit, OnDestroy {
         const sub = this.data$.subscribe(data => {
             this.data = data;
             this.transformData();
-            console.log(this.lineData);
         });
         this.subscriptions.push(sub);
     }
