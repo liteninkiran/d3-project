@@ -15,11 +15,16 @@ type DateRange = {
 const getDates = (year: number) => ({ start: `${year}-01-01`, end: `${year}-12-31` })
 const mapFn = (data: ChartMockData): ChartData => ({ date: new Date(data.date), value: data.value });
 const filterBetween = (data: ChartData, dates: DateRange): boolean => data.date >= new Date(dates.start) && data.date <= new Date(dates.end);
+const filterTo = (data: ChartData, dates: DateRange): boolean => data.date <= new Date(dates.end);
 const filterFrom = (data: ChartData, dates: DateRange): boolean => data.date >= new Date(dates.start);
-const filteredData = (dates: DateRange) => dataset1.map(mapFn).filter((data) => filterFrom(data, dates));
-const filter2024 = filteredData(getDates(2024));
-const filter2023 = filteredData(getDates(2023));
-const filter2016 = filteredData(getDates(2016));
+const filteredDataBetween = (dates: DateRange) => dataset1.map(mapFn).filter((data) => filterBetween(data, dates));
+const filteredDataFrom = (dates: DateRange) => dataset1.map(mapFn).filter((data) => filterFrom(data, dates));
+const filteredDataTo = (dates: DateRange) => dataset1.map(mapFn).filter((data) => filterTo(data, dates));
+
+const filter2016 = filteredDataTo(getDates(2016));
+const filter2018 = filteredDataTo(getDates(2018));
+const filter2024 = filteredDataTo(getDates(2024));
+const filter2023 = filteredDataTo(getDates(2023));
 
 @Component({
     selector: 'app-scratch',
@@ -37,7 +42,7 @@ export class ScratchComponent implements OnInit, OnDestroy {
     ) { }
 
     public ngOnInit(): void {
-        // setTimeout(() => this.chartData = filter2023, 2000);
+        // setTimeout(() => this.chartData = filter2018, 2000);
     }
 
     public ngOnDestroy(): void {
