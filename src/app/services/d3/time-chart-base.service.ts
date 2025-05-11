@@ -31,7 +31,6 @@ export class TimeChartBaseService {
         data: ChartData[],
         chartOptions: ChartOptions,
     ) {
-        console.log('Chart Options', chartOptions);
         this.data = data;
         this.chartOptions = chartOptions;
 

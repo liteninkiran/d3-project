@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { HomeComponent } from './pages/home/home.component';
-import { NhsApiComponent } from './pages/nhs-api/nhs-api.component';
 import { ScratchComponent } from './pages/scratch/scratch.component';
 import { EpdComponent } from './pages/epd/epd.component';
 
@@ -9,10 +8,6 @@ const routes: Routes = [
     {
         path: 'home',
         component: HomeComponent,
-    },
-    {
-        path: 'nhs-api',
-        component: NhsApiComponent,
     },
     {
         path: 'scratch',

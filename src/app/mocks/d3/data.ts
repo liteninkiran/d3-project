@@ -1,6 +1,6 @@
-import { ChartData } from 'src/app/types/d3/data';
+import { ChartMockData } from 'src/app/types/d3/data';
 
-export const dataset1: ChartData[] = [
+export const dataset1: ChartMockData[] = [
     { date: '2013-04-28', value: 135.3 },
     { date: '2013-04-29', value: 141.96 },
     { date: '2013-04-30', value: 135.3 },

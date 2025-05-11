@@ -5,7 +5,7 @@ import { ChartSettingsComponent } from 'src/app/components/d3/chart-settings/cha
 import { dataset1 } from 'src/app/mocks/d3/data';
 import { defaultChartOptions } from 'src/app/types/d3/chart-control-defaults';
 import { ChartOptions } from 'src/app/types/d3/chart-controls';
-import { ChartData, ChartData2 } from 'src/app/types/d3/data';
+import { ChartMockData, ChartData } from 'src/app/types/d3/data';
 
 type DateRange = {
     start: string;
@@ -13,8 +13,8 @@ type DateRange = {
 }
 
 const getDates = (year: number) => ({ start: `${year}-01-01`, end: `${year}-12-31` })
-const mapFn = (data: ChartData): ChartData2 => ({ date: new Date(data.date), value: data.value });
-const filterFn = (data: ChartData2, dates: DateRange): boolean => data.date >= new Date(dates.start) && data.date <= new Date(dates.end);
+const mapFn = (data: ChartMockData): ChartData => ({ date: new Date(data.date), value: data.value });
+const filterFn = (data: ChartData, dates: DateRange): boolean => data.date >= new Date(dates.start) && data.date <= new Date(dates.end);
 const filteredData = (dates: DateRange) => dataset1.map(mapFn).filter((data) => filterFn(data, dates));
 const filter2024 = filteredData(getDates(2024));
 const filter2023 = filteredData(getDates(2023));
@@ -45,6 +45,8 @@ export class ScratchComponent implements OnInit, OnDestroy {
     public openChartSettingsModal() {
         const dialogConfig = new MatDialogConfig<ChartOptions>();
         dialogConfig.data = this.chartOptions;
+        const buttonElement = document.activeElement as HTMLElement;
+        buttonElement.blur();
         const dialogRef = this.dialog.open(ChartSettingsComponent, dialogConfig);
         const dialogOpen = dialogRef.afterOpened();
 

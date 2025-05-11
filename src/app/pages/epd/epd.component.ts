@@ -7,7 +7,7 @@ import { NhsApiService } from 'src/app/services/nhs-api/nhs-api.service';
 import { SpineService } from 'src/app/services/nhs-api/spine.service';
 import { defaultChartOptions } from 'src/app/types/d3/chart-control-defaults';
 import { ChartOptions } from 'src/app/types/d3/chart-controls';
-import { ChartData2 } from 'src/app/types/d3/data';
+import { ChartData } from 'src/app/types/d3/data';
 import { DatastoreSearchSql, defaultOptions, FilterOptions, MonthData, Record } from 'src/app/types/nhs-api/epd';
 
 @Component({
@@ -20,7 +20,7 @@ export class EpdComponent implements OnInit, OnDestroy {
     public requestOptions = defaultOptions;
     public chartOptions = defaultChartOptions;
     public data$: Observable<DatastoreSearchSql[]> = new Observable();
-    public lineData: ChartData2[] = [];
+    public lineData: ChartData[] = [];
     private data: DatastoreSearchSql[] = [];
     private subscriptions: Subscription[] = [];
 
@@ -51,6 +51,8 @@ export class EpdComponent implements OnInit, OnDestroy {
     public openRequestParamsModal() {
         const dialogConfig = new MatDialogConfig();
         dialogConfig.data = this.requestOptions;
+        const buttonElement = document.activeElement as HTMLElement;
+        buttonElement.blur();
         const dialogRef = this.dialog.open(RequestParamsComponent, dialogConfig);
 
         dialogRef.afterClosed().subscribe((options?: FilterOptions) => {
@@ -69,6 +71,8 @@ export class EpdComponent implements OnInit, OnDestroy {
     public openChartSettingsModal() {
         const dialogConfig = new MatDialogConfig<ChartOptions>();
         dialogConfig.data = this.chartOptions;
+        const buttonElement = document.activeElement as HTMLElement;
+        buttonElement.blur();
         const dialogRef = this.dialog.open(ChartSettingsComponent, dialogConfig);
         const dialogOpen = dialogRef.afterOpened();
 
@@ -91,7 +95,6 @@ export class EpdComponent implements OnInit, OnDestroy {
         const sub = this.data$.subscribe(data => {
             this.data = data;
             this.transformData();
-            console.log(this.lineData);
         });
         this.subscriptions.push(sub);
     }
@@ -112,7 +115,7 @@ export class EpdComponent implements OnInit, OnDestroy {
         const getMonth = (num: number) => getDatePart(num, 4, 6) - 1;
         const getYear = (num: number) => getDatePart(num, 0, 4);
         const getDate = (num: number) => new Date(getYear(num), getMonth(num));
-        const mapData = (month: MonthData): ChartData2 => ({
+        const mapData = (month: MonthData): ChartData => ({
             date: getDate(month.YEAR_MONTH),
             value: month.TOTAL_QUANTITY,
         });
