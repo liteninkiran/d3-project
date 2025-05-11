@@ -42,6 +42,8 @@ export const defaultAxesOptions: AxesOptions = {
         rotation: 0,
         textAnchor: 'middle',
         dateFormat: '%b %Y',
+        baseUnit: 'month',
+        every: 6,
     },
     yAxis: {
         fontSize: 15,

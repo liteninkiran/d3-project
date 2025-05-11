@@ -39,6 +39,8 @@ export type XAxisOptions = {
     rotation: number;
     textAnchor: 'start' | 'middle' | 'end';
     dateFormat: string;
+    baseUnit: 'day' | 'week' | 'month' | 'year';
+    every: number;
 }
 
 export type YAxisOptions = {

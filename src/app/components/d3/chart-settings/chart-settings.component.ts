@@ -138,6 +138,8 @@ export class ChartSettingsComponent implements OnInit {
             rotation: this.fb.control(this.options.axes.xAxis.rotation),
             textAnchor: this.fb.control(this.options.axes.xAxis.textAnchor),
             dateFormat: this.fb.control(this.options.axes.xAxis.dateFormat),
+            baseUnit: this.fb.control(this.options.axes.xAxis.baseUnit),
+            every: this.fb.control(this.options.axes.xAxis.every),
         }
     }
 

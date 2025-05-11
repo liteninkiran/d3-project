@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { ChartData, Div, Group, Svg, XScale, YScale } from 'src/app/types/d3/data';
 import { ChartContext } from 'src/app/types/d3/services';
 import * as d3 from 'd3';
-import { ChartOptions } from 'src/app/types/d3/chart-controls';
+import { ChartOptions, XAxisOptions } from 'src/app/types/d3/chart-controls';
 
 @Injectable({ providedIn: 'root' })
 export class TimeChartBaseService {
@@ -47,20 +47,20 @@ export class TimeChartBaseService {
     }
 
     public drawXAxis(): void {
-        const { rotation, fontSize, textAnchor, dateFormat } = this.chartOptions.axes.xAxis;
+        const x = this.chartOptions.axes.xAxis;
 
         const xAxis = d3.axisBottom(this.x)
-            .ticks(d3.timeMonth.every(1))
-            .tickFormat(d3.timeFormat(dateFormat));
+            .tickValues(this.customTicks())
+            .tickFormat(d3.timeFormat(x.dateFormat));
 
         this.getLayer('x-axis')
             .attr('transform', `translate(0, ${this.innerHeight})`)
             .call(xAxis)
             .selectAll('text')
-            .attr('transform', `rotate(${rotation})`)
-            .style('text-anchor', textAnchor)
+            .attr('transform', `rotate(${x.rotation})`)
+            .style('text-anchor', x.textAnchor)
             .attr('x', 0)
-            .attr('font-size', fontSize);
+            .attr('font-size', x.fontSize);
     }
 
     public drawYAxis(): void {
@@ -184,5 +184,28 @@ export class TimeChartBaseService {
         }
         this.svg.selectAll('*').remove();
         this.groups.clear();
+    }
+
+    private getBaseUnit(unit: XAxisOptions['baseUnit']): d3.CountableTimeInterval {
+        if (unit === 'day') return d3.timeDay;
+        if (unit === 'week') return d3.timeWeek;
+        if (unit === 'month') return d3.timeMonth;
+        if (unit === 'year') return d3.timeYear;
+        return d3.timeMonth;
+    }
+
+    private customTicks(): Date[] {
+        const { baseUnit, every } = this.chartOptions.axes.xAxis;
+        const [startDate, endDate] = this.x.domain();
+        const d3BaseUnit = this.getBaseUnit(baseUnit);
+        const customTicks = [];
+        let current = new Date(startDate);
+
+        while (current <= endDate) {
+            customTicks.push(new Date(current));
+            current = d3BaseUnit.offset(current, every);
+        }
+
+        return customTicks;
     }
 }
