@@ -51,7 +51,11 @@ export const defaultAxesOptions: AxesOptions = {
         tickFormat: ',',
         gridLines: {
             enabled: true,
-        }
+        },
+        min: 0,
+        max: 0,
+        minAuto: true,
+        maxAuto: true,
     },
 }
 

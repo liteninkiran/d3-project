@@ -23,7 +23,7 @@ const filteredDataTo = (dates: DateRange) => dataset1.map(mapFn).filter((data) =
 
 const filter2016 = filteredDataTo(getDates(2016));
 const filter2018 = filteredDataTo(getDates(2018));
-const filter2024 = filteredDataTo(getDates(2024));
+const filter2024 = filteredDataBetween(getDates(2024));
 const filter2023 = filteredDataTo(getDates(2023));
 
 @Component({
@@ -33,7 +33,7 @@ const filter2023 = filteredDataTo(getDates(2023));
 })
 export class ScratchComponent implements OnInit, OnDestroy {
 
-    public chartData = filter2016;
+    public chartData = filter2024;
     public chartOptions = defaultChartOptions;
     private subscriptions: Subscription[] = [];
 

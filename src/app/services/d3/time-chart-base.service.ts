@@ -154,12 +154,23 @@ export class TimeChartBaseService {
     }
 
     private createScales(): void {
+        this.createXScale();
+        this.createYScale();
+    }
+
+    private createXScale(): void {
         this.x = d3.scaleTime()
             .domain(d3.extent(this.data, d => d.date))
             .range([0, this.innerWidth]);
+    }
 
-        const yMin = Math.min(0, d3.min(this.data, d => d.value));
-        const yMax = d3.max(this.data, d => d.value)!;
+    private createYScale(): void {
+        const { min, max, minAuto, maxAuto } = this.chartOptions.axes.yAxis;
+        const minValue = Math.min(0, d3.min(this.data, d => d.value));
+        const maxValue = d3.max(this.data, d => d.value)!;
+
+        const yMin = minAuto ? minValue : min;
+        const yMax = maxAuto ? maxValue : max;
 
         this.y = d3.scaleLinear()
             .domain([yMin, yMax])

@@ -15,4 +15,13 @@ export class YAxisOptionsComponent {
     get gridLinesGroup() {
         return this.group.get('gridLines') as FormGroup;
     }
+
+    public toggleTextbox(isChecked: boolean, control: string) {
+        const minControl = this.group.get(control);
+        if (isChecked) {
+            minControl?.disable();
+        } else {
+            minControl?.enable();
+        }
+    }
 }

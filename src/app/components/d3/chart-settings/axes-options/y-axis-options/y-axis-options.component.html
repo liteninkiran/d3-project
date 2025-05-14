@@ -80,6 +80,54 @@
                 </mat-checkbox>
             </div>
 
+            <!-- Min -->
+            <div class="full-width form-row">
+                <mat-checkbox formControlName="minAuto" (change)="toggleTextbox($event.checked, 'min')">
+                    Auto
+                </mat-checkbox>
+                <mat-form-field>
+
+                    <mat-label for="min">
+                        Minimum Value
+                    </mat-label>
+
+                    <input
+                        matInput
+                        type="number"
+                        placeholder="Minimum Value"
+                        formControlName="min"
+                        appearance="fill"
+                        step="100"
+                    />
+
+                </mat-form-field>
+
+            </div>
+
+            <!-- Max -->
+            <div class="full-width form-row">
+                <mat-checkbox formControlName="maxAuto" (change)="toggleTextbox($event.checked, 'max')">
+                    Auto
+                </mat-checkbox>
+                <mat-form-field>
+
+                    <mat-label for="max">
+                        Maximum Value
+                    </mat-label>
+
+                    <input
+                        matInput
+                        type="number"
+                        placeholder="Maximum Value"
+                        formControlName="max"
+                        appearance="fill"
+                        step="100"
+                    />
+
+                </mat-form-field>
+
+            </div>
+
         </mat-card-content>
 
     </mat-card>

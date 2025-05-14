@@ -50,6 +50,10 @@ export type YAxisOptions = {
     gridLines: {
         enabled: boolean;
     }
+    min: number;
+    max: number;
+    minAuto: boolean;
+    maxAuto: boolean;
 }
 
 export type AxesOptions = {
