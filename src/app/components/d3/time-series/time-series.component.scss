@@ -4,3 +4,9 @@ svg {
     height: auto;
     border: 1px solid #ccc;
 }
+
+.button-wrapper {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 10px;
+}
