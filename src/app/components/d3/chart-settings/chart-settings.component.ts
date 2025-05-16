@@ -80,6 +80,7 @@ export class ChartSettingsComponent implements OnInit {
     private chartDef() {
         return {
             type: this.fb.control(this.options.chart.type),
+            title: this.fb.control(this.options.chart.title),
         }
     }
 

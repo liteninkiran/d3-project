@@ -6,7 +6,7 @@ export const defaultChartType: ChartOptions = {
 };
 
 export const defaultChartMargins: MarginOptions = {
-    top: 20,
+    top: 70,
     bottom: 50,
     left: 100,
     right: 40,

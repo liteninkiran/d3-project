@@ -1,15 +1,36 @@
 <div class="tab-container" [formGroup]="group">
 
-    <mat-radio-group formControlName="type">
+    <mat-card appearance="outlined">
 
-        <mat-radio-button value="line" (click)="onRadioClick($event)">
-            Line
-        </mat-radio-button>
+        <mat-card-header>
+            <mat-card-title>
+                Chart Type
+            </mat-card-title>
+        </mat-card-header>
 
-        <mat-radio-button value="bar" (click)="onRadioClick($event)">
-            Bar
-        </mat-radio-button>
+        <mat-card-content>
+            <mat-radio-group formControlName="type">
+                <mat-radio-button value="line" (click)="onRadioClick($event)">Line</mat-radio-button>
+                <mat-radio-button value="bar" (click)="onRadioClick($event)">Bar</mat-radio-button>
+            </mat-radio-group>
+        </mat-card-content>
 
-    </mat-radio-group>
+    </mat-card>
+
+    <div class="full-width form-row">
+        <mat-form-field>
+            <mat-label for="title">
+                Chart Title
+            </mat-label>
+
+            <input
+                matInput
+                type="text"
+                placeholder="Chart Title"
+                formControlName="title"
+                appearance="fill"
+            />
+        </mat-form-field>
+    </div>
 
 </div>
