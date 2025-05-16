@@ -85,6 +85,46 @@
                 </mat-form-field>
             </div>
 
+            <!-- Base Unit -->
+            <div class="full-width form-row">
+                <mat-form-field>
+                    <mat-label for="baseUnit" class="vertical-centre">
+                        Base Unit
+                    </mat-label>
+
+                    <mat-select formControlName="baseUnit">
+                        <mat-option value="day">Day</mat-option>
+                        <mat-option value="week">Week</mat-option>
+                        <mat-option value="month">Month</mat-option>
+                        <mat-option value="year">Year</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+
+            <!-- Every -->
+            <div class="full-width form-row">
+
+                <mat-form-field>
+
+                    <mat-label for="every">
+                        Every
+                    </mat-label>
+
+                    <input
+                        matInput
+                        type="number"
+                        placeholder="Every"
+                        formControlName="every"
+                        appearance="fill"
+                        step="1"
+                        min="1"
+                        max="1000"
+                    />
+
+                </mat-form-field>
+
+            </div>
+
         </mat-card-content>
 
     </mat-card>

@@ -138,6 +138,8 @@ export class ChartSettingsComponent implements OnInit {
             rotation: this.fb.control(this.options.axes.xAxis.rotation),
             textAnchor: this.fb.control(this.options.axes.xAxis.textAnchor),
             dateFormat: this.fb.control(this.options.axes.xAxis.dateFormat),
+            baseUnit: this.fb.control(this.options.axes.xAxis.baseUnit),
+            every: this.fb.control(this.options.axes.xAxis.every),
         }
     }
 
@@ -147,6 +149,10 @@ export class ChartSettingsComponent implements OnInit {
             ticks: this.fb.control(this.options.axes.yAxis.ticks),
             tickFormat: this.fb.control(this.options.axes.yAxis.tickFormat),
             gridLines: this.fb.group(this.yAxisGridlinesGroupDef()),
+            min: this.fb.control({ value: this.options.axes.yAxis.min, disabled: this.options.axes.yAxis.minAuto }),
+            max: this.fb.control({ value: this.options.axes.yAxis.max, disabled: this.options.axes.yAxis.maxAuto }),
+            minAuto: this.fb.control(this.options.axes.yAxis.minAuto),
+            maxAuto: this.fb.control(this.options.axes.yAxis.maxAuto),
         }
     }
 

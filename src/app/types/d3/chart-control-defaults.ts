@@ -42,6 +42,8 @@ export const defaultAxesOptions: AxesOptions = {
         rotation: 0,
         textAnchor: 'middle',
         dateFormat: '%b %Y',
+        baseUnit: 'month',
+        every: 6,
     },
     yAxis: {
         fontSize: 15,
@@ -49,7 +51,11 @@ export const defaultAxesOptions: AxesOptions = {
         tickFormat: ',',
         gridLines: {
             enabled: true,
-        }
+        },
+        min: 0,
+        max: 0,
+        minAuto: true,
+        maxAuto: true,
     },
 }
 

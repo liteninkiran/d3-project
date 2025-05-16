@@ -1,5 +1,7 @@
 // Angular Imports
 import { Component, OnInit, Input, ElementRef, AfterViewInit, ViewChild, ChangeDetectionStrategy, SimpleChanges, OnChanges } from '@angular/core';
+import { Subscription, Observable } from 'rxjs';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 
 // Local Imports
 import { ChartData } from 'src/app/types/d3/data';
@@ -8,6 +10,8 @@ import { LineChartRendererService } from 'src/app/services/d3/line-chart-rendere
 import { TimeChartBaseService } from 'src/app/services/d3/time-chart-base.service';
 import { ChartOptions } from 'src/app/types/d3/chart-controls';
 import { TooltipService } from 'src/app/services/d3/tooltip.service';
+import { ChartSettingsComponent } from '../chart-settings/chart-settings.component';
+import { defaultChartOptions } from 'src/app/types/d3/chart-control-defaults';
 
 @Component({
     selector: 'app-time-series',
@@ -17,16 +21,20 @@ import { TooltipService } from 'src/app/services/d3/tooltip.service';
 })
 export class TimeSeriesComponent implements OnInit, AfterViewInit, OnChanges {
 
-    @Input() data: ChartData[] = [];
-    @Input() chartOptions: ChartOptions;
+    @Input() public data: ChartData[] = [];
+
+    public chartOptions: ChartOptions = defaultChartOptions;
 
     @ViewChild('divRef', { static: true }) private divRef: ElementRef<HTMLDivElement>;
+
+    private subscriptions: Subscription[] = [];
 
     constructor(
         private baseService: TimeChartBaseService,
         private lineChartService: LineChartRendererService,
         private barChartService: BarChartRendererService,
         private tooltipService: TooltipService,
+        private dialog: MatDialog,
     ) { }
 
     public ngOnInit(): void { }
@@ -66,5 +74,29 @@ export class TimeSeriesComponent implements OnInit, AfterViewInit, OnChanges {
         }
 
         this.tooltipService.addTooltip();
+    }
+
+    public openChartSettingsModal() {
+        const dialogConfig = new MatDialogConfig<ChartOptions>();
+        dialogConfig.data = this.chartOptions;
+        const buttonElement = document.activeElement as HTMLElement;
+        buttonElement.blur();
+        const dialogRef = this.dialog.open(ChartSettingsComponent, dialogConfig);
+        const dialogOpen = dialogRef.afterOpened();
+
+        const formChangedFn = (data?: ChartOptions) => {
+            if (data) {
+                this.chartOptions = data;
+                this.createChart();
+            }
+        }
+        const dialogOpenFn = () => this.subscribeTo(dialogRef.componentInstance.form.valueChanges, formChangedFn);
+
+        this.subscribeTo(dialogOpen, dialogOpenFn);
+    }
+
+    private subscribeTo(obs: Observable<any>, fn: () => void): void {
+        const sub = obs.subscribe(fn);
+        this.subscriptions.push(sub);
     }
 }

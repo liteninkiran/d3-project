@@ -39,6 +39,8 @@ export type XAxisOptions = {
     rotation: number;
     textAnchor: 'start' | 'middle' | 'end';
     dateFormat: string;
+    baseUnit: 'day' | 'week' | 'month' | 'year';
+    every: number;
 }
 
 export type YAxisOptions = {
@@ -48,6 +50,10 @@ export type YAxisOptions = {
     gridLines: {
         enabled: boolean;
     }
+    min: number;
+    max: number;
+    minAuto: boolean;
+    maxAuto: boolean;
 }
 
 export type AxesOptions = {

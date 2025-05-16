@@ -54,7 +54,7 @@ export class TooltipService {
         // Create a listening rectangle
         const listeningRect = tooltipLayer
             .append('rect')
-            .attr('width', innerWidth - 1)
+            .attr('width', innerWidth)
             .attr('height', innerHeight)
             .style('pointer-events', 'all')
             .style('fill-opacity', 0)
