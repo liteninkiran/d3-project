@@ -76,10 +76,12 @@ export class TimeChartBaseService {
     }
 
     private chartTitle(): void {
+        const leftMargin = this.chartControl.margins.left;
+        const offset = leftMargin + (this.innerWidth * 0.5);
         this.titleContainer = this.svg
             .append('g')
             .attr('class', 'title-container')
-            .attr('transform', `translate(${0.5 * this.innerWidth}, 40)`)
+            .attr('transform', `translate(${offset}, 40)`)
             .append('text')
             .attr('class', 'label')
             .style('text-anchor', 'middle')
