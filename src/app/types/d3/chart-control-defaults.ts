@@ -7,7 +7,7 @@ export const defaultChartType: ChartOptions = {
 
 export const defaultChartMargins: MarginOptions = {
     top: 70,
-    bottom: 50,
+    bottom: 110,
     left: 100,
     right: 40,
 }
@@ -40,11 +40,11 @@ export const defaultBarOptions: BarOptions = {
 export const defaultAxesOptions: AxesOptions = {
     xAxis: {
         fontSize: 15,
-        rotation: 0,
-        textAnchor: 'middle',
-        dateFormat: '%b %Y',
+        rotation: -45,
+        textAnchor: 'end',
+        dateFormat: '%d %b %Y',
         baseUnit: 'month',
-        every: 6,
+        every: 1,
         title: 'X Axis Title',
     },
     yAxis: {

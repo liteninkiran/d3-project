@@ -141,6 +141,7 @@ export class ChartSettingsComponent implements OnInit {
             dateFormat: this.fb.control(this.options.axes.xAxis.dateFormat),
             baseUnit: this.fb.control(this.options.axes.xAxis.baseUnit),
             every: this.fb.control(this.options.axes.xAxis.every),
+            title: this.fb.control(this.options.axes.xAxis.title),
         }
     }
 
@@ -154,6 +155,7 @@ export class ChartSettingsComponent implements OnInit {
             max: this.fb.control({ value: this.options.axes.yAxis.max, disabled: this.options.axes.yAxis.maxAuto }),
             minAuto: this.fb.control(this.options.axes.yAxis.minAuto),
             maxAuto: this.fb.control(this.options.axes.yAxis.maxAuto),
+            title: this.fb.control(this.options.axes.yAxis.title),
         }
     }
 
