@@ -1,17 +1,17 @@
-import { Margin, LineOptions, BarOptions, ChartOptions, ChartDimensions, ChartType, MarkerOptions, AxesOptions } from './chart-controls';
+import { MarginOptions, LineOptions, BarOptions, ChartControl, DimensionOptions, ChartOptions, MarkerOptions, AxesOptions } from './chart-controls';
 
-export const defaultChartType: ChartType = {
+export const defaultChartType: ChartOptions = {
     type: 'line',
 };
 
-export const defaultChartMargins: Margin = {
+export const defaultChartMargins: MarginOptions = {
     top: 20,
     bottom: 50,
     left: 100,
     right: 40,
 }
 
-export const defaultChartDimensions: ChartDimensions = {
+export const defaultChartDimensions: DimensionOptions = {
     height: 700,
     width: 1700,
 }
@@ -59,7 +59,7 @@ export const defaultAxesOptions: AxesOptions = {
     },
 }
 
-export const defaultChartOptions: ChartOptions = {
+export const defaultChartOptions: ChartControl = {
     chartType: defaultChartType,
     margins: defaultChartMargins,
     dimensions: defaultChartDimensions,

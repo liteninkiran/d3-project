@@ -1,7 +1,7 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { FormGroup, NonNullableFormBuilder } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { ChartOptions, SetColour } from 'src/app/types/d3/chart-controls';
+import { ChartControl, SetColour } from 'src/app/types/d3/chart-controls';
 
 @Component({
     selector: 'app-chart-settings',
@@ -10,7 +10,7 @@ import { ChartOptions, SetColour } from 'src/app/types/d3/chart-controls';
 })
 export class ChartSettingsComponent implements OnInit {
 
-    public options: ChartOptions;
+    public options: ChartControl;
     public form: FormGroup;
 
     get chartTypeGroup() {
@@ -48,7 +48,7 @@ export class ChartSettingsComponent implements OnInit {
     constructor(
         private fb: NonNullableFormBuilder,
         private dialogRef: MatDialogRef<ChartSettingsComponent>,
-        @Inject(MAT_DIALOG_DATA) data: ChartOptions,
+        @Inject(MAT_DIALOG_DATA) data: ChartControl,
     ) {
         this.options = data;
     }

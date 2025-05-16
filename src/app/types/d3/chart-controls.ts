@@ -1,15 +1,15 @@
-export type ChartType = {
+export type ChartOptions = {
     type: 'line' | 'bar';
 }
 
-export type Margin = {
+export type MarginOptions = {
     top: number;
     right: number;
     bottom: number;
     left: number;
 }
 
-export type ChartDimensions = {
+export type DimensionOptions = {
     height: number;
     width: number;
 }
@@ -61,10 +61,10 @@ export type AxesOptions = {
     yAxis: YAxisOptions;
 }
 
-export type ChartOptions = {
-    chartType: ChartType;
-    dimensions: ChartDimensions;
-    margins: Margin;
+export type ChartControl = {
+    chartType: ChartOptions;
+    dimensions: DimensionOptions;
+    margins: MarginOptions;
     line: LineOptions;
     markers: MarkerOptions;
     bar: BarOptions;
