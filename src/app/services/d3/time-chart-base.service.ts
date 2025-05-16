@@ -49,6 +49,7 @@ export class TimeChartBaseService {
         this.drawXAxis();
         this.xAxisTitle();
         this.drawYAxis();
+        this.yAxisTitle();
         this.drawYGrid();
     }
 
@@ -109,6 +110,34 @@ export class TimeChartBaseService {
                 .style('fill', 'black')
                 .style('text-anchor', 'middle')
                 .style('font-size', fontSize)
+                .text(title);
+        }
+    }
+
+    private yAxisTitle(): void {
+        const title = this.chartControl.axes.yAxis.title;
+        const layer = this.getLayer('y-axis');
+        const yTickLabels = layer.selectAll('.tick text');
+        let maxLabelWidth = 0;
+
+        yTickLabels.each(function () {
+            const width = layer.node().getBBox().width;
+            if (width > maxLabelWidth) maxLabelWidth = width;
+        });
+
+        const padding = 10;
+        const labelX = -(maxLabelWidth + padding);
+
+        if (title) {
+            this.getLayer('y-axis')
+                .append('g')
+                .attr('class', 'y-label-container')
+                .attr('transform', `translate(${labelX}, ${this.innerHeight * 0.5})`)
+                .append('text').attr('class', 'yLabel')
+                .style('text-anchor', 'middle')
+                .style('fill', 'black')
+                .attr('transform', 'rotate(-90)')
+                .style('font-size', 20)
                 .text(title);
         }
     }
