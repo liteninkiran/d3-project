@@ -19,7 +19,7 @@ export class TooltipService {
     }
 
     public addTooltip() {
-        const { x, y, data, getLayer, chartOptions, innerHeight, innerWidth } = this.context;
+        const { x, y, data, getLayer, chartControl, innerHeight, innerWidth } = this.context;
         const tooltipLayer = getLayer('tooltip-layer');
 
         let tooltip = d3.select('body').select('.tooltip');

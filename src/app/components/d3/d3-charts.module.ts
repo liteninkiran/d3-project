@@ -9,7 +9,7 @@ import { TimeSeriesComponent } from './time-series/time-series.component';
 import { MarkerOptionsComponent } from './chart-settings/marker-options/marker-options.component';
 import { BarOptionsComponent } from './chart-settings/bar-options/bar-options.component';
 import { DimensionOptionsComponent } from './chart-settings/dimension-options/dimension-options.component';
-import { ChartTypeOptionsComponent } from './chart-settings/chart-type-options/chart-type-options.component';
+import { ChartOptionsComponent } from './chart-settings/chart-options/chart-options.component';
 import { XAxisOptionsComponent } from './chart-settings/axes-options/x-axis-options/x-axis-options.component';
 import { YAxisOptionsComponent } from './chart-settings/axes-options/y-axis-options/y-axis-options.component';
 
@@ -21,7 +21,7 @@ import { YAxisOptionsComponent } from './chart-settings/axes-options/y-axis-opti
         MarkerOptionsComponent,
         BarOptionsComponent,
         DimensionOptionsComponent,
-        ChartTypeOptionsComponent,
+        ChartOptionsComponent,
         XAxisOptionsComponent,
         YAxisOptionsComponent,
     ],

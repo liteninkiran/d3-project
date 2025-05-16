@@ -1,4 +1,4 @@
-import { ChartOptions } from './chart-controls';
+import { ChartControl } from './chart-controls';
 import { ChartData, Group, Svg, XScale, YScale } from './data';
 
 export type MarkerEnter = d3.Selection<d3.EnterElement, ChartData, SVGGElement, unknown>;
@@ -13,6 +13,6 @@ export type ChartContext = {
     innerHeight: number;
     innerWidth: number;
     data: ChartData[];
-    chartOptions: ChartOptions;
+    chartControl: ChartControl;
     getLayer: (name: string) => Group;
 }

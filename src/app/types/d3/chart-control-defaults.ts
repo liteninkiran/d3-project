@@ -1,17 +1,18 @@
-import { Margin, LineOptions, BarOptions, ChartOptions, ChartDimensions, ChartType, MarkerOptions, AxesOptions } from './chart-controls';
+import { MarginOptions, LineOptions, BarOptions, ChartControl, DimensionOptions, ChartOptions, MarkerOptions, AxesOptions } from './chart-controls';
 
-export const defaultChartType: ChartType = {
+export const defaultChartType: ChartOptions = {
     type: 'line',
+    title: 'Chart Title',
 };
 
-export const defaultChartMargins: Margin = {
-    top: 20,
-    bottom: 50,
+export const defaultChartMargins: MarginOptions = {
+    top: 70,
+    bottom: 110,
     left: 100,
     right: 40,
 }
 
-export const defaultChartDimensions: ChartDimensions = {
+export const defaultChartDimensions: DimensionOptions = {
     height: 700,
     width: 1700,
 }
@@ -39,11 +40,12 @@ export const defaultBarOptions: BarOptions = {
 export const defaultAxesOptions: AxesOptions = {
     xAxis: {
         fontSize: 15,
-        rotation: 0,
-        textAnchor: 'middle',
-        dateFormat: '%b %Y',
+        rotation: -45,
+        textAnchor: 'end',
+        dateFormat: '%d %b %Y',
         baseUnit: 'month',
-        every: 6,
+        every: 1,
+        title: 'X Axis Title',
     },
     yAxis: {
         fontSize: 15,
@@ -56,11 +58,12 @@ export const defaultAxesOptions: AxesOptions = {
         max: 0,
         minAuto: true,
         maxAuto: true,
+        title: 'Y Axis Title',
     },
 }
 
-export const defaultChartOptions: ChartOptions = {
-    chartType: defaultChartType,
+export const defaultChartOptions: ChartControl = {
+    chart: defaultChartType,
     margins: defaultChartMargins,
     dimensions: defaultChartDimensions,
     line: defaultLineOptions,

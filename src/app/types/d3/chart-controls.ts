@@ -1,15 +1,16 @@
-export type ChartType = {
+export type ChartOptions = {
     type: 'line' | 'bar';
+    title: string;
 }
 
-export type Margin = {
+export type MarginOptions = {
     top: number;
     right: number;
     bottom: number;
     left: number;
 }
 
-export type ChartDimensions = {
+export type DimensionOptions = {
     height: number;
     width: number;
 }
@@ -41,6 +42,7 @@ export type XAxisOptions = {
     dateFormat: string;
     baseUnit: 'day' | 'week' | 'month' | 'year';
     every: number;
+    title: string;
 }
 
 export type YAxisOptions = {
@@ -54,6 +56,7 @@ export type YAxisOptions = {
     max: number;
     minAuto: boolean;
     maxAuto: boolean;
+    title: string;
 }
 
 export type AxesOptions = {
@@ -61,10 +64,10 @@ export type AxesOptions = {
     yAxis: YAxisOptions;
 }
 
-export type ChartOptions = {
-    chartType: ChartType;
-    dimensions: ChartDimensions;
-    margins: Margin;
+export type ChartControl = {
+    chart: ChartOptions;
+    dimensions: DimensionOptions;
+    margins: MarginOptions;
     line: LineOptions;
     markers: MarkerOptions;
     bar: BarOptions;

@@ -1,7 +1,7 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { FormGroup, NonNullableFormBuilder } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { ChartOptions, SetColour } from 'src/app/types/d3/chart-controls';
+import { ChartControl, SetColour } from 'src/app/types/d3/chart-controls';
 
 @Component({
     selector: 'app-chart-settings',
@@ -10,11 +10,11 @@ import { ChartOptions, SetColour } from 'src/app/types/d3/chart-controls';
 })
 export class ChartSettingsComponent implements OnInit {
 
-    public options: ChartOptions;
+    public options: ChartControl;
     public form: FormGroup;
 
-    get chartTypeGroup() {
-        return this.form.get('chartType') as FormGroup;
+    get chartGroup() {
+        return this.form.get('chart') as FormGroup;
     }
 
     get lineGroup() {
@@ -48,7 +48,7 @@ export class ChartSettingsComponent implements OnInit {
     constructor(
         private fb: NonNullableFormBuilder,
         private dialogRef: MatDialogRef<ChartSettingsComponent>,
-        @Inject(MAT_DIALOG_DATA) data: ChartOptions,
+        @Inject(MAT_DIALOG_DATA) data: ChartControl,
     ) {
         this.options = data;
     }
@@ -67,7 +67,7 @@ export class ChartSettingsComponent implements OnInit {
 
     private setupForm(): void {
         this.form = this.fb.group({
-            chartType: this.fb.group(this.chartTypeDef()),
+            chart: this.fb.group(this.chartDef()),
             dimensions: this.fb.group(this.dimensionGroupDef()),
             margins: this.fb.group(this.marginGroupDef()),
             line: this.fb.group(this.lineGroupDef()),
@@ -77,9 +77,10 @@ export class ChartSettingsComponent implements OnInit {
         });
     }
 
-    private chartTypeDef() {
+    private chartDef() {
         return {
-            type: this.fb.control(this.options.chartType.type),
+            type: this.fb.control(this.options.chart.type),
+            title: this.fb.control(this.options.chart.title),
         }
     }
 
@@ -140,6 +141,7 @@ export class ChartSettingsComponent implements OnInit {
             dateFormat: this.fb.control(this.options.axes.xAxis.dateFormat),
             baseUnit: this.fb.control(this.options.axes.xAxis.baseUnit),
             every: this.fb.control(this.options.axes.xAxis.every),
+            title: this.fb.control(this.options.axes.xAxis.title),
         }
     }
 
@@ -153,6 +155,7 @@ export class ChartSettingsComponent implements OnInit {
             max: this.fb.control({ value: this.options.axes.yAxis.max, disabled: this.options.axes.yAxis.maxAuto }),
             minAuto: this.fb.control(this.options.axes.yAxis.minAuto),
             maxAuto: this.fb.control(this.options.axes.yAxis.maxAuto),
+            title: this.fb.control(this.options.axes.yAxis.title),
         }
     }
 

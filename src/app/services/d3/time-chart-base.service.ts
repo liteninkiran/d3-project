@@ -1,8 +1,10 @@
 import { Injectable } from '@angular/core';
 import { ChartData, Div, Group, Svg, XScale, YScale } from 'src/app/types/d3/data';
 import { ChartContext } from 'src/app/types/d3/services';
+import { ChartControl, XAxisOptions } from 'src/app/types/d3/chart-controls';
 import * as d3 from 'd3';
-import { ChartOptions, XAxisOptions } from 'src/app/types/d3/chart-controls';
+
+type Unit = XAxisOptions['baseUnit'];
 
 @Injectable({ providedIn: 'root' })
 export class TimeChartBaseService {
@@ -12,6 +14,7 @@ export class TimeChartBaseService {
 
     // Containers
     private container: Group;
+    private titleContainer: Group;
     private groups: Map<string, Group> = new Map();
 
     // Scales
@@ -22,32 +25,125 @@ export class TimeChartBaseService {
     private data: ChartData[] = [];
 
     // Dimensions
-    private chartOptions: ChartOptions;
+    private chartControl: ChartControl;
     private innerWidth = 0;
     private innerHeight = 0;
 
     public init(
         divEl: HTMLDivElement,
         data: ChartData[],
-        chartOptions: ChartOptions,
+        chartControl: ChartControl,
     ) {
         this.data = data;
-        this.chartOptions = chartOptions;
+        this.chartControl = chartControl;
 
         this.setMargins();
         this.createSvg(divEl);
         this.resizeSvg();
         this.createContainer();
         this.createScales();
+        this.chartTitle();
     }
 
     public drawAxes(): void {
         this.drawXAxis();
+        this.xAxisTitle();
         this.drawYAxis();
+        this.yAxisTitle();
+        this.drawYGrid();
     }
 
-    public drawXAxis(): void {
-        const x = this.chartOptions.axes.xAxis;
+    public getContext(): ChartContext {
+        return {
+            svg: this.svg,
+            container: this.container,
+            x: this.x,
+            y: this.y,
+            innerHeight: this.innerHeight,
+            innerWidth: this.innerWidth,
+            data: this.data,
+            chartControl: this.chartControl,
+            getLayer: (name: string) => this.getLayer(name),
+        };
+    }
+
+    public reset(): void {
+        this.groups.clear();
+        this.data = [];
+        this.svg = null;
+        this.container = null;
+    }
+
+    private chartTitle(): void {
+        const leftMargin = this.chartControl.margins.left;
+        const offset = leftMargin + (this.innerWidth * 0.5);
+        const title = this.chartControl.chart.title;
+        if (title) {
+            this.titleContainer = this.svg
+                .append('g')
+                .attr('class', 'chart-title-container')
+                .attr('transform', `translate(${offset}, 40)`)
+                .append('text')
+                .attr('class', 'label')
+                .style('text-anchor', 'middle')
+                .style('font-size', 30)
+                .text(title);
+        }
+    }
+
+    private xAxisTitle(): void {
+        const offset = this.innerWidth * 0.5;
+        const title = this.chartControl.axes.xAxis.title;
+        const radians = Math.abs(this.chartControl.axes.xAxis.rotation) * Math.PI / 180;
+        const fontSize = 20;
+        const padding = 80;
+        const labelHeight = fontSize * Math.sin(radians);
+        const yOffset = labelHeight + padding;
+
+        if (title) {
+            this.getLayer('x-axis')
+                .append('g')
+                .attr('class', 'x-axis-title-container')
+                .attr('transform', `translate(${offset}, ${yOffset})`)
+                .append('text')
+                .attr('class', 'label')
+                .style('fill', 'black')
+                .style('text-anchor', 'middle')
+                .style('font-size', fontSize)
+                .text(title);
+        }
+    }
+
+    private yAxisTitle(): void {
+        const title = this.chartControl.axes.yAxis.title;
+        const layer = this.getLayer('y-axis');
+        const yTickLabels = layer.selectAll('.tick text');
+        let maxLabelWidth = 0;
+
+        yTickLabels.each(function () {
+            const width = layer.node().getBBox().width;
+            if (width > maxLabelWidth) maxLabelWidth = width;
+        });
+
+        const padding = 10;
+        const labelX = -(maxLabelWidth + padding);
+
+        if (title) {
+            this.getLayer('y-axis')
+                .append('g')
+                .attr('class', 'y-label-container')
+                .attr('transform', `translate(${labelX}, ${this.innerHeight * 0.5})`)
+                .append('text').attr('class', 'yLabel')
+                .style('text-anchor', 'middle')
+                .style('fill', 'black')
+                .attr('transform', 'rotate(-90)')
+                .style('font-size', 20)
+                .text(title);
+        }
+    }
+
+    private drawXAxis(): void {
+        const x = this.chartControl.axes.xAxis;
 
         const xAxis = d3.axisBottom(this.x)
             .tickValues(this.customTicks())
@@ -63,8 +159,8 @@ export class TimeChartBaseService {
             .attr('font-size', x.fontSize);
     }
 
-    public drawYAxis(): void {
-        const { fontSize, ticks, tickFormat } = this.chartOptions.axes.yAxis;
+    private drawYAxis(): void {
+        const { fontSize, ticks, tickFormat } = this.chartControl.axes.yAxis;
 
         const yAxis = d3.axisLeft(this.y)
             .ticks(ticks)
@@ -73,12 +169,10 @@ export class TimeChartBaseService {
         this.getLayer('y-axis')
             .call(yAxis)
             .attr('font-size', fontSize);
-
-        this.drawYGrid();
     }
 
-    public drawYGrid(): void {
-        const { ticks, gridLines: { enabled } } = this.chartOptions.axes.yAxis;
+    private drawYGrid(): void {
+        const { ticks, gridLines: { enabled } } = this.chartControl.axes.yAxis;
 
         const yGrid = d3.axisLeft(this.y)
             .ticks(ticks)
@@ -99,29 +193,8 @@ export class TimeChartBaseService {
         }
     }
 
-    public getContext(): ChartContext {
-        return {
-            svg: this.svg,
-            container: this.container,
-            x: this.x,
-            y: this.y,
-            innerHeight: this.innerHeight,
-            innerWidth: this.innerWidth,
-            data: this.data,
-            chartOptions: this.chartOptions,
-            getLayer: (name: string) => this.getLayer(name),
-        };
-    }
-
-    public reset(): void {
-        this.groups.clear();
-        this.data = [];
-        this.svg = null;
-        this.container = null;
-    }
-
     private resizeSvg(): void {
-        const { dimensions: { height, width } } = this.chartOptions;
+        const { dimensions: { height, width } } = this.chartControl;
         this.div
             .style('max-width', `${width}px`)
             .style('max-height', `${height}px`);
@@ -148,9 +221,8 @@ export class TimeChartBaseService {
     }
 
     private updateMargins() {
-        const { margins: { top, left } } = this.chartOptions;
-        d3.select('.chart-container')
-            .attr('transform', `translate(${left}, ${top})`);
+        const { margins: { top, left } } = this.chartControl;
+        this.container.attr('transform', `translate(${left}, ${top})`);
     }
 
     private createScales(): void {
@@ -165,7 +237,7 @@ export class TimeChartBaseService {
     }
 
     private createYScale(): void {
-        const { min, max, minAuto, maxAuto } = this.chartOptions.axes.yAxis;
+        const { min, max, minAuto, maxAuto } = this.chartControl.axes.yAxis;
         const minValue = Math.min(0, d3.min(this.data, d => d.value));
         const maxValue = d3.max(this.data, d => d.value)!;
 
@@ -181,7 +253,7 @@ export class TimeChartBaseService {
         const {
             margins: { top, left, right, bottom },
             dimensions: { height, width },
-        } = this.chartOptions;
+        } = this.chartControl;
 
         this.innerWidth = width - left - right;
         this.innerHeight = height - top - bottom;
@@ -190,14 +262,11 @@ export class TimeChartBaseService {
     private createSvg(divEl: HTMLDivElement): void {
         this.div = d3.select(divEl);
         this.svg = this.div.select('svg');
-        if (this.svg.empty()) {
-            this.svg = this.div.append('svg');
-        }
         this.svg.selectAll('*').remove();
         this.groups.clear();
     }
 
-    private getBaseUnit(unit: XAxisOptions['baseUnit']): d3.CountableTimeInterval {
+    private getBaseUnit(unit: Unit): d3.CountableTimeInterval {
         if (unit === 'day') return d3.timeDay;
         if (unit === 'week') return d3.timeWeek;
         if (unit === 'month') return d3.timeMonth;
@@ -206,7 +275,7 @@ export class TimeChartBaseService {
     }
 
     private customTicks(): Date[] {
-        const { baseUnit, every } = this.chartOptions.axes.xAxis;
+        const { baseUnit, every } = this.chartControl.axes.xAxis;
         const [startDate, endDate] = this.x.domain();
         const d3BaseUnit = this.getBaseUnit(baseUnit);
         const customTicks = [];

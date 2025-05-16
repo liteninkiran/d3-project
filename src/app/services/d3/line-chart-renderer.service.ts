@@ -37,7 +37,7 @@ export class LineChartRendererService {
     }
 
     private drawLine(): void {
-        const { x, y, data, getLayer, chartOptions } = this.context;
+        const { x, y, data, getLayer, chartControl } = this.context;
         const lineLayer = getLayer('line-layer');
 
         const line = d3.line<ChartData>()
@@ -52,8 +52,8 @@ export class LineChartRendererService {
                 exit => exit.remove(),
             )
             .attr('fill', 'none')
-            .attr('stroke', chartOptions.line.colour)
-            .attr('stroke-width', chartOptions.line.stroke)
+            .attr('stroke', chartControl.line.colour)
+            .attr('stroke-width', chartControl.line.stroke)
             .transition()
             .duration(500)
             .ease(d3.easeLinear)
@@ -61,10 +61,10 @@ export class LineChartRendererService {
     }
 
     private drawMarkers(): void {
-        const { x, y, data, getLayer, chartOptions } = this.context;
+        const { x, y, data, getLayer, chartControl } = this.context;
         const markerLayer = getLayer('marker-layer');
 
-        if (chartOptions.markers.enabled) {
+        if (chartControl.markers.enabled) {
             const enterFn = (enter: MarkerEnter) => enter.append('circle')
                 .attr('cx', d => x(d.date))
                 .attr('cy', d => y(d.value));
@@ -81,13 +81,13 @@ export class LineChartRendererService {
             markerLayer.selectAll<SVGCircleElement, ChartData>('circle')
                 .data(data)
                 .join(enterFn, updateFn, exitFn)
-                .attr('fill-opacity', chartOptions.markers.opacity)
-                .attr('stroke-opacity', chartOptions.markers.strokeOpacity)
-                .attr('fill', chartOptions.markers.colour)
+                .attr('fill-opacity', chartControl.markers.opacity)
+                .attr('stroke-opacity', chartControl.markers.strokeOpacity)
+                .attr('fill', chartControl.markers.colour)
                 .attr('class', 'marker')
-                .attr('stroke', chartOptions.markers.strokeColour)
-                .attr('stroke-width', chartOptions.markers.stroke)
-                .attr('r', chartOptions.markers.size);
+                .attr('stroke', chartControl.markers.strokeColour)
+                .attr('stroke-width', chartControl.markers.stroke)
+                .attr('r', chartControl.markers.size);
         } else {
             markerLayer.selectAll('circle').remove();
         }
