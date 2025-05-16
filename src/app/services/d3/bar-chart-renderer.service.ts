@@ -22,9 +22,9 @@ export class BarChartRendererService {
     }
 
     public drawBar(): void {
-        const { x, y, data, getLayer, chartOptions } = this.context;
+        const { x, y, data, getLayer, chartControl } = this.context;
         const barLayer = getLayer('bar-layer');
-        const barWidth = chartOptions.bar.width;
+        const barWidth = chartControl.bar.width;
 
         barLayer.selectAll('rect')
             .data(data)
@@ -44,6 +44,6 @@ export class BarChartRendererService {
                     .attr('height', d => y(0) - y(d.value)),
                 exit => exit.remove(),
             )
-            .attr('fill', chartOptions.bar.colour);
+            .attr('fill', chartControl.bar.colour);
     }
 }

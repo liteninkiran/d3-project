@@ -22,17 +22,17 @@ export class TimeChartBaseService {
     private data: ChartData[] = [];
 
     // Dimensions
-    private chartOptions: ChartControl;
+    private chartControl: ChartControl;
     private innerWidth = 0;
     private innerHeight = 0;
 
     public init(
         divEl: HTMLDivElement,
         data: ChartData[],
-        chartOptions: ChartControl,
+        chartControl: ChartControl,
     ) {
         this.data = data;
-        this.chartOptions = chartOptions;
+        this.chartControl = chartControl;
 
         this.setMargins();
         this.createSvg(divEl);
@@ -47,7 +47,7 @@ export class TimeChartBaseService {
     }
 
     public drawXAxis(): void {
-        const x = this.chartOptions.axes.xAxis;
+        const x = this.chartControl.axes.xAxis;
 
         const xAxis = d3.axisBottom(this.x)
             .tickValues(this.customTicks())
@@ -64,7 +64,7 @@ export class TimeChartBaseService {
     }
 
     public drawYAxis(): void {
-        const { fontSize, ticks, tickFormat } = this.chartOptions.axes.yAxis;
+        const { fontSize, ticks, tickFormat } = this.chartControl.axes.yAxis;
 
         const yAxis = d3.axisLeft(this.y)
             .ticks(ticks)
@@ -78,7 +78,7 @@ export class TimeChartBaseService {
     }
 
     public drawYGrid(): void {
-        const { ticks, gridLines: { enabled } } = this.chartOptions.axes.yAxis;
+        const { ticks, gridLines: { enabled } } = this.chartControl.axes.yAxis;
 
         const yGrid = d3.axisLeft(this.y)
             .ticks(ticks)
@@ -108,7 +108,7 @@ export class TimeChartBaseService {
             innerHeight: this.innerHeight,
             innerWidth: this.innerWidth,
             data: this.data,
-            chartOptions: this.chartOptions,
+            chartControl: this.chartControl,
             getLayer: (name: string) => this.getLayer(name),
         };
     }
@@ -121,7 +121,7 @@ export class TimeChartBaseService {
     }
 
     private resizeSvg(): void {
-        const { dimensions: { height, width } } = this.chartOptions;
+        const { dimensions: { height, width } } = this.chartControl;
         this.div
             .style('max-width', `${width}px`)
             .style('max-height', `${height}px`);
@@ -148,7 +148,7 @@ export class TimeChartBaseService {
     }
 
     private updateMargins() {
-        const { margins: { top, left } } = this.chartOptions;
+        const { margins: { top, left } } = this.chartControl;
         d3.select('.chart-container')
             .attr('transform', `translate(${left}, ${top})`);
     }
@@ -165,7 +165,7 @@ export class TimeChartBaseService {
     }
 
     private createYScale(): void {
-        const { min, max, minAuto, maxAuto } = this.chartOptions.axes.yAxis;
+        const { min, max, minAuto, maxAuto } = this.chartControl.axes.yAxis;
         const minValue = Math.min(0, d3.min(this.data, d => d.value));
         const maxValue = d3.max(this.data, d => d.value)!;
 
@@ -181,7 +181,7 @@ export class TimeChartBaseService {
         const {
             margins: { top, left, right, bottom },
             dimensions: { height, width },
-        } = this.chartOptions;
+        } = this.chartControl;
 
         this.innerWidth = width - left - right;
         this.innerHeight = height - top - bottom;
@@ -206,7 +206,7 @@ export class TimeChartBaseService {
     }
 
     private customTicks(): Date[] {
-        const { baseUnit, every } = this.chartOptions.axes.xAxis;
+        const { baseUnit, every } = this.chartControl.axes.xAxis;
         const [startDate, endDate] = this.x.domain();
         const d3BaseUnit = this.getBaseUnit(baseUnit);
         const customTicks = [];

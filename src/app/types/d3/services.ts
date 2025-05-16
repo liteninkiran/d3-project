@@ -13,6 +13,6 @@ export type ChartContext = {
     innerHeight: number;
     innerWidth: number;
     data: ChartData[];
-    chartOptions: ChartControl;
+    chartControl: ChartControl;
     getLayer: (name: string) => Group;
 }

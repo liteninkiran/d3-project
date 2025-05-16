@@ -23,7 +23,7 @@ export class TimeSeriesComponent implements OnInit, AfterViewInit, OnChanges {
 
     @Input() public data: ChartData[] = [];
 
-    public chartOptions: ChartControl = defaultChartOptions;
+    public chartControl: ChartControl = defaultChartOptions;
 
     @ViewChild('divRef', { static: true }) private divRef: ElementRef<HTMLDivElement>;
 
@@ -56,7 +56,7 @@ export class TimeSeriesComponent implements OnInit, AfterViewInit, OnChanges {
         this.baseService.init(
             this.divRef.nativeElement,
             this.data,
-            this.chartOptions,
+            this.chartControl,
         );
         this.baseService.drawAxes();
         const context = this.baseService.getContext();
@@ -65,7 +65,7 @@ export class TimeSeriesComponent implements OnInit, AfterViewInit, OnChanges {
         this.barChartService.setContext(context);
         this.tooltipService.setContext(context);
 
-        if (this.chartOptions.chartType.type === 'line') {
+        if (this.chartControl.chartType.type === 'line') {
             this.barChartService.removeBars();
             this.lineChartService.draw();
         } else {
@@ -78,7 +78,7 @@ export class TimeSeriesComponent implements OnInit, AfterViewInit, OnChanges {
 
     public openChartSettingsModal() {
         const dialogConfig = new MatDialogConfig<ChartControl>();
-        dialogConfig.data = this.chartOptions;
+        dialogConfig.data = this.chartControl;
         const buttonElement = document.activeElement as HTMLElement;
         buttonElement.blur();
         const dialogRef = this.dialog.open(ChartSettingsComponent, dialogConfig);
@@ -86,7 +86,7 @@ export class TimeSeriesComponent implements OnInit, AfterViewInit, OnChanges {
 
         const formChangedFn = (data?: ChartControl) => {
             if (data) {
-                this.chartOptions = data;
+                this.chartControl = data;
                 this.createChart();
             }
         }
