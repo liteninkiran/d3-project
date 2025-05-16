@@ -1,5 +1,6 @@
 export type ChartOptions = {
     type: 'line' | 'bar';
+    title: string;
 }
 
 export type MarginOptions = {
@@ -41,6 +42,7 @@ export type XAxisOptions = {
     dateFormat: string;
     baseUnit: 'day' | 'week' | 'month' | 'year';
     every: number;
+    title: string;
 }
 
 export type YAxisOptions = {
@@ -54,6 +56,7 @@ export type YAxisOptions = {
     max: number;
     minAuto: boolean;
     maxAuto: boolean;
+    title: string;
 }
 
 export type AxesOptions = {

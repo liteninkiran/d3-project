@@ -2,6 +2,7 @@ import { MarginOptions, LineOptions, BarOptions, ChartControl, DimensionOptions,
 
 export const defaultChartType: ChartOptions = {
     type: 'line',
+    title: 'Chart Title',
 };
 
 export const defaultChartMargins: MarginOptions = {
@@ -44,6 +45,7 @@ export const defaultAxesOptions: AxesOptions = {
         dateFormat: '%b %Y',
         baseUnit: 'month',
         every: 6,
+        title: 'X Axis Title',
     },
     yAxis: {
         fontSize: 15,
@@ -56,6 +58,7 @@ export const defaultAxesOptions: AxesOptions = {
         max: 0,
         minAuto: true,
         maxAuto: true,
+        title: 'Y Axis Title',
     },
 }
 
