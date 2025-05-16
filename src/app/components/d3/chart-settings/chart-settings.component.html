@@ -20,12 +20,12 @@
             <!-- Chart Type Tab -->
             <mat-tab label="Chart Type">
                 <app-chart-type-options
-                    [group]="chartTypeGroup"
+                    [group]="chartGroup"
                 />
             </mat-tab>
 
             <!-- Line Tab -->
-            <mat-tab label="Line" *ngIf="form.value.chartType.type === 'line'">
+            <mat-tab label="Line" *ngIf="form.value.chart.type === 'line'">
                 <app-line-options
                     [group]="lineGroup"
                     [markerColour]="form.value.markers.colour"
@@ -34,7 +34,7 @@
              </mat-tab>
 
             <!-- Markers Tab -->
-            <mat-tab label="Markers" *ngIf="form.value.chartType.type === 'line'">
+            <mat-tab label="Markers" *ngIf="form.value.chart.type === 'line'">
                 <app-marker-options
                     [group]="markerGroup"
                     [lineColour]="form.value.line.colour"
@@ -43,7 +43,7 @@
             </mat-tab>
 
             <!-- Bars Tab -->
-            <mat-tab label="Bar" *ngIf="form.value.chartType.type === 'bar'">
+            <mat-tab label="Bar" *ngIf="form.value.chart.type === 'bar'">
                 <app-bar-options
                     [group]="barGroup"
                     [lineColour]="form.value.line.colour"

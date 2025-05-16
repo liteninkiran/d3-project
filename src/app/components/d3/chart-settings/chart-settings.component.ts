@@ -13,8 +13,8 @@ export class ChartSettingsComponent implements OnInit {
     public options: ChartControl;
     public form: FormGroup;
 
-    get chartTypeGroup() {
-        return this.form.get('chartType') as FormGroup;
+    get chartGroup() {
+        return this.form.get('chart') as FormGroup;
     }
 
     get lineGroup() {
@@ -67,7 +67,7 @@ export class ChartSettingsComponent implements OnInit {
 
     private setupForm(): void {
         this.form = this.fb.group({
-            chartType: this.fb.group(this.chartTypeDef()),
+            chart: this.fb.group(this.chartDef()),
             dimensions: this.fb.group(this.dimensionGroupDef()),
             margins: this.fb.group(this.marginGroupDef()),
             line: this.fb.group(this.lineGroupDef()),
@@ -77,9 +77,9 @@ export class ChartSettingsComponent implements OnInit {
         });
     }
 
-    private chartTypeDef() {
+    private chartDef() {
         return {
-            type: this.fb.control(this.options.chartType.type),
+            type: this.fb.control(this.options.chart.type),
         }
     }
 

@@ -62,7 +62,7 @@ export type AxesOptions = {
 }
 
 export type ChartControl = {
-    chartType: ChartOptions;
+    chart: ChartOptions;
     dimensions: DimensionOptions;
     margins: MarginOptions;
     line: LineOptions;

@@ -60,7 +60,7 @@ export const defaultAxesOptions: AxesOptions = {
 }
 
 export const defaultChartOptions: ChartControl = {
-    chartType: defaultChartType,
+    chart: defaultChartType,
     margins: defaultChartMargins,
     dimensions: defaultChartDimensions,
     line: defaultLineOptions,
