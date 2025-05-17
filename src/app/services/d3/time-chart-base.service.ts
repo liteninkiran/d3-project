@@ -42,15 +42,8 @@ export class TimeChartBaseService {
         this.resizeSvg();
         this.createContainer();
         this.createScales();
+        this.drawAxes();
         this.chartTitle();
-    }
-
-    public drawAxes(): void {
-        this.drawXAxis();
-        this.xAxisTitle();
-        this.drawYAxis();
-        this.yAxisTitle();
-        this.drawYGrid();
     }
 
     public getContext(): ChartContext {
@@ -72,6 +65,14 @@ export class TimeChartBaseService {
         this.data = [];
         this.svg = null;
         this.container = null;
+    }
+
+    private drawAxes(): void {
+        this.drawXAxis();
+        this.xAxisTitle();
+        this.drawYAxis();
+        this.yAxisTitle();
+        this.drawYGrid();
     }
 
     private chartTitle(): void {

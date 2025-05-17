@@ -58,7 +58,6 @@ export class TimeSeriesComponent implements OnInit, AfterViewInit, OnChanges {
             this.data,
             this.chartControl,
         );
-        this.baseService.drawAxes();
         const context = this.baseService.getContext();
 
         this.lineChartService.setContext(context);
